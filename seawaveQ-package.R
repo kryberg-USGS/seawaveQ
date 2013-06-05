@@ -9,8 +9,8 @@
 #' \tabular{ll}{
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.7.0\cr
-#' Date: \tab 2013-04-29\cr
+#' Version: \tab 0.8.0\cr
+#' Date: \tab 2013-06-05\cr
 #' License: \tab Unlimited | file LICENSE \cr
 #' LazyLoad: \tab yes\cr
 #' }
@@ -18,8 +18,9 @@
 #' @name seawaveQ-package
 #' @aliases seawaveQ
 #' @docType package
-#' @title An R Package for analyzing trends in pesticide concenterations 
-#' in streams with a seasonal wave (seawave) and adjustment for streamflow 
+#' @title A model and utilities for analyzing trends in chemical 
+#' concentrations in streams with a seasonal wave (seawave) and 
+#' adjustment for streamflow (Q) and other ancillary variables 
 #' (Q) and other ancillary variables
 #' @author Karen R. Ryberg \email{kryberg@@usgs.gov} and 
 #' Aldo V. Vecchia \email{avecchia@@usgs.gov}

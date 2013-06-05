@@ -1,14 +1,13 @@
 Package: seawaveQ
 Type: Package
 Title: U.S. Geological Survey SEAWAVE-Q model
-Version: 0.7.0
-Date: 2013-04-29
+Version: 0.8.0
+Date: 2013-06-05
 Author: Karen R. Ryberg and Aldo V. Vecchia
 Maintainer: Karen R. Ryberg <kryberg@usgs.gov>
 License: Unlimited | file LICENSE 
 LazyLoad: yes
-Description: An R package for the U.S. Geological Survey SEAWAVE-Q model, parametric regression model specifically designed for analyzing seasonal- and flow-related variability and trends in chemical concentrations in water.
+Descriptioin: A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables
 Depends: R (>= 2.15.0), survival, NADA, lubridate
 Suggests: waterData
 URL:  http://pubs.usgs.gov/XXXXX
-
