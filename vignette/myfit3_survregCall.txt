@@ -1,0 +1,338 @@
+
+Tuesday 26 Mar 2013 15:06:31 PM CDT
+R version 2.15.2 (2012-10-26)
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04035
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+                Value Std. Error       z        p
+xxxmatintcpt  -2.6786     0.0673 -39.828 0.00e+00
+xxxmatwavest   0.7654     0.1845   4.148 3.35e-05
+xxxmattndlin  -0.0188     0.0199  -0.946 3.44e-01
+xxxmatflowa30  0.1776     0.3066   0.579 5.63e-01
+xxxmatflowa1  -0.3682     0.6440  -0.572 5.67e-01
+xxxmatseda30   0.2267     0.2048   1.107 2.68e-01
+xxxmatseda1    0.6673     0.1525   4.377 1.20e-05
+Log(scale)    -1.4014     0.1188 -11.800 3.92e-32
+
+Scale= 0.246 
+
+Gaussian distribution
+Loglik(model)= -23.8   Loglik(intercept only)= -60.9
+	Chisq= 74.06 on 6 degrees of freedom, p= 6e-14 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  63.67681 
+BIC (Bayesian Information Criterion) is:  85.63626 
+Model class is 1
+Pulse input function is 5
+Half life is 3
+Seasonal value of the maximum concentration is 0.4808743.
+Tuesday 26 Mar 2013 15:06:32 PM CDT
+R version 2.15.2 (2012-10-26)
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04041
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+               Value Std. Error      z         p
+xxxmatintcpt  -2.084     0.0794 -26.24 9.36e-152
+xxxmatwavest   1.705     0.2019   8.44  3.07e-17
+xxxmattndlin  -0.242     0.0346  -7.01  2.39e-12
+xxxmatflowa30 -0.577     0.5012  -1.15  2.49e-01
+xxxmatflowa1   1.539     1.1229   1.37  1.71e-01
+xxxmatseda30   1.044     0.3130   3.34  8.49e-04
+xxxmatseda1    0.295     0.2711   1.09  2.77e-01
+Log(scale)    -0.928     0.1035  -8.97  3.00e-19
+
+Scale= 0.395 
+
+Gaussian distribution
+Loglik(model)= -38.7   Loglik(intercept only)= -103.7
+	Chisq= 130.12 on 6 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  93.31924 
+BIC (Bayesian Information Criterion) is:  115.2787 
+Model class is 1
+Pulse input function is 3
+Half life is 2
+Seasonal value of the maximum concentration is 0.4808743.
+Monday 08 Apr 2013 12:05:10 PM CDT
+R version 2.15.2 (2012-10-26)
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04035
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+                Value Std. Error       z        p
+xxxmatintcpt  -2.6786     0.0673 -39.828 0.00e+00
+xxxmatwavest   0.7654     0.1845   4.148 3.35e-05
+xxxmattndlin  -0.0188     0.0199  -0.946 3.44e-01
+xxxmatflowa30  0.1776     0.3066   0.579 5.63e-01
+xxxmatflowa1  -0.3682     0.6440  -0.572 5.67e-01
+xxxmatseda30   0.2267     0.2048   1.107 2.68e-01
+xxxmatseda1    0.6673     0.1525   4.377 1.20e-05
+Log(scale)    -1.4014     0.1188 -11.800 3.92e-32
+
+Scale= 0.246 
+
+Gaussian distribution
+Loglik(model)= -23.8   Loglik(intercept only)= -60.9
+	Chisq= 74.06 on 6 degrees of freedom, p= 6e-14 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  63.67681 
+BIC (Bayesian Information Criterion) is:  85.63626 
+Model class is 1
+Pulse input function is 5
+Half life is 3
+Seasonal value of the maximum concentration is 0.4808743.
+Monday 08 Apr 2013 12:05:11 PM CDT
+R version 2.15.2 (2012-10-26)
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04041
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+               Value Std. Error      z         p
+xxxmatintcpt  -2.084     0.0794 -26.24 9.36e-152
+xxxmatwavest   1.705     0.2019   8.44  3.07e-17
+xxxmattndlin  -0.242     0.0346  -7.01  2.39e-12
+xxxmatflowa30 -0.577     0.5012  -1.15  2.49e-01
+xxxmatflowa1   1.539     1.1229   1.37  1.71e-01
+xxxmatseda30   1.044     0.3130   3.34  8.49e-04
+xxxmatseda1    0.295     0.2711   1.09  2.77e-01
+Log(scale)    -0.928     0.1035  -8.97  3.00e-19
+
+Scale= 0.395 
+
+Gaussian distribution
+Loglik(model)= -38.7   Loglik(intercept only)= -103.7
+	Chisq= 130.12 on 6 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  93.31924 
+BIC (Bayesian Information Criterion) is:  115.2787 
+Model class is 1
+Pulse input function is 3
+Half life is 2
+Seasonal value of the maximum concentration is 0.4808743.
+
+Monday 08 Apr 2013 17:48:38 PM CDT
+R version 2.15.2 (2012-10-26)
+seawaveQ version 0.5.0
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04035
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+                Value Std. Error       z        p
+xxxmatintcpt  -2.6786     0.0673 -39.828 0.00e+00
+xxxmatwavest   0.7654     0.1845   4.148 3.35e-05
+xxxmattndlin  -0.0188     0.0199  -0.946 3.44e-01
+xxxmatflowa30  0.1776     0.3066   0.579 5.63e-01
+xxxmatflowa1  -0.3682     0.6440  -0.572 5.67e-01
+xxxmatseda30   0.2267     0.2048   1.107 2.68e-01
+xxxmatseda1    0.6673     0.1525   4.377 1.20e-05
+Log(scale)    -1.4014     0.1188 -11.800 3.92e-32
+
+Scale= 0.246 
+
+Gaussian distribution
+Loglik(model)= -23.8   Loglik(intercept only)= -60.9
+	Chisq= 74.06 on 6 degrees of freedom, p= 6e-14 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  63.67681 
+BIC (Bayesian Information Criterion) is:  85.63626 
+Model class is 1
+Pulse input function is 5
+Half life is 3
+Seasonal value of the maximum concentration is 0.4808743.
+
+
+Monday 08 Apr 2013 17:48:39 PM CDT
+R version 2.15.2 (2012-10-26)
+seawaveQ version 0.5.0
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04041
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+               Value Std. Error      z         p
+xxxmatintcpt  -2.084     0.0794 -26.24 9.36e-152
+xxxmatwavest   1.705     0.2019   8.44  3.07e-17
+xxxmattndlin  -0.242     0.0346  -7.01  2.39e-12
+xxxmatflowa30 -0.577     0.5012  -1.15  2.49e-01
+xxxmatflowa1   1.539     1.1229   1.37  1.71e-01
+xxxmatseda30   1.044     0.3130   3.34  8.49e-04
+xxxmatseda1    0.295     0.2711   1.09  2.77e-01
+Log(scale)    -0.928     0.1035  -8.97  3.00e-19
+
+Scale= 0.395 
+
+Gaussian distribution
+Loglik(model)= -38.7   Loglik(intercept only)= -103.7
+	Chisq= 130.12 on 6 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  93.31924 
+BIC (Bayesian Information Criterion) is:  115.2787 
+Model class is 1
+Pulse input function is 3
+Half life is 2
+Seasonal value of the maximum concentration is 0.4808743.
+
+
+Monday 08 Apr 2013 17:53:12 PM CDT
+R version 2.15.2 (2012-10-26)
+seawaveQ version 0.5.0
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04035
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+                Value Std. Error       z        p
+xxxmatintcpt  -2.6786     0.0673 -39.828 0.00e+00
+xxxmatwavest   0.7654     0.1845   4.148 3.35e-05
+xxxmattndlin  -0.0188     0.0199  -0.946 3.44e-01
+xxxmatflowa30  0.1776     0.3066   0.579 5.63e-01
+xxxmatflowa1  -0.3682     0.6440  -0.572 5.67e-01
+xxxmatseda30   0.2267     0.2048   1.107 2.68e-01
+xxxmatseda1    0.6673     0.1525   4.377 1.20e-05
+Log(scale)    -1.4014     0.1188 -11.800 3.92e-32
+
+Scale= 0.246 
+
+Gaussian distribution
+Loglik(model)= -23.8   Loglik(intercept only)= -60.9
+	Chisq= 74.06 on 6 degrees of freedom, p= 6e-14 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  63.67681 
+BIC (Bayesian Information Criterion) is:  85.63626 
+Model class is 1
+Pulse input function is 5
+Half life is 3
+Seasonal value of the maximum concentration is 0.4808743.
+
+
+Monday 08 Apr 2013 17:53:13 PM CDT
+R version 2.15.2 (2012-10-26)
+seawaveQ version 0.5.0
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04041
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+               Value Std. Error      z         p
+xxxmatintcpt  -2.084     0.0794 -26.24 9.36e-152
+xxxmatwavest   1.705     0.2019   8.44  3.07e-17
+xxxmattndlin  -0.242     0.0346  -7.01  2.39e-12
+xxxmatflowa30 -0.577     0.5012  -1.15  2.49e-01
+xxxmatflowa1   1.539     1.1229   1.37  1.71e-01
+xxxmatseda30   1.044     0.3130   3.34  8.49e-04
+xxxmatseda1    0.295     0.2711   1.09  2.77e-01
+Log(scale)    -0.928     0.1035  -8.97  3.00e-19
+
+Scale= 0.395 
+
+Gaussian distribution
+Loglik(model)= -38.7   Loglik(intercept only)= -103.7
+	Chisq= 130.12 on 6 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  93.31924 
+BIC (Bayesian Information Criterion) is:  115.2787 
+Model class is 1
+Pulse input function is 3
+Half life is 2
+Seasonal value of the maximum concentration is 0.4808743.
+
+
+Monday 08 Apr 2013 18:00:03 PM CDT
+R version 2.15.2 (2012-10-26)
+seawaveQ version 0.5.0
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04035
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+                Value Std. Error       z        p
+xxxmatintcpt  -2.6786     0.0673 -39.828 0.00e+00
+xxxmatwavest   0.7654     0.1845   4.148 3.35e-05
+xxxmattndlin  -0.0188     0.0199  -0.946 3.44e-01
+xxxmatflowa30  0.1776     0.3066   0.579 5.63e-01
+xxxmatflowa1  -0.3682     0.6440  -0.572 5.67e-01
+xxxmatseda30   0.2267     0.2048   1.107 2.68e-01
+xxxmatseda1    0.6673     0.1525   4.377 1.20e-05
+Log(scale)    -1.4014     0.1188 -11.800 3.92e-32
+
+Scale= 0.246 
+
+Gaussian distribution
+Loglik(model)= -23.8   Loglik(intercept only)= -60.9
+	Chisq= 74.06 on 6 degrees of freedom, p= 6e-14 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  63.67681 
+BIC (Bayesian Information Criterion) is:  85.63626 
+Model class is 1
+Pulse input function is 5
+Half life is 3
+Seasonal value of the maximum concentration is 0.4808743.
+
+
+Monday 08 Apr 2013 18:00:03 PM CDT
+R version 2.15.2 (2012-10-26)
+seawaveQ version 0.5.0
+x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+Final model survreg results for 04041
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+               Value Std. Error      z         p
+xxxmatintcpt  -2.084     0.0794 -26.24 9.36e-152
+xxxmatwavest   1.705     0.2019   8.44  3.07e-17
+xxxmattndlin  -0.242     0.0346  -7.01  2.39e-12
+xxxmatflowa30 -0.577     0.5012  -1.15  2.49e-01
+xxxmatflowa1   1.539     1.1229   1.37  1.71e-01
+xxxmatseda30   1.044     0.3130   3.34  8.49e-04
+xxxmatseda1    0.295     0.2711   1.09  2.77e-01
+Log(scale)    -0.928     0.1035  -8.97  3.00e-19
+
+Scale= 0.395 
+
+Gaussian distribution
+Loglik(model)= -38.7   Loglik(intercept only)= -103.7
+	Chisq= 130.12 on 6 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  93.31924 
+BIC (Bayesian Information Criterion) is:  115.2787 
+Model class is 1
+Pulse input function is 3
+Half life is 2
+Seasonal value of the maximum concentration is 0.4808743.

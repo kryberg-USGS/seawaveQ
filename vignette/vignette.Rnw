@@ -1,0 +1,234 @@
+\documentclass[11pt]{article}
+\usepackage{geometry, times}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{fullpage, graphicx, amssymb, epstopdf, hyperref}
+\hypersetup{
+  colorlinks,
+  linkcolor=blue,
+  urlcolor=blue
+}
+\renewcommand{\UrlBreaks}{\do\&\do\=\do\?\do\-\do\/\do\.}
+\usepackage{float}
+\usepackage{verbatim}
+\usepackage{pdfpages}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\SweaveOpts{keep.source=TRUE}
+%\VignetteIndexEntry{Using seawaveQ}
+\usepackage[utf8]{inputenc}
+
+\title{Vignette for seawaveQ---An R Package for Analyzing Trends in Pesticide Concentrations in Streams with a Seasonal Wave (seawave) and Adjustment for Streamflow (Q) and Other Ancillary Variables}
+\author{Karen R. Ryberg and Aldo V. Vecchia}
+\date{\today}                                % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+This R package, \textbf{seawaveQ}, is designed  for fitting a parametric regression model for assessing variability and trends in pesticide concentration in streams and was developed by Vecchia and others (2008), and subsequently refined and referred to as the ``seawave-Q'' model in several trend analyses (Ryberg and others, 2010; Sullivan and others, 2009; Vecchia and others, 2009).  In these publications, ``seawave-Q'' stands for seasonal wave (seawave) with adjustment for streamflow (Q).  The model was developed to ``handle a number of difficulties often found in pesticide data, such as strong seasonality in response to use patterns, high numbers of concentrations below laboratory reporting levels (RLs), complex relations between streamflow and concentration, and intermittent or changing sampling frequencies (both inter-annually and intra-annually)'' (Vecchia and others, 2008).  This R package provides a standardized methodology for fitting the seawave-Q model and makes the trend analysis method widely available for use by others. In addition, several enhancements to the seawave-Q model have been included such as: procedures for preparing and summarizing input data; flexibility to include other explanatory variables besides streamflow; graphical methods for assessing model fit; and additional model outputs.    A flow chart showing how the various function in the package work together is shown in figure 1 of the U.S. Geological Survey Open-File Report documenting this package (Ryberg and Vecchia, 2013). 
+
+The statistical methodology for the seawave-Q model is described in Vecchia and others (2008) and in the U.S. Geological Survey Open-File Report documenting this package (Ryberg and Vecchia, 2013).   Users new to this model should read both of those documents before applying the model to their own data.  An important part of the model and the output shown below is the seasonal wave. The seasonal wave is a periodic (with a period of 1 year) solution to a differential equation (Vecchia and others, 2008) that has a pulse input function, a seasonal shift that determines the time at which the seasonal wave reaches its maximum, and a model half-life.
+
+\section{Input Data}
+
+The seawaveQ model needs two types of input data.  The first is the the water-quality sample data including dates, the concentration data, and qualification codes, indicating which values are censored (less than a long-term method detection level).  The second type of data is the continuous ancillary data used in the model, such as streamflow anomalies (Ryberg and Vecchia, 2012).  These ancillary data are also used to produce a continuous estimate of pesticide concentration.  Examples of the necessary format of these two data sets are provided and documented in the package.  The following code shows how to access the example data.
+\vspace{5 mm}
+
+<<results=verbatim,echo=TRUE>>=
+# load waterData package, assuming it has already been installed on the system
+library(seawaveQ)
+# load example data that comes with the package
+data(swData)
+# show first few rows of water-quality data for Missouri River at Omaha, Nebraska
+head(qwMoRivOmaha)
+# get a description of the data including definitions of the columns
+# by viewing the help documentation
+?qwMoRivOmaha
+@
+
+Optionally, functions have been provided to plot concentration data.  These functions produce scatter plots and box plots that indicate or take into account the censored, less than, values.  The functions are \textit{cenScatPlot} and \textit{rosBoxPlot} and examples of their use follow.  The box plots are generated using the function \textit{ros}, regression on order statistics, in the R package \textbf{NADA} (Lee, 2012).  It is an implementation of a regression on order statistics designed for multiply-censored analytical-chemistry data  (Helsel, 2005). 
+\vspace{5 mm}
+
+\begin{figure}[H]
+\centering
+%\setkeys{Gin}{width=1.45\textwidth}
+<<fig=TRUE,width=7,height=4.5,echo=TRUE>>=
+# scatter plot showing unqualified, estimated, and censored  values
+cenScatPlot(qwMoRivOmaha, pname="04035")
+@
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\setkeys{Gin}{width=1.45\textwidth}
+<<fig=TRUE,width=7,height=4.5,echo=TRUE>>=
+# scatter plot with many additional plotting arguments
+# these options provide a plot closer to the plotting standards
+#  of the U.S. Geological Survey however, these plots may not 
+# meet all U.S. Geological Survey publication requirements
+par(las=1, tcl=0.5)
+cenScatPlot(qwMoRivOmaha, pname="04035", 
+                       site="06610000 Missouri River at Omaha, Neb.",
+                       ylabel="Simazine concentration, in micrograms per liter",
+                       legcex=0.7, qwcols=c("R", "P"), ylim=c(0,0.1), yaxs="i", 
+                       cex.lab=0.9, cex.axis=0.9, xlim=c(as.Date("1996-01-01"), 
+                       as.Date("2004-01-01")), xaxs="i", xaxt="n")
+axdates <- c("1996-01-01", "1998-01-01", "2000-01-01", 
+                       "2002-01-01", "2004-01-01")
+axis(1, as.Date(axdates), 
+                       labels=c("1996", "1998", "2000", "2002", "2004"), cex.axis=0.9)
+@
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\setkeys{Gin}{width=1.45\textwidth}
+<<fig=TRUE,width=7,height=4.5,echo=TRUE>>=
+# simple box plots of water-quality concentrations
+rosBoxPlot(qwMoRivOmaha, qwcols=c("R", "P"))
+@
+\end{figure}
+
+\begin{figure}[H]
+\centering
+%\setkeys{Gin}{width=1.45\textwidth}
+<<fig=TRUE,width=7,height=4.5,echo=TRUE>>=
+# same boxplot function with many additional plotting arguments
+rosBoxPlot(qwMoRivOmaha, site="06610000 Missouri River at Omaha, Neb.",
+                     log="y", yaxt="n", ylim=c(0.000001, 10), qwcols=c("R", "P"), 
+                     ylab=c("Concentration, micrograms per liter"), col="skyblue1",
+                     cex.axis=0.7, cex.sub=0.8, 
+                     par(tcl=0.5, las=1, yaxs="i", mgp=c(3,0.5,0), mar=c(5,5,2,2), 
+                     cex.main=0.9))
+axis(2, at=c(0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10),
+labels=c("0.000001", "0.00001", "0.0001", "0.001", "0.01",
+"0.1", "1", "10"), cex.axis=0.7)
+@
+\end{figure}
+
+The second data set needed is the one containing the continuous ancillary data for building the model that describes pesticide concentrations.  
+\vspace{5 mm}
+
+<<results=verbatim,echo=TRUE>>=
+data(swData)
+# show last few rows of water-quality data for Missouri River at Omaha, Nebraska
+tail(cqwMoRivOmaha)
+# get a description of the data including definitions of the columns
+# by viewing the help documentation
+?cqwMoRivOmaha
+@
+\vspace{5 mm}
+
+In this case, the continuous ancillary data includes daily streamflow (dflow) and daily sediment concentration (dsed), as well as the 30-day and 1-day streamflow (flowa30 and flowa1) and sediment (seda30 and seda1) anomalies.  (The anomalies were calculated using the \textbf{waterData} package for R.)
+
+In order to build a model using one or more of these ancillary variables as explanatory variables for pesticide concentration, the continuous ancillary variables need to be associated with the water-quality samples.  The function \textit{combineData} will combine water-quality sample data and continuous (daily) ancillary variables and drop unnecessary columns.  One needs to specify the water-quality sample data, the continuous ancillary data, and the columns representing the station identifier, the data, the qualification code columns, and the concentration columns as shown in the following code.
+\vspace{5 mm}
+
+<<results=verbatim,echo=TRUE>>=
+data(swData)
+MoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha,
+qwcols=c("staid", "dates", "R", "P"))
+# view combined data set
+head(MoRivOmaha)
+@
+
+\section{Fitting the seawaveQ Model}
+
+One can now fit the seawaveQ model using the data explored and combined in the previous code examples.  The follow code fits three different seawaveQ models (with differing continuous ancillary variables) for two pesticides in the data set.  The pesticides are 04035, simazine, and 04041, cyanazine.  See the help documentation for further information about the function arguments shown and additional arguments.
+\vspace{5 mm}
+
+<<results=verbatim,echo=TRUE>>=
+myfit1 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
+tanm="myfit1", pnames=c("04035", "04041"), yrstart=1995,
+yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1"),
+dcol="dates", qwcols=c("R","P"))
+myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
+tanm="myfit2", pnames=c("04035", "04041"), yrstart=1995,
+yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30", "seda1"),
+dcol="dates", qwcols=c("R","P"))
+myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
+tanm="myfit3", pnames=c("04035", "04041"), yrstart=1995,
+yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1",
+"seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
+@
+
+\section{Model Output}
+The model fitting process finds the best pulse input function and model half-life for the concentration data and uses survival regression to fit a regression model.  Three types of output are provided: 1) a list, the first element being a data frame with information about the model and its parameters, the second element being the survival regression summary; 2) text files showing a summary of the survival regression results, like the second element of the list, but with  additional measures of model quality and information about the R session; and 3) a pdf file of plots showing the model, trend, and diagnostic plots.  The data frame results for the three models for simazine and cyanazine are shown below.
+\vspace{5 mm}
+
+<<results=verbatim,echo=TRUE>>=
+# get the first element of the list for each model/constituent combination
+# the data frame with information about each model/constituent combination
+myfit1[[1]]
+myfit2[[1]]
+myfit3[[1]]
+
+# get the second element of the list for each model/constituent combination
+# the survival regression summary for each model/constituent combination
+myfit1[[2]]
+myfit2[[2]]
+myfit3[[2]]
+
+@
+\vspace{5 mm}
+The first item of the list, the data frame, contains information about each model including the pesticide analyzed; the model class (an option in seawaveQ that is not currently implemented but that will provide additional model options in the future); the choice of model or pulse input function, an integer 1 through 14; the model half-life in months, an integer, 1 to 4 months; the decimal season of highest concentration; the scale factor from the survreg.object; the log-likelihood for the model; the coefficient for the model intercept; the coefficient for the seasonal wave; the coefficient for the trend component of the model; 0 or more values representing coefficients for the continuous ancillary variables; the standard error for the intercept; the standard error for the seasonal wave; the standard error for the trend; and 0 or more columns representing standard errors for the continuous ancillary variables.
+
+The second item of the list is provided so that users could extract the attributes of the survival regression summary programmatically (rather than viewing them in the text file) and create  their own summaries or plots of the results.
+
+<<results=verbatim,echo=TRUE>>=
+
+attributes(myfit1[[2]][[1]])
+myfit1[[2]][[1]]$n
+myfit1[[2]][[1]]$table
+
+@
+\vspace{5 mm}
+
+The text file for the first of the function calls above is inserted here as an example.  Users may run the model fitting code themselves and view the resulting text files for all three models.  The results for all three are too long to include in this vignette.
+
+\vspace{5 mm}
+
+\verbatiminput{myfit1_survregCall.txt}%
+
+\vspace{5 mm}
+
+The plots written to a pdf file for the first pesticide, 04035, simazine, in the first model, myfit1, are included below.  As with the text results, the plots for all three models and all pesticides are too numerous to include here.  Users are encouraged to run the code themselves and examine all of the plots.
+
+\includepdf[pages={-}]{myfit104035.pdf}
+
+\vspace{5 mm}
+
+The plotting position used for representing censored values in the model plots (produced by the internal function \textit{seawaveQPlots} further described in the package help documentation) is an important consideration for interpreting model fit.  Plotting values obtained by using the censoring limit, or something smaller such as one-half of the censoring limit, produce plots that are difficult to interpret if there are a large number of censored values.  Therefore, to make the plots more representative of diagnostic plots used for standard (non-censored) regression,  a method for substituting randomized residuals in place of censored residuals was used.   If a log-transformed concentration is censored at a particular limit, $logC < L$, then the residual for that concentration is censored as well, $logC - fitted(logC) < L - fitted(logC) = rescen)$.  In that case, a randomized residual was generated from a conditional normal distribution:
+\begin{verbatim}
+	resran  <-  scl * qnorm(runif(1) * pnorm(rescen / scl))
+\end{verbatim}
+where \textit{scl} is the scale parameter from the survival regression model, \textit{pnorm} is the R function for computing cumulative normal probabilities, \textit{runif} is the R function for generating a random variable from the uniform distribution, and \textit{qnorm} is the R function for computing quantiles of the normal distribution.  Under the assumption that the model residuals are uncorrelated, normally distributed random variables with mean zero and standard deviation scl, the randomized residuals generated in this manner are an unbiased sample of the true (but unknown) residuals for the censored data.  The plotting position used a censored concentration is $fitted(logC) + resran$.  Note that each time a new model fit is performed, a new set of randomized residuals is generated and thus the plotting positions for censored values can change.
+
+\section{References}
+Helsel, D.R., 2005, Nondetects and data analysis: New York, John Wiley and Sons.
+
+Lee, Lopaka, 2012, Nondetects and data analysis for environmental data: R package version 1.5-4,
+\url{http://CRAN.R-project.org/package=NADA}.
+
+Ryberg, K.R. and Vecchia, A.V., 2006, Water-quality trend analysis and sampling design for the Devils Lake Basin, North Dakota, January 1965 through September 2003: U.S. Geological Survey Scientific Investigations Report 2006--5238, 64 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2006/5238/}.
+
+Ryberg, K.R. and Vecchia, A.V., 2012, waterData---An R package for retrieval, analysis, and anomaly calculation of daily hydrologic time series data, version 1.0: U.S. Geological Survey Open-File Report 2012--1168, 8 p., accessed March 1, 2013, at \url{http://pubs.usgs.gov/of/2012/1168/}.
+
+Ryberg, K.R., and Vecchia, A.V., 2013, seawaveQ---An R Package for Analyzing Trends in Pesticide Concentrations in Streams with a Seasonal Wave (seawave) and Adjustment for Streamflow (Q) and Other Ancillary Variables: U.S. Geological Survey Open-File Report 2013-XXXX, XX p.
+
+Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, Trends in pesticide concentrations in urban streams in the United States, 1992-2008: U.S. Geological Survey Scientific Investigations Report 2010--5139, 101 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2010/5139/}.
+
+Sullivan, D.J., Vecchia, A.V., Lorenz, D.L., Gilliom, R.J., and Martin, J.D., 2009, Trends in pesticide concentrations in corn-belt streams, 1996--2006: U.S. Geological Survey Scientific Investigations Report 2009--5132, 75 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2009/5132/}.
+
+Vecchia, A.V., 2005, Water-quality trend analysis and sampling design for streams in the Red River of the North Basin, Minnesota, North Dakota, and South Dakota, 1970--2001: U.S. Survey Scientific Investigations Report 2005--5224, 54 p., accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2005/5224/}.
+
+Vecchia, A.V., Gilliom, R.J., Sullivan, D.J., Lorenz, D.L., and Martin, J.D., 2009, Trends in concentrations and use of agricultural herbicides for Corn Belt rivers, 1996--2006:  Environmental Science and Technology, v. 43, p. 9,096-9,102, accessed May 1, 2012, at \url{http://water.usgs.gov/nawqa/pubs/es902122j.pdf}.
+
+Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, Modeling variability and trends in pesticide concentrations in streams: Journal of the American Water Resources Association, v. 44, no. 5, pp. 1,308-1,324, accessed May 1, 2012, at \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
+
+\end{document}  
