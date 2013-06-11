@@ -73,7 +73,9 @@
 #' concentration, a text file containing a summary of the survival 
 #' regression call for each model selected, and a list.  The first element
 #' of the list is a data frame described under format.  The second element
-#' of the list is the summary of the survival regression call.  
+#' of the list is the summary of the survival regression call.  The third 
+#' element is the observed concentration data (censored and uncensored). 
+#' The fourth element is the concentration data predicted by the model.
 #' @format The data frame returned has one row for each parameter analyzed 
 #' and the number of columns depend on the number of continuous ancillary
 #' variables used. The general format is: \cr
@@ -207,6 +209,8 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
                       tanm, pnames=pnames[iipar], qwcols, mclass=1)
       stpars <- myRes[[1]]
       aovout <- myRes[[2]]
+      obsDat <- myRes[[3]][[1]]
+      predDat <- myRes[[3]][[2]]
       if ( !exists("aovoutall") ) {
         aovoutall <- myRes[[2]]
       } else { 
@@ -230,6 +234,24 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
         stparsoutall <- rbind(stparsoutall, stparsout)
       } else {
         stparsoutall <- stparsout
+      }
+    }
+    if ( exists("obsDat") ) {
+      if(iipar==1) {
+        obsdatall <- obsDat
+      } else if (iipar > 1 & exists("obsdatall") )  {
+        obsdatall <- merge(obsdatall, obsDat, all=TRUE)
+      } else {
+        obsdatall <- obsDat
+      }
+    }
+    if ( exists("predDat") ) {
+      if(iipar==1) {
+        preddatall <- predDat
+      } else if (iipar > 1 & exists("preddatall") )  {
+        preddatall <- merge(preddatall, predDat, all=TRUE)
+      } else {
+        preddatall <- predDat
       }
     }
   }
@@ -258,7 +280,7 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
                              paste('se', c('int', 'wave', 'tnd'), 
                                    sep=''), 'pvaltnd')
     }
-    fitRes <- list(stparsoutall, aovoutall)
+    fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall)
     fitRes
   } else { message("No constituent had 10 or more uncensored values.")}
 }

@@ -2,7 +2,9 @@
 #' 
 #' seawaveQPlots is usually called from within \code{\link{fitMod}} but
 #' can be invoked directly.  It generates plots of data and model results, 
-#' as well as diagnostic plot.
+#' as well as diagnostic plots, and returns the observed and predicted 
+#' concentrations so that users may plot the concentrations using 
+#' their own functions.
 #' @note The plotting position used for representing censored values in 
 #' the plots produced by \code{\link{seawaveQPlots}} is an important 
 #' consideration for interpreting model fit.  Plotting values obtained by 
@@ -68,7 +70,9 @@
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @return a pdf file containing plots of the data and modeled 
-#' concentrations and regression diagnostic plots.
+#' concentrations and regression diagnostic plots and a list containing
+#' the observed concentrations (censored and uncensored) and the predicted
+#' concentrations used for the plot.
 #' @export
 #' @examples
 #' data(swData)
@@ -355,4 +359,27 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
     }
   }
   dev.off()
+  Dectime<-NULL
+  censDat<- data.frame(cbind(Dectime=tyr[centmp], rmk="<", 
+                             val=10^ytmp[centmp]), stringsAsFactors=FALSE)
+  censDat$Dectime<-as.numeric(censDat$Dectime)
+  censDat$val<-as.numeric(censDat$val)
+  dimnames(censDat)[[2]][2]<-paste("R", pnames, sep="")
+  dimnames(censDat)[[2]][3]<-paste("P", pnames, sep="")
+  uncensDat<- data.frame(cbind(Dectime=tyr[!centmp], rmk="", 
+                               val=10^ytmp[!centmp]),
+                         stringsAsFactors=FALSE)
+  uncensDat$Dectime<-as.numeric(uncensDat$Dectime)
+  uncensDat$val<-as.numeric(uncensDat$val)
+  dimnames(uncensDat)[[2]][2]<-paste("R", pnames, sep="")
+  dimnames(uncensDat)[[2]][3]<-paste("P", pnames, sep="")
+  obsDat<- merge(censDat, uncensDat, all=TRUE)
+  obsDat<-subset(obsDat, Dectime <= yrend & Dectime >= yrstart)
+  
+  predDat<- data.frame(cbind(Dectime=tyrpr, pred=ytmpxx))
+  dimnames(predDat)[[2]][2]<-paste("P", pnames, sep="")
+  predDat <- subset(predDat, Dectime <= yrend & Dectime >= yrstart)
+      
+  plotDat <- list(obsDat, predDat)
+  plotDat
 }

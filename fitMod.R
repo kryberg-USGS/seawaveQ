@@ -33,7 +33,10 @@
 #' results, and a list.  The first element of the list contains 
 #' information about the data and the model(s) selected (see 
 #' \code{\link{examplestpars}}). The second element of the list contains 
-#' the summary of the survival regression call.
+#' the summary of the survival regression call.  The third element of the 
+#' list is itself a list containing the observed concentrations (censored 
+#' and uncensored) and the predicted concentrations used by 
+#' \code{\link{seawaveQPlots}} to generate the plots.
 #' @export
 #' @examples
 #' data(swData)
@@ -171,10 +174,10 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       "\n", sep="")
   sink()
   
-  seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
+  plotDat<-seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
                 tndlinpr, cdatsub, cavdat, cavmat, clog, centmp, 
                 yrstart, yrend, tyr, tyrpr, pnames, tanm)  
   
-  myRes <- list(stpars, aovout)
+  myRes <- list(stpars, aovout, plotDat)
   myRes
 }
