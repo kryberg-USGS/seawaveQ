@@ -75,7 +75,9 @@
 #' of the list is a data frame described under format.  The second element
 #' of the list is the summary of the survival regression call.  The third 
 #' element is the observed concentration data (censored and uncensored). 
-#' The fourth element is the concentration data predicted by the model.
+#' The fourth element is the concentration data predicted by the model.  
+#' The fifth element provides summary statistics for the predicted 
+#' concentrations.
 #' @format The data frame returned has one row for each parameter analyzed 
 #' and the number of columns depend on the number of continuous ancillary
 #' variables used. The general format is: \cr
@@ -121,8 +123,16 @@
 #' tanm="myfit3", pnames=c("04035", "04037", "04041"), yrstart=1995, 
 #' yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1", 
 #' "seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
-#' myfit3[[1]][1,]
+#' # trend model results
+#' myfit3[[1]]
+#' # example regression call
 #' myfit3[[2]][[1]]
+#' # first few lines of observed concentrations
+#' head(myfit3[[3]])
+#' # first few lines of predicted concentrations
+#' head(myfit3[[4]])
+#' # summary statistics for predicted concentrations
+#' head(myfit3[[5]])
 #' @references
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 #' Trends in pesticide concentrations in urban streams in the United 
@@ -191,6 +201,10 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
   pnamesf<-vector(length=0)
   for  (iipar in (1:npars)) {
     if ( exists("stpars") ) { rm(stpars)}
+    if ( exists("aovout") ) { rm(aovout)}
+    if ( exists("obsDat") ) { rm(obsDat)}
+    if ( exists("predDat") ) { rm(predDat)}
+    if ( exists("predSummary") ) { rm(predSummary)}
     # for individual parameters, need to remove missing data
     # cdat columns for trend analysis of single parameter
     matches <- unique (grep(paste(iwcav, collapse="|"), names(cdat)))
@@ -211,6 +225,17 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
       aovout <- myRes[[2]]
       obsDat <- myRes[[3]][[1]]
       predDat <- myRes[[3]][[2]]
+      mycol<-paste("P", pnames[iipar], sep="")
+      predSummary <- data.frame(analysis=tanm, pname=pnames[iipar], 
+                                predMeanConc=round(mean(predDat[,mycol]), 
+                                               digits=5), 
+                                matrix(round(quantile(predDat[, mycol], 
+                                                probs=c(0.10, 0.25, 0.5, 0.75, 0.9)), 
+                                             digits=5), 
+                                       nrow=1, 
+                                       dimnames=list(NULL,c("predQ10", "predQ25", 
+                                                         "predQ50", "predQ75", "predQ90"))),
+                                stringsAsFactors=FALSE)
       if ( !exists("aovoutall") ) {
         aovoutall <- myRes[[2]]
       } else { 
@@ -254,6 +279,15 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
         preddatall <- predDat
       }
     }
+    if ( exists("predSummary") ) {
+      if(iipar==1) {
+        predSumAll <- predSummary
+      } else if (iipar > 1 & exists("predSumAll") )  {
+        predSumAll <- rbind(predSumAll, predSummary)
+      } else {
+        predSumAll <- predSummary
+      }
+    }
   }
 	
   if ( exists("stparsoutall") ) {
@@ -280,7 +314,7 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
                              paste('se', c('int', 'wave', 'tnd'), 
                                    sep=''), 'pvaltnd')
     }
-    fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall)
+    fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, predSumAll)
     fitRes
   } else { message("No constituent had 10 or more uncensored values.")}
 }

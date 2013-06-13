@@ -359,13 +359,15 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
     }
   }
   dev.off()
-  Dectime<-NULL
-  censDat<- data.frame(cbind(Dectime=tyr[centmp], rmk="<", 
-                             val=10^ytmp[centmp]), stringsAsFactors=FALSE)
-  censDat$Dectime<-as.numeric(censDat$Dectime)
-  censDat$val<-as.numeric(censDat$val)
-  dimnames(censDat)[[2]][2]<-paste("R", pnames, sep="")
-  dimnames(censDat)[[2]][3]<-paste("P", pnames, sep="")
+  #Dectime<-NULL
+  if (sum(centmp) > 0 ) {
+    censDat<- data.frame(cbind(Dectime=tyr[centmp], rmk="<", 
+                               val=10^ytmp[centmp]), stringsAsFactors=FALSE)
+    censDat$Dectime<-as.numeric(censDat$Dectime)
+    censDat$val<-as.numeric(censDat$val)
+    dimnames(censDat)[[2]][2]<-paste("R", pnames, sep="")
+    dimnames(censDat)[[2]][3]<-paste("P", pnames, sep="")
+  }
   uncensDat<- data.frame(cbind(Dectime=tyr[!centmp], rmk="", 
                                val=10^ytmp[!centmp]),
                          stringsAsFactors=FALSE)
@@ -373,8 +375,14 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
   uncensDat$val<-as.numeric(uncensDat$val)
   dimnames(uncensDat)[[2]][2]<-paste("R", pnames, sep="")
   dimnames(uncensDat)[[2]][3]<-paste("P", pnames, sep="")
-  obsDat<- merge(censDat, uncensDat, all=TRUE)
-  obsDat<-subset(obsDat, Dectime <= yrend & Dectime >= yrstart)
+  if (sum(centmp) > 0 ) {
+    obsDat<- merge(censDat, uncensDat, all=TRUE)
+    obsDat<-subset(obsDat, Dectime <= yrend & Dectime >= yrstart)
+  }
+  else {
+    obsDat<-uncensDat
+    obsDat<-subset(obsDat, Dectime <= yrend & Dectime >= yrstart)
+  }
   
   predDat<- data.frame(cbind(Dectime=tyrpr, pred=ytmpxx))
   dimnames(predDat)[[2]][2]<-paste("P", pnames, sep="")

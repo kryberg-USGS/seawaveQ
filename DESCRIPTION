@@ -1,8 +1,8 @@
 Package: seawaveQ
 Type: Package
 Title: U.S. Geological Survey SEAWAVE-Q model
-Version: 0.8.0
-Date: 2013-06-10
+Version: 0.8.1
+Date: 2013-06-13
 Author: Karen R. Ryberg and Aldo V. Vecchia
 Maintainer: Karen R. Ryberg <kryberg@usgs.gov>
 License: Unlimited | file LICENSE 

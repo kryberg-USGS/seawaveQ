@@ -9,8 +9,8 @@
 #' \tabular{ll}{
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.8.0\cr
-#' Date: \tab 2013-06-10\cr
+#' Version: \tab 0.8.1\cr
+#' Date: \tab 2013-06-13\cr
 #' License: \tab Unlimited | file LICENSE \cr
 #' LazyLoad: \tab yes\cr
 #' }
