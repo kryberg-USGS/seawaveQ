@@ -13,7 +13,7 @@
 #' trend period. 
 #' @param tndend is the end (in whole or decimal years) of the trend 
 #' period. 
-#' @param tanm is an a character identifier that names the trend 
+#' @param tanm is a character identifier that names the trend 
 #' analysis run.  It is used to label output files.
 #' @param pnames is the parameter (water-quality constituents) to 
 #' analyze (if using USGS parameters, omit the the starting 'P', such as 

@@ -12,7 +12,7 @@
   A numeric matrix of two rows and 14 columns.\cr
    column  description\cr
    1  mclass, model class has not been implemented yet and is equal to 1\cr
-   2  model chosen (a number 1-56), this number represents both the pulse input function and the half life \cr
+   2  model chosen (a number 1-56), this number represents both the pulse input function and the half-life\cr
    3  is the scale factor from the \code{survreg.object}
    4  is the likelihood for the model chosen\cr
    5  is the coefficient for the model intercept \cr
@@ -25,7 +25,7 @@
    12 is the standard error for the trend term  \cr
    13 is the standard error for the 30-day flow anomaly term  \cr
    14 is the standard error for the 1-day flow anomaly term  \cr
-   15 is  cmaxt, the decimal season of highest concentration \cr
+   15 is  cmaxt, the decimal season of maximum concentration \cr
    16 is the p-value for the trend line \cr
 }
 \seealso{

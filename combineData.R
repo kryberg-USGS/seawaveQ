@@ -13,11 +13,11 @@
 #' qualification codes.  See example datasets for more information about 
 #' the data format, \link{IllRivValleyCty} and \link{qwMoRivOmaha}.
 #' @param qwcols is a character vector with column headings for 
-#' a station (location) indentifier, a dates column identifier, beginning 
+#' a station (location) identifier, a dates column identifier, beginning 
 #' of column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
 #' @param cqwdat is the dataset containing variables that can be used as 
-#' explanatory variables for the seawave-q model.  See example dataset
+#' explanatory variables for the seawaveQ model.  See example dataset
 #' for more information about the data format \link{cqwMoRivOmaha}.  These 
 #' are daily values with no missing values allowed between the first and 
 #' the last date in the dataset.
@@ -31,7 +31,8 @@
 #' combined the datasets.  The first column is the station identifier and 
 #' the second column is the date column.  These two column headings must 
 #' be the same in the two datasets being combined and the dates in the 
-#' datasets being combined must be dates and be in the same format.
+#' datasets being combined must be for the class Date and be in the same 
+#' format.
 #' @keywords manip
 #' @author Karen R. Ryberg and Aldo V. Vecchia
 #' @export

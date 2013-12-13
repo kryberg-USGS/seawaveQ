@@ -3,8 +3,9 @@
 \alias{cqwMoRivOmaha}
 \title{Continuously monitored (daily) data for 06610000 Missouri River at Omaha, Neb.}
 \description{
-  Continuously monitored (daily) streamflow and sediment data for USGS streamgage
-  06610000 Missouri River at Omaha, Neb., and streamflow and sediment anomalies.
+  Continuously monitored (daily) streamflow and sediment data for U.S. Geological 
+  Survey streamgage 06610000 Missouri River at Omaha, Neb., and streamflow and 
+  sediment anomalies.
 }
 \details{
   The streamflow and sediment anomalies were generated using the R package 
@@ -42,8 +43,8 @@
 \references{
   Ryberg, K.R. and Vecchia, A.V., 2012, waterData---An R package for 
   retrieval, analysis, and anomaly calculation of daily hydrologic time 
-  series data, version 1.0.0: U.S. Geological Survey Open-File Report 2012
-  --1168, 8 p. (Also available at 
+  series data, version 1.0.0: U.S. Geological Survey Open-File Report 
+  2012--1168, 8 p. (Also available at 
   \url{http://pubs.usgs.gov/of/2012/1168/}.)
 }
   \keyword{datasets}

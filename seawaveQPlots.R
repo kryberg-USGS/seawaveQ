@@ -29,7 +29,9 @@
 #' normally distributed random variables with mean zero and standard 
 #' deviation scl, the randomized residuals generated in this manner are an 
 #' unbiased sample of the true (but unknown) residuals for the censored 
-#' data.  The plotting position used a censored concentration is 
+#' data.  This is an application of the probability integral transform 
+#' (Mood and others, 1974) to generate random variables from continuous 
+#' distributions. The plotting position used a censored concentration is 
 #' \code{fitted(logC) + resran}.  Note that each time a new model fit is 
 #' performed, a new set of randomized residuals is generated and thus the 
 #' plotting positions for censored values can change.
@@ -74,6 +76,9 @@
 #' the observed concentrations (censored and uncensored) and the predicted
 #' concentrations used for the plot.
 #' @export
+#' @references
+#' Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 
+#' theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
 #' @examples
 #' data(swData)
 #' myPlots <- seawaveQPlots(stpars=examplestpars, cmaxt=0.4808743, 
@@ -359,35 +364,38 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
     }
   }
   dev.off()
-  #Dectime<-NULL
+  dectime=NULL
   if (sum(centmp) > 0 ) {
-    censDat<- data.frame(cbind(Dectime=tyr[centmp], rmk="<", 
+    censDat<- data.frame(cbind(dectime=tyr[centmp], rmk="<", 
                                val=10^ytmp[centmp]), stringsAsFactors=FALSE)
-    censDat$Dectime<-as.numeric(censDat$Dectime)
+    censDat$dectime<-as.numeric(censDat$dectime)
     censDat$val<-as.numeric(censDat$val)
     dimnames(censDat)[[2]][2]<-paste("R", pnames, sep="")
     dimnames(censDat)[[2]][3]<-paste("P", pnames, sep="")
   }
-  uncensDat<- data.frame(cbind(Dectime=tyr[!centmp], rmk="", 
+  uncensDat<- data.frame(cbind(dectime=tyr[!centmp], rmk="", 
                                val=10^ytmp[!centmp]),
                          stringsAsFactors=FALSE)
-  uncensDat$Dectime<-as.numeric(uncensDat$Dectime)
+  uncensDat$dectime<-as.numeric(uncensDat$dectime)
   uncensDat$val<-as.numeric(uncensDat$val)
   dimnames(uncensDat)[[2]][2]<-paste("R", pnames, sep="")
   dimnames(uncensDat)[[2]][3]<-paste("P", pnames, sep="")
   if (sum(centmp) > 0 ) {
     obsDat<- merge(censDat, uncensDat, all=TRUE)
-    obsDat<-subset(obsDat, Dectime <= yrend & Dectime >= yrstart)
+    obsDat<-subset(obsDat, dectime <= yrend & dectime >= yrstart)
   }
   else {
     obsDat<-uncensDat
-    obsDat<-subset(obsDat, Dectime <= yrend & Dectime >= yrstart)
+    obsDat<-subset(obsDat, dectime <= yrend & dectime >= yrstart)
   }
   
-  predDat<- data.frame(cbind(Dectime=tyrpr, pred=ytmpxx))
+  obsDat$dectime <- round(obsDat$dectime, digits=3)
+  
+  predDat<- data.frame(cbind(dectime=tyrpr, pred=ytmpxx))
   dimnames(predDat)[[2]][2]<-paste("P", pnames, sep="")
-  predDat <- subset(predDat, Dectime <= yrend & Dectime >= yrstart)
-      
+  predDat <- subset(predDat, dectime <= yrend & dectime >= yrstart)
+  predDat$dectime <- round(predDat$dectime, digits=3)
+  
   plotDat <- list(obsDat, predDat)
   plotDat
 }

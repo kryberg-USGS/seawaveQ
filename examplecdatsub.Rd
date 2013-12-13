@@ -18,7 +18,7 @@
    yrc \tab numeric \tab Year \cr
    moc \tab numeric \tab Month \cr
    dac \tab numeric \tab Day \cr
-   jdayc \tab numeric \tab Julian day from first day water year for start year in \code{\link{fitswavecav}} \cr
+   jdayc \tab numeric \tab Julian day from first day of start year in \code{\link{fitswavecav}} \cr
    flowa30 \tab numeric \tab 30-day streamflow anomaly \cr
    flowa1 \tab numeric \tab 1-day streamflow anomaly \cr
    seda30 \tab numeric \tab 30-day sediment anomaly \cr

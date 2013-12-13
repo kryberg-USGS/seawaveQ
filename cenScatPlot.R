@@ -1,4 +1,4 @@
-#' Function for to generate a scatter plot that indicates censored and 
+#' Function to generate a scatter plot that indicates censored and 
 #' estimated water-quality concentrations.
 #'
 #' This function uses the qualification, or remark, column associated
@@ -8,7 +8,7 @@
 #' value is not qualified; an "E" indicates the values has been 
 #' estimated; and a less than symbol, "<", indicates the value has been 
 #' censored as less than a minimum reporting level.  See Oblinger 
-#' Childress, 1999, for information on the minimum reporting level and 
+#' Childress (1999) for information on the minimum reporting level and 
 #' the definition of "E" for U.S. Geological Survey data.  Other users may 
 #' have a different definition of the minimum reporting level, but 
 #' censored values need to be qualified with a "<".  Using the "E" code is 
@@ -24,7 +24,7 @@
 #' \code{\link{IllRivValleyCty}} and \code{\link{qwMoRivOmaha}}.
 #' @param datescol is the column label for the dates column.
 #' @param pname is the the column heading (paramenter name) for the 
-#' particular water-quality constituent to be plotted the parameters (omit 
+#' particular water-quality constituent to be plotted (omit 
 #' the the starting character, for example for sulfate data indicated by 
 #' P00945, enter "00945").  
 #' @param qwcols is a character vector with the beginning of the
@@ -32,7 +32,8 @@
 #' column headers for concentration data (default is P for parameter).
 #' @param site is a label for the plot title indicating the site where
 #' the water-quality samples were collected.
-#' @param ylabel is the label for the y-axis
+#' @param xlabel is the label for the x-axis, defaults to no label.
+#' @param ylabel is the label for the y-axis.
 #' @param legpos is the position of the legend, see \link{legend}.
 #' @param legcex is a numerical value giving the amount by which the 
 #' legend text and symbols should be magnified relative to the default, 
@@ -46,7 +47,7 @@
 #' T.J., 1999, New reporting procedures based on long-term method 
 #' detection levels and some considerations for interpretations of 
 #' water-quality data provided by the U.S. Geological Survey: U.S. 
-#' Geological Survey Open-File Report 99-193, 19 p. (Also available at 
+#' Geological Survey Open-File Report 99--193, 19 p. (Also available at 
 #' \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.)
 #' @export
 #' @examples
@@ -66,13 +67,13 @@
 #' axis(1, as.Date(axdates, "%Y-%m-%d"), 
 #'      labels=c("1996", "2000", "2004", "2008", "2012"), cex.axis=0.9)
 cenScatPlot <- function(data, datescol="dates", pname,
-                        qwcols=c("R", "P"), site="", 
+                        qwcols=c("R", "P"), site="", xlabel="",
                         ylabel="Concentration", legpos="topright", 
                         legcex=1, ...) {
   qualcode <- paste(qwcols[1], pname, sep="")
   parameter <- paste(qwcols[2], pname, sep="")
   subdat <- data[ , c(datescol, qualcode, parameter)]
-  plot(subdat[,1], subdat[,3], type="n", xlab="", ylab=ylabel, ...)
+  plot(subdat[,1], subdat[,3], type="n", xlab=xlabel, ylab=ylabel, ...)
   sub1<-subset(subdat, subdat[,2]=="" | subdat[,2]=="_")
   points(sub1[,1], sub1[,3], col="black", pch=16)
   sub2<-subset(subdat, subdat[,2]=="E")

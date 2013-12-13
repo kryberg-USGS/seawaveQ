@@ -21,16 +21,16 @@
 #' qualification information, or remark codes, are in a column labeled 
 #' R04035.  To use this function, the argument pnames would be the unique 
 #' identifier for simazine values and qualifications, 04035, and the 
-#' qwcols arcugement would be c("R", "P") to indicate that the 
+#' qwcols argument would be c("R", "P") to indicate that the 
 #' qualification column starts with an R and the values column starts with 
 #' a P. \cr
 #' Other users may have data in different format that can be 
 #' changed to use with this function.  For example, a user may have
 #' concentration values and qualification codes in one column, such
-#' as a column labled simzaine with the values 0.05, 0.10, <0.01, 
+#' as a column labeled simzaine with the values 0.05, 0.10, <0.01, 
 #' <0.01, and 0.90.  In this case, the less thans and any other 
 #' qualification codes should be placed in a separate column.  The
-#' column names for the qualication codes and the concentration values
+#' column names for the qualification codes and the concentration values
 #' should be the same with the exception of different beginning
 #' letters to indicate which column is which.  The columns could be
 #' named Rsimazine and Psimazine.  Then the argument pnames = "simazine" 
@@ -80,29 +80,29 @@
 #' concentrations.
 #' @format The data frame returned has one row for each parameter analyzed 
 #' and the number of columns depend on the number of continuous ancillary
-#' variables used. The general format is: \cr
+#' variables used. The general format is as follows: \cr
 #' \tabular{lll}{
 #'  pname \tab character \tab Parameter analyzed \cr
 #'  mclass \tab numeric \tab Currently a value of 1 \cr
-#'  jmod \tab numeric \tab The choice of model or pulse input function, an 
-#'  integer 1 through 14. \cr
+#'  jmod \tab numeric \tab The choice of pulse input function, an 
+#'  integer 1--14. \cr
 #'  hlife \tab numeric \tab the model half-life in months, an integer, 1 to 
 #'  4 months \cr
-#'  cmaxt \tab numeric \tab the decimal season of highest concentration \cr
+#'  cmaxt \tab numeric \tab the decimal season of maximum concentration \cr
 #'  scl \tab numeric \tab the scale factor from the 
 #'  \code{survreg.object} \cr
 #'  loglik \tab numeric \tab the log-likelihood for the model \cr
 #'  cint \tab numeric \tab coefficient for model intercept \cr
 #'  cwave \tab numeric \tab coefficient for the seasonal wave \cr
 #'  ctnd \tab numeric \tab coefficient for the trend component of model \cr
-#'  c[alphanumeric] \tab numeric \tab 0 or more columns representing coefficients for 
-#'  the continuous ancillary variables\cr
+#'  c[alphanumeric] \tab numeric \tab 0 or more coefficients for the 
+#'  continuous ancillary variables\cr
 #'  seint \tab numeric \tab standard error for the intercept \cr
 #'  sewave \tab numeric \tab standard error for the seasonal wave \cr
 #'  setnd \tab numeric \tab standard error for the trend \cr
-#'  se[alphanumeric] \tab numeric \tab  0 or more columns representing standard
-#'  errors for the continuous ancillary variables\cr
-#'  pvaltnd is the p-value for the trend line \cr
+#'  se[alphanumeric] \tab numeric \tab  0 or more standard errors for the 
+#'  continuous ancillary variables\cr
+#'  pvaltnd \tab numeric \tab the p-value for the trend line \cr
 #' }
 #' @seealso The functions that \code{fitswavecav} calls internally: \cr
 #' \code{\link{prepData}} and \code{\link{fitMod}}.
@@ -155,9 +155,6 @@
 fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0, 
                         yrend=0, tndbeg=0, tndend=0, iwcav=c("none"), 
                         dcol="dates", qwcols=c("R", "P"), mclass=1) {
-  require(lubridate)
-  require(survival)
-							
   # perform data checks
 							
   dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, 
@@ -208,9 +205,9 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
     # for individual parameters, need to remove missing data
     # cdat columns for trend analysis of single parameter
     matches <- unique (grep(paste(iwcav, collapse="|"), names(cdat)))
-    spcols <- x<-c(1:4, grep(pnames[iipar], names(cdat)), matches )
+    spcols <- c(1:4, grep(pnames[iipar], names(cdat)), matches )
     cdatiipar <- cdat[, spcols]
-    cdatsub <- subset(cdatiipar, !is.na(cdat[, paste(qwcols[2], pnames[iipar],
+    cdatsub <- subset(cdatiipar, !is.na(cdatiipar[, paste(qwcols[2], pnames[iipar],
                                                 sep="")]))
     cencol<-paste(qwcols[1], pnames[iipar], sep="")
     centmp <- cdatsub[, cencol]=='<'
@@ -314,6 +311,8 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
                              paste('se', c('int', 'wave', 'tnd'), 
                                    sep=''), 'pvaltnd')
     }
+    obsdatall$dectime<-round(obsdatall$dectime, digits=3)
+    preddatall$dectime<-round(preddatall$dectime, digits=3)
     fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, predSumAll)
     fitRes
   } else { message("No constituent had 10 or more uncensored values.")}

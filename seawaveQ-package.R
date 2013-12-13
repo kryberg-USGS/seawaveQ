@@ -1,4 +1,4 @@
-#' An R package for the U.S. Geological Survey SEAWAVE-Q model, a 
+#' An R package for the U.S. Geological Survey seawaveQ model, a 
 #' parametric regression model specifically designed for analyzing 
 #' seasonal- and flow-related variability and trends in pesticide 
 #' concentrations.  See Vecchia and others (2008) for the original 
@@ -9,8 +9,8 @@
 #' \tabular{ll}{
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.8.1\cr
-#' Date: \tab 2013-06-13\cr
+#' Version: \tab 1.0.0\cr
+#' Date: \tab 2013--12--13\cr
 #' License: \tab Unlimited | file LICENSE \cr
 #' LazyLoad: \tab yes\cr
 #' }
@@ -27,12 +27,12 @@
 #' @keywords package
 #' @references 
 #'
-#' Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ---An R Package for 
-#' Analyzing Trends in Pesticide Concenterations in Streams with a 
-#' Seasonal Wave (seawave) and Adjustment for Streamflow (Q) and Other 
-#' Ancillary Variables: U.S. Geological Survey Open-File Report 
-#' 2012--1168, 8 p. (Also available at 
-#' \url{http://pubs.usgs.gov/of/2013/XXXX/}.)
+#' Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ--An R package providing 
+#' a model and utilities for analyzing trends in chemical concentrations 
+#' in streams with a seasonal wave (seawave) and adjustment for 
+#' streamflow (Q) and other ancillary variables: U.S. Geological Survey 
+#' Open-File Report 2013--1255, 13 p., with 3 appendixes, 
+#' \url{http://dx.doi.org/10.3133/ofr20131255}.
 #' 
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., Gilliom, R.J., 2010, Trends 
 #' in pesticide concentrations in urban streams in the United States, 

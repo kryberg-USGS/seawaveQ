@@ -9,8 +9,8 @@
 }
 \usage{examplecavmat}
 \keyword{datasets}
-\format{A matrix containing 115 30-day and 1-day streamflow anomalies (
-  Ryberg and Vecchia, 2012).
+\format{A matrix containing 115 30-day and 1-day streamflow anomalies 
+  (Ryberg and Vecchia, 2012).
   \tabular{lll}{
    flowa30 \tab numeric \tab 30-day streamflow anomaly \cr
    flowa1 \tab numeric \tab 1-day streamflow anomaly \cr
