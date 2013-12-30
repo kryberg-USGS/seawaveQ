@@ -41,7 +41,7 @@ package.skeleton(name="seawaveQ",force=TRUE,
 roxygenize("seawaveQ",roxygen.dir="seawaveQ",copy.package=FALSE)
 system("cp DESCRIPTION ./seawaveQ/.")
 system("cp NEWS ./seawaveQ/.")
-system("cp LICENSE ./seawaveQ")
+system("cp LICENSE.note ./seawaveQ")
 system("cp *.Rd ./seawaveQ/man/.")
 system("mkdir ./seawaveQ/data")
 system("mkdir ./seawaveQ/man/figures")

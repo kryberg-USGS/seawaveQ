@@ -115,21 +115,21 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
   ipktpr[ipktpr==0] <- 1
   wavestpr <- wavexx[ipktpr]
   intcptpr <- rep(1, length(wavestpr))
-  xxxmat <- cbind(intcpt, wavest, tndlin)
+  xmat <- cbind(intcpt, wavest, tndlin)
   if(length(cdatsub[1,]) > 6) {
-    xxxmat <- cbind(xxxmat, cavmat)
+    xmat <- cbind(xmat, cavmat)
     cavmatpr <- as.matrix(cavdat[, 5:length(cavdat[1,])])
   }
-  xxxmatpr <- cbind(intcptpr, wavestpr, tndlinpr)
+  xmatpr <- cbind(intcptpr, wavestpr, tndlinpr)
   if(length(cdatsub[1,]) > 6) {
-    xxxmatpr <- cbind(xxxmatpr, cavmatpr)
+    xmatpr <- cbind(xmatpr, cavmatpr)
   }
-  partmp <- stpars[1, 5:(5 + length(xxxmat[1,]) - 1)]
-  fitadjx02 <- xxxmatpr %*% partmp
-  fitadjx12 <- as.matrix( partmp[1] * xxxmatpr[, 1] + partmp[3] * 
-                            xxxmatpr[, 3])
-  cresx02 <- clog - xxxmat %*% partmp
-  fitadjxdat <- xxxmat %*% partmp
+  partmp <- stpars[1, 5:(5 + length(xmat[1,]) - 1)]
+  fitadjx02 <- xmatpr %*% partmp
+  fitadjx12 <- as.matrix( partmp[1] * xmatpr[, 1] + partmp[3] * 
+                            xmatpr[, 3])
+  cresx02 <- clog - xmat %*% partmp
+  fitadjxdat <- xmat %*% partmp
   scltmp2 <- stpars[1, 3]
   cresx02std <- (cresx02) / scltmp2
   ncenx <- sum(centmp)

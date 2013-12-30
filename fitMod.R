@@ -92,9 +92,9 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   aovout <- vector('list', 1)
   aicout <- vector('list', 2)
   bicout <- vector('list', 2)
-  # parxxx and aovtmp are temporary objects to store results 
+  # parx and aovtmp are temporary objects to store results 
   # for 56 model possibilities
-  parxxx <- matrix(nrow=56, ncol=5 + 2 * (nexvars + 1))
+  parx <- matrix(nrow=56, ncol=5 + 2 * (nexvars + 1))
   aovtmp <- vector('list', 56)
   aictmp <- vector('list', 56)
   bictmp <- vector('list', 56)
@@ -114,21 +114,21 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       wavestpr <- awave[ipkt]
       indcen <- !centmp
       intcpt <- rep(1, length(wavest))
-      xxxmat <- cbind(intcpt, wavest, tndlin)
+      xmat <- cbind(intcpt, wavest, tndlin)
       if (length(cdatsub[1,]) > 6) { 
-        xxxmat <- cbind(xxxmat, cavmat) 
+        xmat <- cbind(xmat, cavmat) 
       }
-      nctmp <- length(xxxmat[1,])
+      nctmp <- length(xmat[1,])
       clogtmp <- clog
         
       # requires survival package
       tmpouta <- survreg(Surv(time=clogtmp, time2=indcen, 
-                              type='left') ~ xxxmat - 1, 
+                              type='left') ~ xmat - 1, 
                          dist='gaussian')
-      parxxx[j2,] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
+      parx[j2,] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
                        tmpouta$coef, 
                        summary(tmpouta)$table[1:nctmp, 2], 
-                       summary(tmpouta)$table["xxxmattndlin", 4]) 
+                       summary(tmpouta)$table["xmattndlin", 4]) 
       aovtmp[[j2]] <- summary(tmpouta)
       aictmp[[j2]] <- extractAIC(tmpouta)[2]
       bictmp[[j2]] <- extractAIC(tmpouta, 
@@ -137,14 +137,14 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
     }
   }
   # find largest likelihood (smallest negative likelihood)
-  likxxx <- (-parxxx[,4])
+  likx <- (-parx[,4])
   # eliminate models with negative coefficient for the seasonal wave
-  likxxx[parxxx[,6]<0] <- NA
+  likx[parx[,6]<0] <- NA
   # add 1 to likelihood for double humps (changed to zero for now)
-  likxxx[25:56] <- likxxx[25:56] + 0
-  # pckone <- order(likxxx)[1]
-  pckone <- order(likxxx)[1]
-  stpars[1,] <- c(parxxx[pckone,], cmaxt)
+  likx[25:56] <- likx[25:56] + 0
+  # pckone <- order(likx)[1]
+  pckone <- order(likx)[1]
+  stpars[1,] <- c(parx[pckone,], cmaxt)
   aovout[[1]] <- aovtmp[[pckone]]
   aicout[[1]] <- aictmp[[pckone]]
   bicout[[1]] <- bictmp[[pckone]]
