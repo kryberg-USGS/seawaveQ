@@ -1,0 +1,62 @@
+\name{compwaveconv}
+\alias{compwaveconv}
+\title{Seasonal Wave Computation}
+\usage{
+  compwaveconv(cmaxt, jmod, hlife, mclass = 1)
+}
+\arguments{
+  \item{cmaxt}{is the time of the maximum chemical
+  concentration, decimal time in years.}
+
+  \item{jmod}{is the choice of model or pulse input
+  function, an integer 1 through 14.}
+
+  \item{hlife}{is the model half-life in months, 1 to 4
+  months}
+
+  \item{mclass}{has not been implemented yet, but will
+  provide additional model options.}
+}
+\value{
+  a numeric vector of size 361 with discrete values of the
+  seasonal wave for decimal season \code{seq(0,1,1/360)}.
+}
+\description{
+  Function to compute seasonal wave.
+}
+\note{
+  The seasonal wave is a dimensionless, periodic function
+  of time with an annual cycle, similar to a mixture of
+  sine and cosine functions often used to model seasonality
+  in concentration data. However, the seasonal wave is
+  better suited for modeling seasonal behavior of pesticide
+  data than a mixture of sines and cosines. The pulse input
+  function, represented by jmod, has either one or two
+  distinct application seasons (when pesticides may be
+  transported to the stream) of lengths from 1 to 6 months.
+  Therefore, 56 (14x4) choices for the wave function are
+  available. The numeric vector is a discrete approximation
+  of the continuous wave function defined on the interval 0
+  to 1.
+}
+\examples{
+# evaluate seasonal wave for specified decimal seasons
+# these example decimal dates represent days at points 0.25, 0.5, and
+# 0.75 percent of the way through the year and the end of the year
+dseas <- c(0.25, 0.5, 0.75, 1)
+swave <- compwaveconv(cmaxt=0.483, jmod=2, hlife=4, mclass=1)
+swave[floor(360 * dseas)]
+plot(seq(0,1,1/360),swave, typ="l")
+}
+\author{
+  Aldo V. Vecchia
+}
+\references{
+  Vecchia, A.V., Martin, J.D. and Gilliom, R.J., 2008,
+  Modeling variability and trends in pesticide
+  concentrations in streams: JAWRA Journal of the American
+  Water Resources Association, v. 44, p. 1308--1324,
+  \url{http://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
+}
+\keyword{datagen}
+

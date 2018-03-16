@@ -1,0 +1,8 @@
+export(cenScatPlot)
+export(combineData)
+export(compwaveconv)
+export(fitMod)
+export(fitswavecav)
+export(prepData)
+export(rosBoxPlot)
+export(seawaveQPlots)
