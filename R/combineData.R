@@ -38,8 +38,8 @@
 #' @export
 #' @examples
 #' data(swData)
-#' MoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha, 
-#' qwcols=c("staid", "dates", "R", "P"))
+#' MoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha, 
+#' qwcols = c("staid", "dates", "R", "P"))
 
 combineData <- function(qwdat, cqwdat, 
                         qwcols=c("staid", "dates", "R", "P")) {
