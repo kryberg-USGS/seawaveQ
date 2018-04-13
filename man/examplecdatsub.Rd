@@ -10,7 +10,7 @@
 \usage{examplecdatsub}
 \keyword{datasets}
 \format{
-  A data frame containing 115 observations of 10 variables.  The date variables
+  A data frame containing 115 observations of 8 variables.  The date variables
   were internally calculated.  The columns R04041 and P04041 are a subset of 
   \code{\link{qwMoRivOmaha}} and the 30-day and 1-day streamflow and sediment anomalies 
   are a subset of \code{\link{cqwMoRivOmaha}}.
@@ -35,10 +35,10 @@
 }
 \source{Internal data captured from the following function call:
 \preformatted{fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha, 
-                       tanm="myexample", pnames=c("04041"), yrstart=1995, 
-                       yrend=2003, tndbeg=1995, tndend=2003, 
-                       iwcav=c("flowa30","flowa1"), dcol="dates", 
-                       qwcols=c("R","P"))}
+                       tanm = "myexample", pnames = c("04041"), yrstart = 1995, 
+                       yrend = 2003, tndbeg = 1995, tndend = 2003, 
+                       iwcav = c("flowa30", "flowa1"), dcol = "dates", 
+                       qwcols = c("R", "P"))}
 }
 
 
