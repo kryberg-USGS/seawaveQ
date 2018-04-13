@@ -48,7 +48,7 @@
 #' detection levels and some considerations for interpretations of 
 #' water-quality data provided by the U.S. Geological Survey: U.S. 
 #' Geological Survey Open-File Report 99--193, 19 p.,
-#' \url{http://water.usgs.gov/owq/OFR_99-193/index.html}
+#' \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.
 #' @export
 #' @examples
 #' data(swData)
