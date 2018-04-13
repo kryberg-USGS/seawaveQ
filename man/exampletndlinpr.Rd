@@ -18,10 +18,10 @@ data(swData)
 head(exampletndlinpr)
 }
 \source{Internal data captured from the following function call:
-\preformatted{fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha, 
-                       tanm="myexample", pnames=c("04041"), yrstart=1995, 
-                       yrend=2003, tndbeg=1995, tndend=2003, 
-                       iwcav=c("flowa30","flowa1"), dcol="dates", 
-                       qwcols=c("R","P"))}
+\preformatted{fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+                       tanm = "myexample", pnames = c("04041"), yrstart = 1995, 
+                       yrend = 2003, tndbeg = 1995, tndend = 2003, 
+                       iwcav = c("flowa30", "flowa1"), dcol = "dates", 
+                       qwcols = c("R", "P"))}
 }
 
