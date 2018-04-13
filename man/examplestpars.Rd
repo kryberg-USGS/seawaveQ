@@ -13,7 +13,7 @@
    column  description\cr
    1  mclass, model class has not been implemented yet and is equal to 1\cr
    2  model chosen (a number 1-56), this number represents both the pulse input function and the half-life\cr
-   3  is the scale factor from the \code{survreg.object}
+   3  is the scale factor from the \code{survreg.object} \cr
    4  is the likelihood for the model chosen\cr
    5  is the coefficient for the model intercept \cr
    6  is the coefficient for the seasonal wave component of the model \cr
@@ -37,11 +37,11 @@
 }
 \source{
   Internal data captured from the following function call:
- \preformatted{fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha, 
-                       tanm="myexample", pnames=c("04041"), yrstart=1995, 
-                       yrend=2003, tndbeg=1995, tndend=2003, 
-                       iwcav=c("flowa30","flowa1"), dcol="dates", 
-                       qwcols=c("R","P"))}
+ \preformatted{fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+                       tanm = "myexample", pnames = c("04041"), yrstart = 1995, 
+                       yrend = 2003, tndbeg = 1995, tndend = 2003, 
+                       iwcav = c("flowa30", "flowa1"), dcol = "dates", 
+                       qwcols = c("R", "P"))}
 }
 
 
