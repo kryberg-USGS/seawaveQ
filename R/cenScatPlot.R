@@ -53,39 +53,39 @@
 #' @examples
 #' data(swData)
 #' # scatter plot of Simazine concentrations
-#' cenScatPlot(IllRivValleyCty, pname="04035")
+#' cenScatPlot(IllRivValleyCty, pname = "04035")
 #' # scatter plot with many additional plotting arguments
-#' par(las=1, tcl=0.5)
-#' cenScatPlot(IllRivValleyCty, pname="04035", 
-#'             site="05586100 Illinois River at Valley City, IL",
-#'             ylabel="Simazine concentration, in micrograms per liter", 
-#'             legcex=0.7, ylim=c(0,0.4), yaxs="i", cex.lab=0.9, 
-#'             cex.axis=0.9, xlim=c(as.Date("1996-01-01", "%Y-%m-%d"), 
-#'             as.Date("2012-01-01", "%Y-%m-%d")), xaxs="i", xaxt="n")
-#' axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
+#' par(las = 1, tcl = 0.5)
+#' cenScatPlot(IllRivValleyCty, pname = "04035", 
+#'             site = "05586100 Illinois River at Valley City, IL",
+#'             ylabel = "Simazine concentration, in micrograms per liter", 
+#'             legcex = 0.7, ylim = c(0,0.4), yaxs = "i", cex.lab = 0.9, 
+#'             cex.axis = 0.9, xlim = c(as.Date("1996-01-01", "%Y-%m-%d"), 
+#'             as.Date("2012-01-01", "%Y-%m-%d")), xaxs = "i", xaxt = "n")
+#' axdates <- c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
 #'            "2012-01-01")
 #' axis(1, as.Date(axdates, "%Y-%m-%d"), 
-#'      labels=c("1996", "2000", "2004", "2008", "2012"), cex.axis=0.9)
-cenScatPlot <- function(data, datescol="dates", pname,
-                        qwcols=c("R", "P"), site="", xlabel="",
-                        ylabel="Concentration", legpos="topright", 
-                        legcex=1, ...) {
-  qualcode <- paste(qwcols[1], pname, sep="")
-  parameter <- paste(qwcols[2], pname, sep="")
+#'      labels = c("1996", "2000", "2004", "2008", "2012"), cex.axis = 0.9)
+cenScatPlot <- function(data, datescol = "dates", pname,
+                        qwcols = c("R", "P"), site = "", xlabel = "",
+                        ylabel = "Concentration", legpos = "topright", 
+                        legcex = 1, ...) {
+  qualcode <- paste(qwcols[1], pname, sep = "")
+  parameter <- paste(qwcols[2], pname, sep = "")
   subdat <- data[ , c(datescol, qualcode, parameter)]
-  plot(subdat[,1], subdat[,3], type="n", xlab=xlabel, ylab=ylabel, ...)
-  sub1<-subset(subdat, subdat[,2]=="" | subdat[,2]=="_")
-  points(sub1[,1], sub1[,3], col="black", pch=16)
-  sub2<-subset(subdat, subdat[,2]=="E")
-  points(sub2[,1], sub2[,3], col="green", pch=8)
-  sub3<-subset(subdat, subdat[,2]=="<")
-  points(sub3[,1], sub3[,3], col="red")
+  plot(subdat[,1], subdat[,3], type = "n", xlab = xlabel, ylab = ylabel, ...)
+  sub1 <- subset(subdat, subdat[,2] == "" | subdat[,2] == "_")
+  points(sub1[,1], sub1[,3], col = "black", pch = 16)
+  sub2 <- subset(subdat, subdat[,2] == "E")
+  points(sub2[,1], sub2[,3], col = "green", pch = 8)
+  sub3 <- subset(subdat, subdat[,2] == "<")
+  points(sub3[,1], sub3[,3], col = "red")
   leg.txt <- c("Quantified concentrations", "Estimated concentrations",
                "Censored concentrations, less thans")
   
-  legend(legpos, leg.txt, col=c("black", "green", "red"), 
-         pch=c(16, 8, 1), cex=legcex, bty="n")
-  if (nchar(site)>=1) {
-    title(main=site)
+  legend(legpos, leg.txt, col = c("black", "green", "red"), 
+         pch = c(16, 8, 1), cex = legcex, bty = "n")
+  if (nchar(site) >= 1) {
+    title(main = site)
   }
 }
