@@ -10,7 +10,7 @@
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
 #' Version: \tab 1.0.0\cr
-#' Date: \tab 2013--12--12\cr
+#' Date: \tab 2013--12--15\cr
 #' License: \tab Unlimited | file LICENSE \cr
 #' LazyLoad: \tab yes\cr
 #' }
