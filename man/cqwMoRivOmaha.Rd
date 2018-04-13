@@ -31,7 +31,7 @@
   data(swData)
   
   # summary of water-quality concentrations
-  apply(cqwMoRivOmaha[,3:8], 2, summary)
+  apply(cqwMoRivOmaha[, 3:8], 2, summary)
 }
 \source{Data provided by Patrick Phillips, U.S. Geological Survey,
         New York Water Science Center.}
