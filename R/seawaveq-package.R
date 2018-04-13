@@ -27,6 +27,17 @@
 #' @keywords package
 #' @references 
 #'
+#' Oelsner, G.P., Sprague, L.A., Murphy, J.C., Zuellig, R.E., Johnson, H.M., 
+#' Ryberg, K.R., Falcone, J.A., Stets, E.G., Vecchia, A.V., Riskin, M.L., 
+#' De Cicco, L.A., Mills, T.J., and Farmer, W.H., 2017, Water-quality trends 
+#' in the nation’s rivers and streams, 1972–2012—Data preparation, statistical 
+#' methods, and trend results: U. S. Geological Survey Scientific Investigations 
+#' Report 2017–5006, 136 p., http://pubs.er.usgs.gov/publication/sir20175006.
+#'
+#' Ryberg, K.R., and Gilliom, R.J., 2015, Trends in pesticide concentrations 
+#' and use for major rivers of the United States: Science of The Total Environment, 
+#' v. 538, p. 431–444, https://doi.org/10.1016/j.scitotenv.2015.06.095.
+#'
 #' Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ--An R package providing 
 #' a model and utilities for analyzing trends in chemical concentrations 
 #' in streams with a seasonal wave (seawave) and adjustment for 
@@ -43,6 +54,11 @@
 #' J.D., 2009, Trends in pesticide concentrations in corn-belt streams, 
 #' 1996-2006: U.S. Geological Survey Scientific Investigations Report 
 #' 2009-5132, 75 p. \url{http://pubs.usgs.gov/sir/2009/5132/}.
+#' 
+#' Ryberg, K.R., Vecchia, A.V., Gilliom, R.J., and Martin, J.D., 2014, 
+#' Pesticide trends in major rivers of the United States, 1992-2010: 
+#' U.S. Geological Survey Scientific Investigations Report 2014–5135, 
+#' 74 p., accessed at http://pubs.er.usgs.gov/publication/sir20145135.
 #' 
 #' Vecchia, A.V., Gilliom, R.J., Sullivan, D.J., Lorenz, D.L., and 
 #' Martin, J.D., 2009, Trends in concentrations and use of agricultural 
