@@ -6,10 +6,10 @@ analysis}
 and the number of columns depend on the number of continuous ancillary
 variables used. The general format is as follows: \cr
 \tabular{lll}{
- pname \tab character \tab Parameter analyzed \cr
- mclass \tab numeric \tab Currently a value of 1 \cr
- jmod \tab numeric \tab The choice of pulse input function, an
- integer 1--14. \cr
+ pname \tab character \tab parameter analyzed \cr
+ mclass \tab numeric \tab currently a value of 1 \cr
+ jmod \tab numeric \tab the choice of pulse input function, an
+ integer 1--14 \cr
  hlife \tab numeric \tab the model half-life in months, an integer, 1 to
  4 months \cr
  cmaxt \tab numeric \tab the decimal season of maximum concentration \cr
@@ -111,10 +111,10 @@ variables used. The general format is as follows: \cr
   laboratory analysis indicated that the concentration was
   less than 0.01 micrograms per liter.  The USGS parameter
   code for simazine is 04035 (U.S. Geological Survey,
-  2013b).  When the data are retrieved through the National
+  2018b).  When the data are retrieved through the National
   Water Information System: Web Interface
   (\url{http://waterdata.usgs.gov/nwis}; U.S. Geological
-  Survey, 2013a), the concentration values are in a column
+  Survey, 2018a), the concentration values are in a column
   labeled P04035 and the qualification information, or
   remark codes, are in a column labeled R04035.  To use
   this function, the argument pnames would be the unique
@@ -175,17 +175,15 @@ head(myfit1[[5]])
   Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom,
   R.J., 2010, Trends in pesticide concentrations in urban
   streams in the United States, 1992--2008: U.S. Geological
-  Survey Scientific Investigations Report 2010-5139, 101 p.
-  (Also available at
-  \url{http://pubs.usgs.gov/sir/2010/5139/}.)
+  Survey Scientific Investigations Report 2010-5139, 101 p., \url{http://pubs.usgs.gov/sir/2010/5139/}.
 
-  U.S. Geological Survey, 2013a, National Water Information
-  System: Web Interface, accessed Febaruary 26, 2013, at
+  U.S. Geological Survey, 2018a, National Water Information
+  System: Web Interface, accessed April 20, 2018, at
   \url{http://waterdata.usgs.gov}.
 
-  U.S. Geological Survey, 2013b, Parameter code definition:
+  U.S. Geological Survey, 2018b, Parameter code definition:
   National Water Information System: Web Interface,
-  accessed Febaruary 26, 2013, at
+  accessed April 20, 2018, at
   \url{http://nwis.waterdata.usgs.gov/usa/nwis/pmcodes}.
 
   Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008,
