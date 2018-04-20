@@ -142,20 +142,20 @@ variables used. The general format is as follows: \cr
 }
 \examples{
 data(swData)
-modMoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
-myfit1 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit1", pnames=c("04035", "04037", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1"),
-dcol="dates", qwcols=c("R","P"))
+modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
+myfit1 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
+tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995,
+yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"),
+dcol = "dates", qwcols = c("R", "P"))
  \dontrun{
-myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit2", pnames=c("04035", "04037", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30","seda1"),
-dcol="dates", qwcols=c("R","P"))
-myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit3", pnames=c("04035", "04037", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1",
-"seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
+myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
+tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995,
+yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"),
+dcol = "dates", qwcols = c("R", "P"))
+myfit3 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
+tanm = "myfit3", pnames = c("04035", "04037", "04041"), yrstart = 1995,
+yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1",
+"seda30", "seda1"), dcol = "dates", qwcols = c("R", "P"))
 }
 # trend model results
 myfit1[[1]]
