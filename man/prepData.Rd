@@ -29,7 +29,7 @@
 
   \item{iwcav}{is a character variable indicating which
   continuous ancillary variables to include, if none use
-  iwcav=c("none").}
+  iwcav = c("none").}
 
   \item{qwcols}{is a character vector with the beginning of
   the column headers for remarks code (default is R), and
@@ -54,10 +54,10 @@
 }
 \examples{
 data(swData)
-modMoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
-preppedDat <- prepData(modMoRivOmaha, cqwMoRivOmaha, yrstart=1995,
-yrend=2003, dcol="dates", pnames=c("04035", "04037", "04041"),
-iwcav=c("flowa30","flowa1"), qwcols=c("R","P"))
+modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
+preppedDat <- prepData(modMoRivOmaha, cqwMoRivOmaha, yrstart = 1995,
+yrend = 2003, dcol = "dates", pnames = c("04035", "04037", "04041"),
+iwcav = c("flowa30", "flowa1"), qwcols = c("R", "P"))
 }
 \author{
   Aldo V. Vecchia and Karen R. Ryberg
