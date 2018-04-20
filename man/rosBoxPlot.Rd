@@ -91,7 +91,7 @@ axis(2,
   Helsel, D.R., 2005, Nondetects and data analysis: New
   York, John Wiley and Sons.
 
-  Lee, Lopaka, 2012, Nondetects and data analysis for
+  Lee, Lopaka, 2013, Nondetects and data analysis for
   environmental data: R package version 1.5-4,
   \url{http://CRAN.R-project.org/package=NADA}.
 
