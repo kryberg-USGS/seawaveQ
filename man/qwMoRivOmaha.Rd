@@ -226,6 +226,13 @@
 \source{Data provided by Patrick Phillips, U.S. Geological Survey,
         New York Water Science Center.}
 \references{
+  Helsel, D.R., 2005, Nondetects and data analysis: New
+  York, John Wiley and Sons.
+
+  Lee, Lopaka, 2013, Nondetects and data analysis for
+  environmental data: R package version 1.5-4,
+  \url{http://CRAN.R-project.org/package=NADA}.
+  
   Oblinger Childress, C.J., Foreman, W.T., Connor, B.F., and Maloney, T.J.,
   1999, New reporting procedures based on long-term method detection levels
   and some considerations for interpretations of water-quality data provided
