@@ -58,8 +58,8 @@
 \examples{
 data(swData)
 myRes <- fitMod(cdatsub=examplecdatsub, cavdat=examplecavdat,
-yrstart=1995, yrend=2003, tndbeg=1995, tndend=2003, tanm="myfit3",
-pnames=c("04041"), qwcols=c("R", "P"))
+yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3",
+pnames = c("04041"), qwcols = c("R", "P"))
 }
 \author{
   Aldo V. Vecchia and Karen R. Ryberg
