@@ -22,7 +22,7 @@
   \if{latex}{\figure{05586100EPTC.pdf}{EPTC concentrations in the
   Illinois River at Valley City, Ill.} \cr}
   Boxplot of data using regression on order statistics (Helsel, 2005; Lee, 
-  2010) to estimate censored values.
+  2013) to estimate censored values.
   \if{html}{\figure{05586100BoxPlots.png}{Boxplots of chemical concentrations 
   in the Illinois River at Valley City, Ill.} \cr}
   \if{latex}{\figure{05586100BoxPlots.pdf}{Boxplots of chemical concentrations 
