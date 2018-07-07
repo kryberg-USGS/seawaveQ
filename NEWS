@@ -1,3 +1,8 @@
+Version 2.0.0
+*************
+Minor updates to documentation. Addition of a model option with
+restriced cubic splines and update of vignette.
+
 Version 1.0.0
 *************
 This is the first publicly available version of seawaveQ.
