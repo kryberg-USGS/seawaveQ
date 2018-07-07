@@ -43,6 +43,9 @@
 #' myRes <- fitMod(cdatsub=examplecdatsub, cavdat=examplecavdat, 
 #' yrstart=1995, yrend=2003, tndbeg=1995, tndend=2003, tanm="myfit3", 
 #' pnames=c("04041"), qwcols=c("R", "P"))
+#' @references
+#' Allison, P.D. 1995: Survival analysis using the SAS system---A 
+#' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
                    pnames, qwcols, mclass=1) {
   yr <- cdatsub[[1]]
@@ -140,7 +143,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   likx <- (-parx[,4])
   # eliminate models with negative coefficient for the seasonal wave
   likx[parx[,6]<0] <- NA
-  # add 1 to likelihood for double humps (changed to zero for now)
+  # This could be used to penalize models with two seasons of application
   likx[25:56] <- likx[25:56] + 0
   # pckone <- order(likx)[1]
   pckone <- order(likx)[1]
@@ -148,6 +151,13 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   aovout[[1]] <- aovtmp[[pckone]]
   aicout[[1]] <- aictmp[[pckone]]
   bicout[[1]] <- bictmp[[pckone]]
+  
+  # generalized r-squared statistic based on  the likelihood-ratio test
+  # see Allison (1995, pp. 247-249)
+  # Allison, Paul D. 1995. Survival Analysis Using the SAS System: 
+  # A Practical Guide. Cary, NC: SAS Institute Inc.
+  lrt <- -2 * aovout[[1]]$loglik[1] - (-2 * aovout[[1]]$loglik[2])
+  r2 <- round(1 - exp(-lrt / aovout[[1]]$n), digits = 2)
   
   regCallFile <- paste(tanm, "_survregCall.txt", sep="")
   resmsg<-paste("Final model survreg results saved to ", regCallFile, ".", 
@@ -162,10 +172,11 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       "\n", si$platform, 
       "\n\nFinal model survreg results for ", pnames, sep="")
   print(aovout[[1]])
-  cat("AIC (Akaike's An Information Criterion) is: ", aicout[[1]], "\n", 
-      sep=" ")
-  cat("BIC (Bayesian Information Criterion) is: ", bicout[[1]], "\n", 
-      sep=" ")
+  cat("Generalized r-squared is: ", r2, "\n", sep = " ")
+  cat("AIC (Akaike's An Information Criterion) is: ", round(aicout[[1]], digits = 2), 
+      "\n", sep = " ")
+  cat("BIC (Bayesian Information Criterion) is: ", round(bicout[[1]], digits = 2), 
+      "\n", sep = " ")
   jmod <- floor((stpars[1, 2] - 1) / 4) + 1
   hlife <- stpars[1, 2] - (jmod - 1) * 4
   cat("Model class is ", mclass, "\nPulse input function is ", jmod,
