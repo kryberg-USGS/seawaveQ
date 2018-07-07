@@ -3,7 +3,9 @@
 #' Fits the seawaveQ model (Vecchia and others, 2008) using a seasonal 
 #' wave and continuous ancillary variables (streamflow anomalies and other 
 #' continuous variables such as conductivity or sediment) to model water 
-#' quality.
+#' quality. The version in the 2.0.0 update to the R package has an
+#' option to use restricted cubic splines as a more flexible definition
+#' of the temporal trend.
 #' @name fitswavecav
 #' @title Fit seasonal wave and continuous ancillary data for trend 
 #' analysis
@@ -66,9 +68,14 @@
 #' @param qwcols is a character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param mclass has not been implemented yet but will provide
-#' additional model options.
-#' @keywords models regression ts survival
+#' @param mclass indicates the class on model one wants to use.
+#' A class 1 model is the the traditional SEAWAVE-Q model that has a
+#' linear time tredn. A class 2 model is a newer option for longer
+#' trend periods that uses a set of restricted cubic splines on the 
+#' time variable to provide a more flexible model. 
+#' @param numk is the number of knots in the restricted cubic spline model.
+#' The default is 4, and the recommended number is 3--7.
+#' @keywords models regression ts survival multivariate
 #' @return a pdf file containing plots of the data and modeled 
 #' concentration, a text file containing a summary of the survival 
 #' regression call for each model selected, and a list.  The first element
@@ -78,12 +85,12 @@
 #' The fourth element is the concentration data predicted by the model.  
 #' The fifth element provides summary statistics for the predicted 
 #' concentrations.
-#' @format The data frame returned has one row for each parameter analyzed 
+#' @format The data frame returned has one row for each chemical analyzed 
 #' and the number of columns depend on the number of continuous ancillary
 #' variables used. The general format is as follows: \cr
 #' \tabular{lll}{
 #'  pname \tab character \tab Parameter analyzed \cr
-#'  mclass \tab numeric \tab Currently a value of 1 \cr
+#'  mclass \tab numeric \tab A value of 1 or 2\cr
 #'  jmod \tab numeric \tab The choice of pulse input function, an 
 #'  integer 1--14. \cr
 #'  hlife \tab numeric \tab the model half-life in months, an integer, 1 to 
@@ -94,15 +101,15 @@
 #'  loglik \tab numeric \tab the log-likelihood for the model \cr
 #'  cint \tab numeric \tab coefficient for model intercept \cr
 #'  cwave \tab numeric \tab coefficient for the seasonal wave \cr
-#'  ctnd \tab numeric \tab coefficient for the trend component of model \cr
+#'  ctnd[alpahnumeric] \tab numeric \tab coefficient(s) for the trend component(s) of model \cr
 #'  c[alphanumeric] \tab numeric \tab 0 or more coefficients for the 
 #'  continuous ancillary variables\cr
 #'  seint \tab numeric \tab standard error for the intercept \cr
 #'  sewave \tab numeric \tab standard error for the seasonal wave \cr
-#'  setnd \tab numeric \tab standard error for the trend \cr
+#'  setnd[alphanumeric] \tab numeric \tab standard error for the trend component(s) \cr
 #'  se[alphanumeric] \tab numeric \tab  0 or more standard errors for the 
 #'  continuous ancillary variables\cr
-#'  pvaltnd \tab numeric \tab the p-value for the trend line \cr
+#'  pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
 #' }
 #' @seealso The functions that \code{fitswavecav} calls internally: \cr
 #' \code{\link{prepData}} and \code{\link{fitMod}}.
@@ -110,19 +117,19 @@
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @examples
 #' data(swData)
-#' modMoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
-#' myfit1 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha, 
-#' tanm="myfit1", pnames=c("04035", "04037", "04041"), yrstart=1995, 
-#' yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1"), 
-#' dcol="dates", qwcols=c("R","P"))
-#' myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha, 
-#' tanm="myfit2", pnames=c("04035", "04037", "04041"), yrstart=1995, 
-#' yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30","seda1"), 
-#' dcol="dates", qwcols=c("R","P"))
-#' myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha, 
-#' tanm="myfit3", pnames=c("04035", "04037", "04041"), yrstart=1995, 
-#' yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1", 
-#' "seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
+#' modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
+#' myfit1 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+#' tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+#' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
+#' dcol = "dates", qwcols = c("R", "P"))
+#' myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+#' tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+#' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"), 
+#' dcol = "dates", qwcols = c("R", "P"))
+#' myfit3 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+#' tanm = "myfit3", pnames=c("04035", "04037", "04041"), yrstart = 1995, 
+#' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1", 
+#' "seda30", "seda1"), dcol = "dates", qwcols = c("R","P"))
 #' # trend model results
 #' myfit3[[1]]
 #' # example regression call
@@ -137,183 +144,255 @@
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 #' Trends in pesticide concentrations in urban streams in the United 
 #' States, 1992--2008: U.S. Geological Survey Scientific Investigations 
-#' Report 2010-5139, 101 p. (Also available at 
-#' \url{http://pubs.usgs.gov/sir/2010/5139/}.)
+#' Report 2010-5139, 101 p., \url{http://pubs.usgs.gov/sir/2010/5139/}.
 #'
-#' U.S. Geological Survey, 2013a, National Water Information System: 
-#' Web Interface, accessed Febaruary 26, 2013, at
-#' \url{http://waterdata.usgs.gov}.
+#' U.S. Geological Survey, 2018a, National Water Information System: 
+#' Web Interface, accessed July 7, 2018, at
+#' \url{https://waterdata.usgs.gov/nwis}.
 #' 
-#' U.S. Geological Survey, 2013b, Parameter code definition: National 
-#' Water Information System: Web Interface, accessed Febaruary 26, 2013,
-#' at \url{http://nwis.waterdata.usgs.gov/usa/nwis/pmcodes}.
+#' U.S. Geological Survey, 2018b, Parameter code definition: National 
+#' Water Information System: Web Interface, accessed July 18, 2018,
+#' at \url{https://nwis.waterdata.usgs.gov/usa/nwis/pmcodes}.
 #' 
 #' Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008, Modeling 
 #' variability and  trends in pesticide concentrations in streams: 
 #' Journal of the American Water Resources Association, v. 44, no. 5, p. 
 #' 1308-1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
 fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0, 
-                        yrend=0, tndbeg=0, tndend=0, iwcav=c("none"), 
-                        dcol="dates", qwcols=c("R", "P"), mclass=1) {
-  # perform data checks
+			yrend=0, tndbeg=0, tndend=0, iwcav=c("none"), 
+			dcol="dates", qwcols=c("R", "P"), mclass=1, 
+			numk = 4) {
+  require(lubridate)
+  # perform data checks and check arguments
 							
-  dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, 
-            greater than or equal to 0.")
-  if (!is.numeric(c(yrstart, yrend, tndbeg, tndend))) stop(dtmes)
-  if ( yrstart < 0 | yrend < 0 | tndbeg < 0 | tndend < 0 ) stop(dtmes)
-  if(yrstart > yrend) {yrstart <- 0; yrend <- 0}
-  if(tndbeg > tndend) { tndbeg <- 0; tndend <- 0}
-  
-  # year function is from the lubridate package
-  if(yrstart != 0) { 
-    yrstart <- max(yrstart, year(min(cavdat[,dcol])))
+  dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, \n 
+             greater than or equal to 0.")
+  if (!is.numeric(c(yrstart, yrend, tndbeg, tndend))) 
+    stop(dtmes)
+  if (yrstart < 0 | yrend < 0 | tndbeg < 0 | tndend < 0) 
+    stop(dtmes)
+  if (yrstart > yrend) {
+    yrstart <- 0
+    yrend <- 0
   }
-  if(yrstart == 0) { yrstart <- min(year(cavdat[, dcol])) }
-  if(yrend != 0) { 
+  if (tndbeg > tndend) {
+    tndbeg <- 0
+    tndend <- 0
+  }
+  if (yrstart != 0) {
+    yrstart <- max(yrstart, year(min(cavdat[, dcol])))
+  }
+  if (yrstart == 0) {
+    yrstart <- min(year(cavdat[, dcol]))
+  }
+  if (yrend != 0) {
     yrend <- min(yrend, year(max(cavdat[, dcol]))) + 1
   }
-  if(yrend == 0) { yrend <- year(max(cavdat[, dcol])) + 1 }
-  if(tndbeg == 0) {tndbeg <- yrstart}
-  if(tndend == 0) {tndend <- yrend}
-  
+  if (yrend == 0) {
+    yrend <- year(max(cavdat[, dcol])) + 1
+  }
+  if (tndbeg == 0) {
+    tndbeg <- yrstart
+  }
+  if (tndend == 0) {
+    tndend <- yrend
+  }
   dtmsg <- paste("Trend begin year is ", tndbeg, "; trend end year is ", 
-                 tndend, ".", sep="")
+                 tndend, ".", sep = "")
   message(dtmsg)
 							
   npars <- length(pnames)
   nparsmes <- c("There are no parameters to analyze. User must pass
 				at least one parameter name to the function using the pnames 
 				argument.")
-  if (npars < 1) stop(nparsmes)
+  if (npars < 1) {
+    stop(nparsmes)
+  }
   
+  # Check model class arguments and inform user of type of model.
+  mclassmes <- c("Currently, the only valid mclass options are numeric values of 1 or 2.")
+  
+  if (mclass != 1 & mclass != 2) {
+    stop(mclassmes)
+  }
+  
+  if (mclass == 1 ) {
+    message("Performing analysis using class 1 model with a linear trend.")
+  }
+  
+  mclassmes2 <- c("Models of class 2 must have a numeric value for the number of knots.\nSuggested value is 3 to 6.\n.")
+  if (mclass == 2 ) {
+    message("Performing analysis using class 2 model with restricted cubic splines.")
+    if (!is.numeric(numk)) {
+      stop(mclassmes2)
+    }
+  }
+	
   # prepare concentration data
   # prepare continous ancillary data
-  myfun <- function(x) deparse(substitute(x)) 
+  # myfun <- function(x) deparse(substitute(x)) 
   prepmsg <- paste("Preparing the data.")
   message(prepmsg)
   myData <- prepData(cdat, cavdat, yrstart, yrend, dcol, pnames, 
                      iwcav, qwcols) 
   cdat <- myData[[1]]
   cavdat <- myData[[2]]
-  pnamesf<-vector(length=0)
-  for  (iipar in (1:npars)) {
-    if ( exists("stpars") ) { rm(stpars)}
-    if ( exists("aovout") ) { rm(aovout)}
-    if ( exists("obsDat") ) { rm(obsDat)}
-    if ( exists("predDat") ) { rm(predDat)}
-    if ( exists("predSummary") ) { rm(predSummary)}
-    # for individual parameters, need to remove missing data
-    # cdat columns for trend analysis of single parameter
-    matches <- unique (grep(paste(iwcav, collapse="|"), names(cdat)))
-    spcols <- c(1:4, grep(pnames[iipar], names(cdat)), matches )
+  pnamesf <- vector(length = 0)
+  for (iipar in (1:npars)) {
+    if (exists("stpars")) {
+      rm(stpars)
+    }
+    if (exists("aovout")) {
+      rm(aovout)
+    }
+    if (exists("obsDat")) {
+      rm(obsDat)
+    }
+    if (exists("predDat")) {
+      rm(predDat)
+    }
+    if (exists("predSummary")) {
+      rm(predSummary)
+    }
+    matches <- unique(grep(paste(iwcav, collapse = "|"), 
+                           names(cdat)))
+    spcols <- c(1:4, grep(pnames[iipar], names(cdat)), matches)
     cdatiipar <- cdat[, spcols]
-    cdatsub <- subset(cdatiipar, !is.na(cdatiipar[, paste(qwcols[2], pnames[iipar],
-                                                sep="")]))
-    cencol<-paste(qwcols[1], pnames[iipar], sep="")
-    centmp <- cdatsub[, cencol]=='<'
+    cdatsub <- subset(cdatiipar, !is.na(cdatiipar[, paste(qwcols[2], 
+                                                          pnames[iipar], sep = "")]))
+    cencol <- paste(qwcols[1], pnames[iipar], sep = "")
+    centmp <- cdatsub[, cencol] == "<"
+	  
     # check to see if at least 10 noncensored values
-    if(sum(!centmp) > 9) {
-      # fit model to data
-      fitmsg <- paste("Fitting model for ", pnames[iipar], ".", sep="")
-      message(fitmsg)
-      myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, 
-                      tanm, pnames=pnames[iipar], qwcols, mclass=1)
+    if (sum(!centmp) > 9) {
+      if (mclass == 1) {
+        fitmsg <- paste("Fitting model for ", pnames[iipar], sep = "")
+        message(fitmsg)
+        myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
+                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
+                         qwcols)
+      } else {
+        fitmsg <- paste("Fitting model for ", pnames[iipar], 
+                        ", using restriced cubic splines.", sep = "")
+        message(fitmsg)
+        myRes <- fitMod2(cdatsub, cavdat, yrstart, yrend, 
+                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
+                         qwcols, mclass = mclass, numknots = numk)
+      }
       stpars <- myRes[[1]]
       aovout <- myRes[[2]]
       obsDat <- myRes[[3]][[1]]
       predDat <- myRes[[3]][[2]]
-      mycol<-paste("P", pnames[iipar], sep="")
-      predSummary <- data.frame(analysis=tanm, pname=pnames[iipar], 
-                                predMeanConc=round(mean(predDat[,mycol]), 
-                                               digits=5), 
+      mycol <- paste("P", pnames[iipar], sep = "")
+      predSummary <- data.frame(analysis = tanm, pname = pnames[iipar], 
+                                predMeanConc = round(mean(predDat[, mycol]), 
+                                                     digits = 5), 
                                 matrix(round(quantile(predDat[, mycol], 
-                                                probs=c(0.10, 0.25, 0.5, 0.75, 0.9)), 
-                                             digits=5), 
-                                       nrow=1, 
-                                       dimnames=list(NULL,c("predQ10", "predQ25", 
-                                                         "predQ50", "predQ75", "predQ90"))),
-                                stringsAsFactors=FALSE)
-      if ( !exists("aovoutall") ) {
+                                                      probs = c(0.1, 0.25, 0.5, 0.75, 0.9)), 
+					     digits = 5), nrow = 1, 
+				       dimnames = list(NULL, c("predQ10", "predQ25", 
+							       "predQ50", "predQ75",  
+							       "predQ90"))), 
+				stringsAsFactors = FALSE)
+      if (!exists("aovoutall")) {
         aovoutall <- myRes[[2]]
-      } else { 
+      }
+      else {
         aovoutall <- c(aovoutall, myRes[[2]])
       }
-      pnamesf <- c(pnamesf,pnames[iipar])
-    } else {
-      notenoughmes <- paste("Less than 10 uncensored values for P",  
-                            pnames[iipar], ".\n", 
-                            "Analysis not performed.", sep="")
-      message(notenoughmes)   
+      pnamesf <- c(pnamesf, pnames[iipar])
     }
-    #  prepare output
-    if ( exists("stpars") ) {
+    else {
+      notenoughmes <- paste("Less than 10 uncensored values for P", 
+                            pnames[iipar], ".\n", "Analysis not performed.", 
+                            sep = "")
+      message(notenoughmes)
+    }
+    if (exists("stpars")) {
       stpars <- round(stpars, 5)
       row.names(stpars) <- NULL
-      stparsout <- matrix(stpars[1,], nrow=1)
-      if(iipar==1) {
+      stparsout <- matrix(stpars[1, ], nrow = 1)
+      if (iipar == 1) {
         stparsoutall <- stparsout
-      } else if (iipar > 1 & exists("stparsoutall") )  {
+      }
+      else if (iipar > 1 & exists("stparsoutall")) {
         stparsoutall <- rbind(stparsoutall, stparsout)
-      } else {
+      }
+      else {
         stparsoutall <- stparsout
       }
     }
-    if ( exists("obsDat") ) {
-      if(iipar==1) {
+    if (exists("obsDat")) {
+      if (iipar == 1) {
         obsdatall <- obsDat
-      } else if (iipar > 1 & exists("obsdatall") )  {
-        obsdatall <- merge(obsdatall, obsDat, all=TRUE)
-      } else {
+      }
+      else if (iipar > 1 & exists("obsdatall")) {
+        obsdatall <- merge(obsdatall, obsDat, all = TRUE)
+      }
+      else {
         obsdatall <- obsDat
       }
     }
-    if ( exists("predDat") ) {
-      if(iipar==1) {
+    if (exists("predDat")) {
+      if (iipar == 1) {
         preddatall <- predDat
-      } else if (iipar > 1 & exists("preddatall") )  {
-        preddatall <- merge(preddatall, predDat, all=TRUE)
-      } else {
+      }
+      else if (iipar > 1 & exists("preddatall")) {
+        preddatall <- merge(preddatall, predDat, all = TRUE)
+      }
+      else {
         preddatall <- predDat
       }
     }
-    if ( exists("predSummary") ) {
-      if(iipar==1) {
+    if (exists("predSummary")) {
+      if (iipar == 1) {
         predSumAll <- predSummary
-      } else if (iipar > 1 & exists("predSumAll") )  {
+      }
+      else if (iipar > 1 & exists("predSumAll")) {
         predSumAll <- rbind(predSumAll, predSummary)
-      } else {
+      }
+      else {
         predSumAll <- predSummary
       }
     }
   }
-	
-  if ( exists("stparsoutall") ) {
-    mod1 <- floor((stparsoutall[,2] - 1) / 4) + 1
-    hlife1 <- stparsoutall[,2] - (mod1 - 1) * 4
-    
-    nxtmp <- length(stparsoutall[1,])
-    stparsoutall <- cbind(mclass, mod1, hlife1, stparsoutall[,nxtmp], 
-                        matrix(stparsoutall[, -c(1, 2, nxtmp)], 
-                               nrow=dim(stparsoutall)[1]))
+  if (exists("stparsoutall")) {
+    mod1 <- floor((stparsoutall[, 2] - 1)/4) + 1
+    hlife1 <- stparsoutall[, 2] - (mod1 - 1) * 4
+    nxtmp <- length(stparsoutall[1, ])
+    stparsoutall <- cbind(mclass, mod1, hlife1, 
+                          stparsoutall[, nxtmp], 
+                          matrix(stparsoutall[, -c(1, 2, nxtmp)], 
+                                 nrow = dim(stparsoutall)[1]))
     stparsoutall <- data.frame(pnamesf, stparsoutall)
-    if(iwcav[1] != 'none') { 
-      names(stparsoutall) <- c('pname', 'mclass', 'jmod', 'hlife', 
-                               'cmaxt', 'scl', 'loglik', 
-                             paste('c', c('int', 'wave', 'tnd', iwcav), 
-                                   sep=''), 
-                             paste('se', c('int', 'wave', 'tnd', iwcav),
-                                   sep=''), 'pvaltnd')
-    } else if (iwcav[1] == 'none') {
-      names(stparsoutall) <- c('pname', 'mclass', 'jmod', 'hlife', 
-                               'cmaxt', 'scl', 'loglik',
-                             paste('c', c('int', 'wave', 'tnd'), 
-                                   sep=''),
-                             paste('se', c('int', 'wave', 'tnd'), 
-                                   sep=''), 'pvaltnd')
+    if (iwcav[1] != "none") {
+      names(stparsoutall) <- c("pname", "mclass", "jmod", 
+                               "hlife", "cmaxt", "scl", "loglik", 
+                               paste("c", names(myRes[[2]][[1]]$coefficients), sep = ""), 
+                               paste("se", names(myRes[[2]][[1]]$coefficients), 
+                                     sep = ""), 
+                               paste("pval", 
+                                     names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
+                                                                              names(myRes[[2]][[1]]$coefficients))],
+                                     sep = ""))
     }
-    obsdatall$dectime<-round(obsdatall$dectime, digits=3)
-    preddatall$dectime<-round(preddatall$dectime, digits=3)
-    fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, predSumAll)
+    else if (iwcav[1] == "none") {
+      names(stparsoutall) <- c("pname", "mclass", "jmod", 
+                               "hlife", "cmaxt", "scl", "loglik", 
+                               paste("c", names(myRes[[2]][[1]]$coefficients), sep = ""), 
+                               paste("se", names(myRes[[2]][[1]]$coefficients), 
+                                     sep = ""), 
+                               paste("pval", 
+                                     names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
+                                                                              names(myRes[[2]][[1]]$coefficients))],
+                                     sep = ""))
+    }
+    obsdatall$dectime <- round(obsdatall$dectime, digits = 3)
+    preddatall$dectime <- round(preddatall$dectime, digits = 3)
+    fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, 
+                   predSumAll)
     fitRes
-  } else { message("No constituent had 10 or more uncensored values.")}
+  } else {
+    message("No constituent had 10 or more uncensored values.")
+  }
 }
