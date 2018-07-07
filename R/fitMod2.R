@@ -51,6 +51,9 @@
 #' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, 
 #' tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
 #' mclass = 2, numknots = 4)
+#' @references
+#' Allison, P.D. 1995: Survival analysis using the SAS system---A 
+#' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
                      pnames, qwcols, mclass = 2, numknots = 4) {
   require(rms)
@@ -66,11 +69,14 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   clog <- log10(cdatsub[, ccol])
   cencol <- paste(qwcols[1], pnames, sep = "")
   centmp <- cdatsub[, cencol] == "<"
+  
+  #  set up matrix with continuous variables
   if (length(cdatsub[1, ]) > 6) {
     cavmat <- as.matrix(cdatsub[, 7:length(cdatsub[1, ])])
   }  else {
     cavmat <- as.matrix(cdatsub)
   }
+  # compute variables for decimal season, year, trend 
   tseas <- dyr - floor(dyr)
   tyr <- dyr
   tyrpr <- dyrpr
@@ -87,20 +93,29 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
   tndrcspr <- rcs(tndlinpr, attributes(tndrcs)$parms)
 
+  # find cmaxt (decimal season of max concentration)
   tmpsm <- supsmu(tseas, clog)
   xsm <- tmpsm$x
   ysm <- tmpsm$y
   nsm <- length(ysm)
   cmaxt <- xsm[order(ysm)[nsm]]
+  
+  # nexvars is the number of explanatory variables (wave, trend, 
+  # and continuous variables, if any)
+  # stpars and aovout store the model output
   nexvars <- 2 + (length(cdatsub[1, ]) - 6) + (numknots - 1) 
   stpars <- matrix(nrow = 2, ncol = (4 + 2 * nexvars + (numknots - 1) + 1))
   aovout <- vector("list", 1)
   aicout <- vector("list", 2)
-  bicout <- vector("list", 2)
+  bicout <- vector("list", 2
+  # parx and aovtmp are temporary objects to store results 
+  # for 56 model possibilities
   parx <- matrix(nrow = 56, ncol = (dim(stpars)[[2]] - 1))
   aovtmp <- vector("list", 56)
   aictmp <- vector("list", 56)
   bictmp <- vector("list", 56)
+  # ready to loop through 56 model choices 
+  # (14 models x 4 halflives)
   wvmsg <- paste("Computing the best seasonal wave.")
   message(wvmsg)
   for (j in 1:14) {
@@ -132,7 +147,9 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       bictmp[[j2]] <- extractAIC(tmpouta, k = log(length(tmpouta$linear.predictors)))[2]
     }
   }
+  # find largest likelihood (smallest negative likelihood)
   likx <- (-parx[, 4])
+  # eliminate models with negative coefficient for the seasonal wave
   likx[parx[, 6] < 0] <- NA
   # This could be used to penalize models with two seasons of application
   likx[25:56] <- likx[25:56] + 0
