@@ -1,14 +1,67 @@
+#' Internal function that fits the seawaveQ model with restricted cubic splines.
+#' 
+#' fitMod2 is called from within \link{fitswavecav} but
+#' can be invoked directly.  It fits the seawaveQ model and with 
+#' restricted cubic splines on tim variable returns the model
+#' results.
+#' @param cdatsub is the concentration data
+#' @param cavdat is the continuous (daily) ancillary data
+#' @param yrstart is the starting year of the analysis (treated as January
+#' 1 of that year).  
+#' @param yrend is the ending year of the analysis (treated as December 31
+#' of that year).
+#' @param tndbeg is the beginning (in whole or decimal years) of the 
+#' trend period. 
+#' @param tndend is the end (in whole or decimal years) of the trend 
+#' period. 
+#' @param tanm is a character identifier that names the trend 
+#' analysis run.  It is used to label output files.
+#' @param pnames is the parameter (water-quality constituents) to 
+#' analyze (if using USGS parameters, omit the the starting 'P', such as 
+#' "00945" for sulfate).  
+#' @param qwcols is a character vector with the beginning of the
+#' column headers for remarks code (default is R), and beginning of 
+#' column headers for concentration data (default is P for parameter).
+#' @param mclass indicates the class on model one wants to use.
+#' A class 1 model is the the traditional SEAWAVE-Q model that has a
+#' linear time tredn. A class 2 model is a newer option for longer
+#' trend periods that uses a set of restricted cubic splines on the 
+#' time variable to provide a more flexible model. 
+#' @param numknots is the number of knots in the restricted cubic spline model.
+#' The default is 4, and the recommended number is 3--7.
+#' @keywords models
+#' @keywords regression
+#' @keywords survival
+#' @keywords ts
+#' @keywords multivariate
+#' @author Karen R. Ryberg and Aldo V. Vecchia
+#' @return a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
+#' a text file showing the best model survival regression call and 
+#' results, and a list.  The first element of the list contains 
+#' information about the data and the model(s) selected (see 
+#' \code{\link{examplestpars}}). The second element of the list contains 
+#' the summary of the survival regression call.  The third element of the 
+#' list is itself a list containing the observed concentrations (censored 
+#' and uncensored) and the predicted concentrations used by 
+#' \code{\link{seawaveQPlots}} to generate the plots.
+#' @export
+#' @examples
+#' data(swData)
+#' myRes <- fitMod2(cdatsub = examplecdatsub, cavdat = examplecavdat, 
+#' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, 
+#' tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
+#' mclass = 2, numknots = 4)
 fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
-                     pnames, qwcols, mclass = 2, numknots = numknots) {
+                     pnames, qwcols, mclass = 2, numknots = 4) {
   require(rms)
   yr <- cdatsub[[1]]
   mo <- cdatsub[[2]]
   da <- cdatsub[[3]]
-  dyr <- yr + (mo - 1)/12 + (da - 0.5)/366
+  dyr <- yr + (mo - 1) / 12 + (da - 0.5) / 366
   yrpr <- cavdat[[1]]
   mopr <- cavdat[[2]]
   dapr <- cavdat[[3]]
-  dyrpr <- yrpr + (mopr - 1)/12 + (dapr - 0.5)/366
+  dyrpr <- yrpr + (mopr - 1) / 12 + (dapr - 0.5) / 366
   ccol <- paste(qwcols[2], pnames, sep = "")
   clog <- log10(cdatsub[, ccol])
   cencol <- paste(qwcols[1], pnames, sep = "")
@@ -123,6 +176,6 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, 
                             tndrcs, tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
                            yrstart, yrend, tyr, tyrpr, pnames, tanm, numknots = numknots)
-  myRes <- list(stpars, aovout, plotDat, tndrcspr)
+  myRes <- list(stpars, aovout, plotDat)
   myRes
 }
