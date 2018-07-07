@@ -45,59 +45,58 @@ prepData <- function(cdat, cavdat, yrstart, yrend, dcol, pnames,
   cdat$moc <- month(cdat[, dcol])
   cdat$dac <- day(cdat[, dcol])
   cdat$jdayc <- julian(cdat[, dcol], 
-                       origin=as.Date(paste(yrstart-1, 
-                                            "-10-01", sep="")))
+                       origin = as.Date(paste(yrstart - 1, 
+                                            "-10-01", sep = "")))
   # column headings of concentration data
-  mycols<-c("yrc","moc","dac","jdayc")
-  rnames <- paste(qwcols[1], pnames, sep='')
-  pnames <- paste(qwcols[2], pnames, sep='')
+  mycols <- c("yrc", "moc", "dac", "jdayc")
+  rnames <- paste(qwcols[1], pnames, sep = '')
+  pnames <- paste(qwcols[2], pnames, sep = '')
   
   for ( i in 1:length(pnames) ) {
-    mycols<-c(mycols, rnames[i], pnames[i])
+    mycols <- c(mycols, rnames[i], pnames[i])
   }
-  if ( iwcav[1]!= "none" ) {
+  if ( iwcav[1] != "none" ) {
     mycols <- c(mycols, iwcav)
   }
   cdat <- cdat[, mycols]
   # columns of cdat are year, month, day, julian day, remark code, 
   # concentration value, and the selected ancillary variables
   
-  if ( iwcav[1]!= "none" ) {
+  if ( iwcav[1] != "none" ) {
     pcktmp <- !is.na(cdat[,4])
     for (j in 1:length(iwcav) ) {
-      pcktmp <- pcktmp & !is.na(cdat[,iwcav[j]])
+      pcktmp <- pcktmp & !is.na(cdat[, iwcav[j]])
     }
-    cdat <- cdat[pcktmp,]
+    cdat <- cdat[pcktmp, ]
   }
   
-  cavdat <- subset(cavdat, year(cavdat[,dcol]) >= yrstart & 
+  cavdat <- subset(cavdat, year(cavdat[, dcol]) >= yrstart & 
                      year(cavdat[, dcol]) <= yrend)
   cavdat$yrx <- year(cavdat[, dcol])
   cavdat$mox <- month(cavdat[, dcol])
   cavdat$dax <- day(cavdat[, dcol])
   cavdat$jdayx <- julian(cavdat[, dcol], 
-                         origin=as.Date(paste(yrstart-1, 
-                                              "-10-01", sep="")))
+                         origin=as.Date(paste(yrstart - 1, 
+                                              "-10-01", sep = "")))
   # determine column headings of ancillary data
-  mycols<-c("yrx","mox","dax","jdayx")
-  
-  if ( iwcav[1]!= "none" ) {
+  mycols <- c("yrx", "mox", "dax", "jdayx")  
+  if ( iwcav[1] != "none") {
     mycols <- c(mycols, iwcav)
   }
   cavdat <- cavdat[, mycols]
+  
   # columns of cavdat are year, month, day, julian day, and the 
   # selected continuous variables 
   # remove rows with missing values 
   # for concentration or continuous variables
-  
-  if ( iwcav[1]!= "none" ) {
-    pcktmp <- !is.na(cavdat[,5])
-    if(length(cavdat[1,]) > 5)  {
-      for (j in 6:length(cavdat[1,])) {
-        pcktmp <- pcktmp & !is.na(cavdat[,j])
+  if ( iwcav[1] != "none" ) {
+    pcktmp <- !is.na(cavdat[, 5])
+    if(length(cavdat[1, ]) > 5)  {
+      for (j in 6:length(cavdat[1, ])) {
+        pcktmp <- pcktmp & !is.na(cavdat[, j])
       }
     }
-    cavdat <- cavdat[pcktmp,]
+    cavdat <- cavdat[pcktmp, ]
   }
   myData<-list(cdat, cavdat)
   myData
