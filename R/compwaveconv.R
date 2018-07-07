@@ -7,8 +7,6 @@
 #' @param jmod is the choice of model or pulse input function, an integer 
 #' 1 through 14.
 #' @param hlife is the model half-life in months, 1 to 4 months
-#' @param mclass has not been implemented yet, but will provide
-#' additional model options.
 #' @return a numeric vector of size 361 with discrete values of the 
 #' seasonal wave for decimal season \code{seq(0,1,1/360)}.
 #' @note The seasonal wave is a dimensionless, periodic function of time 
@@ -35,10 +33,10 @@
 #' # these example decimal dates represent days at points 0.25, 0.5, and 
 #' # 0.75 percent of the way through the year and the end of the year
 #' dseas <- c(0.25, 0.5, 0.75, 1)
-#' swave <- compwaveconv(cmaxt = 0.483, jmod = 2, hlife = 4, mclass = 1)
+#' swave <- compwaveconv(cmaxt = 0.483, jmod = 2, hlife = 4)
 #' swave[floor(360 * dseas)]
 #' plot(seq(0, 1, 1/360), swave, typ = "l")
-compwaveconv <- function(cmaxt, jmod, hlife, mclass = 1) {
+compwaveconv <- function(cmaxt, jmod, hlife) {
   del <- 1 / 12
   txx <- seq(0, 1, 1 / 360)
   
