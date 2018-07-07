@@ -78,35 +78,33 @@
 #'      at=c(0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1), 
 #'      labels=c("0.0000001", "0.000001","0.00001", "0.0001", "0.001",
 #'               "0.01", "0.1", "1"), cex.axis=0.7)
-rosBoxPlot <- function(data, site="", qwcols=c("R", "P"), ...) {
+rosBoxPlot <- function(data, site = "", qwcols = c("R", "P"), ...) {
   # parameter columns
-  pmatch <- paste(qwcols[2], "[[:digit:]]", sep="")
+  pmatch <- paste(qwcols[2], "[[:digit:]]", sep = "")
   parms <- grep(pmatch, dimnames(data)[[2]])
   # qualifier columns
-  rmatch <- paste(qwcols[1], "[[:digit:]]", sep="")
+  rmatch <- paste(qwcols[1], "[[:digit:]]", sep = "")
   quals <- grep(rmatch, dimnames(data)[[2]])
-  obs <- as.matrix(data[,parms])
+  obs <- as.matrix(data[, parms])
   mynames <- dimnames(data)[[2]][parms]
-#   if (dim(obs)[[2]]==1) {
-#     colnames(obs)<-mynames
-#   }
-  censored <- as.matrix(data[,quals])
-  censored <- censored=="<"
-  my.res<-list()
+
+  censored <- as.matrix(data[, quals])
+  censored <- censored = ="<"
+  my.res <- list()
   for (i in 1:length(parms) ) {
-    my.list <- list(obs=obs[, i][!is.na(obs[, i])], 
-                    cen=censored[, i][!is.na(obs[, i])])
-    n<-length(my.list$obs)
-    m <- length(my.list$cen[my.list$cen==TRUE])
+    my.list <- list(obs = obs[, i][!is.na(obs[, i])], 
+                    cen = censored[, i][!is.na(obs[, i])])
+    n <- length(my.list$obs)
+    m <- length(my.list$cen[my.list$cen == TRUE])
     if (n > 0 & m/n < .90) {
-      my.ros<-ros(my.list$obs, my.list$cen)
-      my.res[[paste(mynames[i], sep="")]] <- my.ros$modeled
+      my.ros <- ros(my.list$obs, my.list$cen)
+      my.res[[paste(mynames[i], sep = "")]] <- my.ros$modeled
     }
   }
   boxplot(my.res, ...)
-  title(sub="Censored values estimated using regression on order 
-        statistcs", line=3)
+  title(sub = "Censored values estimated using regression on order 
+        statistcs", line = 3)
   if (is.character(site)) {
-    title(main=site)
+    title(main = site)
   }
 }
