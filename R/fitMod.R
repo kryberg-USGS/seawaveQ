@@ -87,9 +87,9 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   nsm <- length(ysm)
   cmaxt <- xsm[order(ysm)[nsm]]
     
-  # stpars and aovout store the model output
   # nexvars is the number of explanatory variables (wave, trend, 
   # and continuous variables, if any)
+  # stpars and aovout store the model output
   nexvars <- 2 + length(cdatsub[1,]) - 6
   stpars <- matrix(nrow=2,ncol=6 + 2 * (nexvars + 1))
   aovout <- vector('list', 1)
@@ -145,7 +145,6 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   likx[parx[,6]<0] <- NA
   # This could be used to penalize models with two seasons of application
   likx[25:56] <- likx[25:56] + 0
-  # pckone <- order(likx)[1]
   pckone <- order(likx)[1]
   stpars[1,] <- c(parx[pckone,], cmaxt)
   aovout[[1]] <- aovtmp[[pckone]]
