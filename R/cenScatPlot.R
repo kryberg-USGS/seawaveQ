@@ -73,13 +73,13 @@ cenScatPlot <- function(data, datescol = "dates", pname,
   qualcode <- paste(qwcols[1], pname, sep = "")
   parameter <- paste(qwcols[2], pname, sep = "")
   subdat <- data[ , c(datescol, qualcode, parameter)]
-  plot(subdat[,1], subdat[,3], type = "n", xlab = xlabel, ylab = ylabel, ...)
-  sub1 <- subset(subdat, subdat[,2] == "" | subdat[,2] == "_")
-  points(sub1[,1], sub1[,3], col = "black", pch = 16)
+  plot(subdat[, 1], subdat[, 3], type = "n", xlab = xlabel, ylab = ylabel, ...)
+  sub1 <- subset(subdat, subdat[, 2] == "" | subdat[, 2] == "_")
+  points(sub1[, 1], sub1[, 3], col = "black", pch = 16)
   sub2 <- subset(subdat, subdat[,2] == "E")
-  points(sub2[,1], sub2[,3], col = "green", pch = 8)
+  points(sub2[, 1], sub2[, 3], col = "green", pch = 8)
   sub3 <- subset(subdat, subdat[,2] == "<")
-  points(sub3[,1], sub3[,3], col = "red")
+  points(sub3[, 1], sub3[, 3], col = "red")
   leg.txt <- c("Quantified concentrations", "Estimated concentrations",
                "Censored concentrations, less thans")
   
