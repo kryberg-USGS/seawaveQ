@@ -42,15 +42,15 @@
 #' qwcols = c("staid", "dates", "R", "P"))
 
 combineData <- function(qwdat, cqwdat, 
-                        qwcols=c("staid", "dates", "R", "P")) {
+                        qwcols = c("staid", "dates", "R", "P")) {
   # combine concentration data with continous data and anomalies
-  pattern <- paste("(", qwcols[1], ")|(", qwcols[2], ")|(", qwcols[3],"|", 
+  pattern <- paste("(", qwcols[1], ")|(", qwcols[2], ")|(", qwcols[3], "|", 
                    qwcols[4], ")[[:alnum:]]+", sep="")
   mycols <- grep(pattern, dimnames(qwdat)[[2]])
   # drop extract columns
-  qwdat <- qwdat[,mycols]
-  dat <- merge(qwdat, cqwdat, by.x=qwcols[1:2], by.y=qwcols[1:2], 
-               all.x=TRUE )
+  qwdat <- qwdat[, mycols]
+  dat <- merge(qwdat, cqwdat, by.x = qwcols[1:2], by.y = qwcols[1:2], 
+               all.x = TRUE )
   row.names(dat) <- NULL
   dat
 }
