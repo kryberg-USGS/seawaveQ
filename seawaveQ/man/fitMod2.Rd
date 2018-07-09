@@ -5,7 +5,7 @@
 \title{Internal function that fits the seawaveQ model with restricted cubic splines.}
 \usage{
 fitMod2(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, pnames, qwcols,
-  mclass = 2, numknots = 4)
+  mclass = 2, numk = 4)
 }
 \arguments{
 \item{cdatsub}{is the concentration data}
@@ -41,7 +41,7 @@ linear time tredn. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
 time variable to provide a more flexible model.}
 
-\item{numknots}{is the number of knots in the restricted cubic spline model.
+\item{numk}{is the number of knots in the restricted cubic spline model.
 The default is 4, and the recommended number is 3--7.}
 }
 \value{
@@ -66,7 +66,7 @@ data(swData)
 myRes <- fitMod2(cdatsub = examplecdatsub, cavdat = examplecavdat, 
 yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, 
 tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
-mclass = 2, numknots = 4)
+mclass = 2, numk = 4)
 }
 \references{
 Allison, P.D. 1995: Survival analysis using the SAS system---A 

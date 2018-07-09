@@ -43,9 +43,9 @@
 #' @export
 #' @examples
 #' data(swData)
-#' myRes <- fitMod(cdatsub=examplecdatsub, cavdat=examplecavdat, 
-#' yrstart=1995, yrend=2003, tndbeg=1995, tndend=2003, tanm="myfit3", 
-#' pnames=c("04041"), qwcols=c("R", "P"))
+#' myRes <- fitMod(cdatsub = examplecdatsub, cavdat = examplecavdat, 
+#' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3", 
+#' pnames = c("04041"), qwcols = c("R", "P"))
 #' @references
 #' Allison, P.D. 1995: Survival analysis using the SAS system---A 
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
@@ -59,13 +59,13 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   mopr <- cavdat[[2]]
   dapr <- cavdat[[3]]
   dyrpr <- yrpr + (mopr - 1) / 12 + (dapr - 0.5) / 366
-  ccol <- paste(qwcols[2], pnames, sep="")
+  ccol <- paste(qwcols[2], pnames, sep = "")
   clog <- log10(cdatsub[, ccol])
-  cencol <- paste(qwcols[1], pnames, sep="")
-  centmp <- cdatsub[, cencol]=='<'
+  cencol <- paste(qwcols[1], pnames, sep = "")
+  centmp <- cdatsub[, cencol] == '<'
   
   #  set up matrix with continuous variables
-  if(length(cdatsub[1,])>6) {
+  if (length(cdatsub[1,]) > 6) {
     cavmat <- as.matrix(cdatsub[,7:length(cdatsub[1,])])   
   } else {
     cavmat <- as.matrix(cdatsub)
@@ -77,10 +77,10 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   tyrpr <- dyrpr
   tseaspr <- (dyrpr - floor(dyrpr))
   tmid <- (tndbeg + tndend) / 2
-  tndlin <- tyr-tmid
+  tndlin <- tyr - tmid
   tndlin[tyr < tndbeg] <- tndbeg - tmid
   tndlin[tyr > tndend + 1] <- tndend - tmid 
-  tndlinpr <- tyrpr-tmid
+  tndlinpr <- tyrpr - tmid
   tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
   tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
   # find cmaxt (decimal season of max concentration)
@@ -94,13 +94,13 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   # and continuous variables, if any)
   # stpars and aovout store the model output
   nexvars <- 2 + length(cdatsub[1,]) - 6
-  stpars <- matrix(nrow=2,ncol=6 + 2 * (nexvars + 1))
+  stpars <- matrix(nrow = 2,ncol = 6 + 2 * (nexvars + 1))
   aovout <- vector('list', 1)
   aicout <- vector('list', 2)
   bicout <- vector('list', 2)
   # parx and aovtmp are temporary objects to store results 
   # for 56 model possibilities
-  parx <- matrix(nrow=56, ncol=5 + 2 * (nexvars + 1))
+  parx <- matrix(nrow = 56, ncol = 5 + 2 * (nexvars + 1))
   aovtmp <- vector('list', 56)
   aictmp <- vector('list', 56)
   bictmp <- vector('list', 56)
@@ -113,10 +113,10 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       j2 <- (j - 1) * 4 + k
       awave <- compwaveconv(cmaxt, j, k)
       ipkt <- floor(360 * tseas)
-      ipkt[ipkt==0] <- 1
+      ipkt[ipkt == 0] <- 1
       wavest <- awave[ipkt]
       ipkt <- floor(360 * tseaspr)
-      ipkt[ipkt==0] <- 1
+      ipkt[ipkt == 0] <- 1
       wavestpr <- awave[ipkt]
       indcen <- !centmp
       intcpt <- rep(1, length(wavest))
@@ -129,8 +129,8 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
         
       # requires survival package
       tmpouta <- survreg(Surv(time=clogtmp, time2=indcen, 
-                              type='left') ~ xmat - 1, 
-                         dist='gaussian')
+                              type="left") ~ xmat - 1, 
+                         dist = "gaussian")
       parx[j2,] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
                        tmpouta$coef, 
                        summary(tmpouta)$table[1:nctmp, 2], 
@@ -138,14 +138,14 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       aovtmp[[j2]] <- summary(tmpouta)
       aictmp[[j2]] <- extractAIC(tmpouta)[2]
       bictmp[[j2]] <- extractAIC(tmpouta, 
-                                 k=log(length(
+                                 k = log(length(
                                    tmpouta$linear.predictors)))[2]
     }
   }
   # find largest likelihood (smallest negative likelihood)
   likx <- (-parx[,4])
   # eliminate models with negative coefficient for the seasonal wave
-  likx[parx[,6]<0] <- NA
+  likx[parx[, 6] < 0] <- NA
   # This could be used to penalize models with two seasons of application
   likx[25:56] <- likx[25:56] + 0
   pckone <- order(likx)[1]
@@ -161,18 +161,18 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   lrt <- -2 * aovout[[1]]$loglik[1] - (-2 * aovout[[1]]$loglik[2])
   r2 <- round(1 - exp(-lrt / aovout[[1]]$n), digits = 2)
   
-  regCallFile <- paste(tanm, "_survregCall.txt", sep="")
-  resmsg<-paste("Final model survreg results saved to ", regCallFile, ".", 
-               sep="")
+  regCallFile <- paste(tanm, "_survregCall.txt", sep = "")
+  resmsg <- paste("Final model survreg results saved to ", regCallFile, ".", 
+               sep = "")
   message(resmsg)
   si <- sessionInfo()
-  sink(regCallFile, append=TRUE, type="output")
-  cat("\n\n", format(Sys.time(), "%A %d %b %Y %X %p %Z"), sep="")
+  sink(regCallFile, append = TRUE, type = "output")
+  cat("\n\n", format(Sys.time(), "%A %d %b %Y %X %p %Z"), sep = "")
   cat("\n", si$R.version$version.string, 
       "\n", si$otherPkgs[[grep("seawaveQ", si$otherPkgs)]]$Package,
       " version ", si$otherPkgs[[grep("seawaveQ", si$otherPkgs)]]$Version,
       "\n", si$platform, 
-      "\n\nFinal model survreg results for ", pnames, sep="")
+      "\n\nFinal model survreg results for ", pnames, sep = "")
   print(aovout[[1]])
   cat("Generalized r-squared is: ", r2, "\n", sep = " ")
   cat("AIC (Akaike's An Information Criterion) is: ", round(aicout[[1]], digits = 2), 
@@ -184,10 +184,10 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   cat("Model class is ", mclass, "\nPulse input function is ", jmod,
       "\nHalf life is ", hlife, 
       "\nSeasonal value of the maximum concentration is ", cmaxt, ".", 
-      "\n", sep="")
+      "\n", sep = "")
   sink()
   
-  plotDat<-seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
+  plotDat <- seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
                 tndlinpr, cdatsub, cavdat, cavmat, clog, centmp, 
                 yrstart, yrend, tyr, tyrpr, pnames, tanm)  
   

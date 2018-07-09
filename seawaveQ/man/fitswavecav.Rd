@@ -7,7 +7,7 @@ and the number of columns depend on the number of continuous ancillary
 variables used. The general format is as follows: \cr
 \tabular{lll}{
  pname \tab character \tab Parameter analyzed \cr
- mclass \tab numeric \tab Currently a value of 1 \cr
+ mclass \tab numeric \tab A value of 1 or 2 \cr
  jmod \tab numeric \tab The choice of pulse input function, an
  integer 1--14. \cr
  hlife \tab numeric \tab the model half-life in months, an integer, 1 to
@@ -18,15 +18,15 @@ variables used. The general format is as follows: \cr
  loglik \tab numeric \tab the log-likelihood for the model \cr
  cint \tab numeric \tab coefficient for model intercept \cr
  cwave \tab numeric \tab coefficient for the seasonal wave \cr
- ctnd \tab numeric \tab coefficient for the trend component of model \cr
+ ctnd[alpahnumeric] \tab numeric \tab coefficient(s) for the trend component(s) of model \cr
  c[alphanumeric] \tab numeric \tab 0 or more coefficients for the
  continuous ancillary variables\cr
  seint \tab numeric \tab standard error for the intercept \cr
  sewave \tab numeric \tab standard error for the seasonal wave \cr
- setnd \tab numeric \tab standard error for the trend \cr
+ setnd[alphanumeric] \tab numeric \tab standard error for the trend component(s) \cr
  se[alphanumeric] \tab numeric \tab  0 or more standard errors for the
  continuous ancillary variables\cr
- pvaltnd \tab numeric \tab the p-value for the trend line \cr
+ pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
 }}
 \usage{
   fitswavecav(cdat, cavdat, tanm = "trend1", pnames,
@@ -77,8 +77,14 @@ variables used. The general format is as follows: \cr
   beginning of column headers for concentration data
   (default is P for parameter).}
 
-  \item{mclass}{has not been implemented yet but will
-  provide additional model options.}
+  \item{mclass}{indicates the class on model one wants to use.
+  A class 1 model is the the traditional SEAWAVE-Q model that has a
+  linear time tredn. A class 2 model is a newer option for longer
+  trend periods that uses a set of restricted cubic splines on the 
+  time variable to provide a more flexible model.}
+  
+  \item{numk}{is the number of knots in the restricted cubic spline model.
+  The default is 4, and the recommended number is 3--7.}
 }
 \value{
   a pdf file containing plots of the data and modeled

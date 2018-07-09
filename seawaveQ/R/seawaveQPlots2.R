@@ -68,8 +68,14 @@
 #' "00945" for sulfate).  
 #' @param tanm is an a character identifier that names the trend 
 #' analysis run.  It is used to label output files.
-#' @param mclass has not been implemented yet, but will provide
-#' additional model options.
+#' @param 
+#' @param mclass indicates the class on model one wants to use.
+#' A class 1 model is the the traditional SEAWAVE-Q model that has a
+#' linear time trend. A class 2 model is a newer option for longer
+#' trend periods that uses a set of restricted cubic splines on the 
+#' time variable to provide a more flexible model. 
+#' @param numk is the number of knots in the restricted cubic spline model.
+#' The default is 4, and the recommended number is 3--7.
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @return a pdf file containing plots of the data and modeled 
@@ -87,11 +93,11 @@
 #' tndlinpr=exampletndlinpr, cdatsub=examplecdatsub, cavdat=examplecavdat, 
 #' cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
 #' yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
-#' pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numknots = 4)
+#' pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numk = 4)
 seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, 
                             tndrcs, tndrcspr, cdatsub, 
                             cavdat, cavmat, clog, centmp, yrstart, yrend, tyr, 
-                            tyrpr, pnames, tanm, mclass = 2, numknots) {
+                            tyrpr, pnames, tanm, mclass = 2, numk) {
   # produce plots for selected model
   # set up output file for graphs 
   # output graphs to a pdf

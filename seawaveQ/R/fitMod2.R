@@ -27,7 +27,7 @@
 #' linear time tredn. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model. 
-#' @param numknots is the number of knots in the restricted cubic spline model.
+#' @param numk is the number of knots in the restricted cubic spline model.
 #' The default is 4, and the recommended number is 3--7.
 #' @keywords models
 #' @keywords regression
@@ -50,12 +50,12 @@
 #' myRes <- fitMod2(cdatsub = examplecdatsub, cavdat = examplecavdat, 
 #' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, 
 #' tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
-#' mclass = 2, numknots = 4)
+#' mclass = 2, numk = 4)
 #' @references
 #' Allison, P.D. 1995: Survival analysis using the SAS system---A 
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
-                     pnames, qwcols, mclass = 2, numknots = 4) {
+                     pnames, qwcols, mclass = 2, numk = 4) {
   yr <- cdatsub[[1]]
   mo <- cdatsub[[2]]
   da <- cdatsub[[3]]
@@ -85,7 +85,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   tndlin <- tyr - tmid
   tndlin[tyr < tndbeg] <- tndbeg - tmid
   tndlin[tyr > tndend + 1] <- tndend - tmid
-  tndrcs <- rcs(tndlin, numknots)
+  tndrcs <- rcs(tndlin, numk)
 
   tndlinpr <- tyrpr - tmid
   tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
@@ -102,8 +102,8 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   # nexvars is the number of explanatory variables (wave, trend, 
   # and continuous variables, if any)
   # stpars and aovout store the model output
-  nexvars <- 2 + (length(cdatsub[1, ]) - 6) + (numknots - 1) 
-  stpars <- matrix(nrow = 2, ncol = (4 + 2 * nexvars + (numknots - 1) + 1))
+  nexvars <- 2 + (length(cdatsub[1, ]) - 6) + (numk - 1) 
+  stpars <- matrix(nrow = 2, ncol = (4 + 2 * nexvars + (numk - 1) + 1))
   aovout <- vector("list", 1)
   aicout <- vector("list", 2)
   bicout <- vector("list", 2)
@@ -191,7 +191,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   sink()
   plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, 
                             tndrcs, tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
-                           yrstart, yrend, tyr, tyrpr, pnames, tanm, numknots = numknots)
+                           yrstart, yrend, tyr, tyrpr, pnames, tanm, numk = numk)
   myRes <- list(stpars, aovout, plotDat)
   myRes
 }

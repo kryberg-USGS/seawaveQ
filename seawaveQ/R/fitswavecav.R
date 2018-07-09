@@ -70,7 +70,7 @@
 #' column headers for concentration data (default is P for parameter).
 #' @param mclass indicates the class on model one wants to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
-#' linear time tredn. A class 2 model is a newer option for longer
+#' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model. 
 #' @param numk is the number of knots in the restricted cubic spline model.
@@ -112,7 +112,8 @@
 #'  pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
 #' }
 #' @seealso The functions that \code{fitswavecav} calls internally: \cr
-#' \code{\link{prepData}} and \code{\link{fitMod}}.
+#' \code{\link{prepData}} and \code{\link{fitMod} for linear trend models or 
+#' \code{\link{fitMod2} for models using restricted cubic splines.
 #' @export
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @examples
@@ -125,21 +126,17 @@
 #' myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
 #' tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"), 
-#' dcol = "dates", qwcols = c("R", "P"))
-#' myfit3 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
-#' tanm = "myfit3", pnames=c("04035", "04037", "04041"), yrstart = 1995, 
-#' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1", 
-#' "seda30", "seda1"), dcol = "dates", qwcols = c("R","P"))
+#' dcol = "dates", qwcols = c("R", "P"), mclass = 2)
 #' # trend model results
-#' myfit3[[1]]
+#' myfit1[[1]]
 #' # example regression call
-#' myfit3[[2]][[1]]
+#' myfit1[[2]][[1]]
 #' # first few lines of observed concentrations
-#' head(myfit3[[3]])
+#' head(myfit1[[3]])
 #' # first few lines of predicted concentrations
-#' head(myfit3[[4]])
+#' head(myfit1[[4]])
 #' # summary statistics for predicted concentrations
-#' head(myfit3[[5]])
+#' head(myfit1[[5]])
 #' @references
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 #' Trends in pesticide concentrations in urban streams in the United 
@@ -157,7 +154,7 @@
 #' Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008, Modeling 
 #' variability and  trends in pesticide concentrations in streams: 
 #' Journal of the American Water Resources Association, v. 44, no. 5, p. 
-#' 1308-1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
+#' 1308--1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
 fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0, 
 			yrend=0, tndbeg=0, tndend=0, iwcav=c("none"), 
 			dcol="dates", qwcols=c("R", "P"), mclass=1, 
@@ -275,7 +272,7 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
         message(fitmsg)
         myRes <- fitMod2(cdatsub, cavdat, yrstart, yrend, 
                          tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                         qwcols, mclass = mclass, numknots = numk)
+                         qwcols, mclass = mclass, numk = numk)
       }
       stpars <- myRes[[1]]
       aovout <- myRes[[2]]
