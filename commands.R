@@ -1,5 +1,0 @@
-setwd("~/rPackages/seawaveq")
-#load("~/rPackages/seawaveq.RData")
-library(roxygen2)
-package.skeleton(name="seawaveq",force=TRUE,code_files=c("seawaveq-package.R","compWave.R"))
-roxygenize("seawaveq",roxygen.dir="seawaveq",copy.package=FALSE)
