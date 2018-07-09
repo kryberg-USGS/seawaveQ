@@ -34,7 +34,7 @@
 #' De Cicco, L.A., Mills, T.J., and Farmer, W.H., 2017, Water-quality trends 
 #' in the nation's rivers and streams, 1972--2012---Data preparation, statistical 
 #' methods, and trend results: U. S. Geological Survey Scientific Investigations 
-#' Report 2017--5006, 136 p.,  \url{https://doi.org/10.3133/sir20175006}.
+#' Report 2017--5006, 136 p., \url{https://doi.org/10.3133/sir20175006}.
 #'
 #' Ryberg, K.R. and Gilliom, R.J., 2015, Trends in pesticide concentrations 
 #' and use for major rivers of the United States: Science of The Total Environment, 
@@ -47,7 +47,7 @@
 #' Open-File Report 2013--1255, 13 p., with 3 appendixes, 
 #' \url{http://dx.doi.org/10.3133/ofr20131255}.
 #' 
-#' #' Ryberg, K.R., Vecchia, A.V., Gilliom, R.J., and Martin, J.D., 2014, 
+#' Ryberg, K.R., Vecchia, A.V., Gilliom, R.J., and Martin, J.D., 2014, 
 #' Pesticide trends in major rivers of the United States, 1992--2010: 
 #' U.S. Geological Survey Scientific Investigations Report 2014--5135, 
 #' 74 p., \url{http://pubs.er.usgs.gov/publication/sir20145135}.

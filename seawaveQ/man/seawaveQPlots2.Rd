@@ -6,7 +6,7 @@
 \usage{
 seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, tndrcs,
   tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, yrstart, yrend, tyr, tyrpr,
-  pnames, tanm, mclass = 2, numknots)
+  pnames, tanm, mclass = 2, numk)
 }
 \arguments{
 \item{stpars}{is a matrix of information about the best seawaveQ model
@@ -113,7 +113,7 @@ tseas=exampletseas, tseaspr=exampletseaspr, tndlin=exampletndlin,
 tndlinpr=exampletndlinpr, cdatsub=examplecdatsub, cavdat=examplecavdat, 
 cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
 yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
-pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numknots = 4)
+pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numk = 4)
 }
 \references{
 Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 

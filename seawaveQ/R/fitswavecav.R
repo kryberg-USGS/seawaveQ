@@ -126,7 +126,7 @@
 #' myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
 #' tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"), 
-#' dcol = "dates", qwcols = c("R", "P"), mclass = 2)
+#' dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4)
 #' # trend model results
 #' myfit1[[1]]
 #' # example regression call
@@ -155,9 +155,9 @@
 #' variability and  trends in pesticide concentrations in streams: 
 #' Journal of the American Water Resources Association, v. 44, no. 5, p. 
 #' 1308--1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
-fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0, 
-			yrend=0, tndbeg=0, tndend=0, iwcav=c("none"), 
-			dcol="dates", qwcols=c("R", "P"), mclass=1, 
+fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0, 
+                        yrend = 0, tndbeg = 0, tndend = 0, iwcav = c("none"), 
+			dcol = "dates", qwcols = c("R", "P"), mclass = 1, 
 			numk = 4) {
   # perform data checks and check arguments
   dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, \n 

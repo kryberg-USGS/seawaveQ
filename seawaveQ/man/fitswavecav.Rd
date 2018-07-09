@@ -32,7 +32,7 @@ variables used. The general format is as follows: \cr
   fitswavecav(cdat, cavdat, tanm = "trend1", pnames,
     yrstart = 0, yrend = 0, tndbeg = 0, tndend = 0,
     iwcav = c("none"), dcol = "dates",
-    qwcols = c("R", "P"), mclass = 1)
+    qwcols = c("R", "P"), mclass = 1, numk = 4)
 }
 \arguments{
   \item{cdat}{is the concentration data}
@@ -152,16 +152,12 @@ modMoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
 myfit1 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
 tanm="myfit1", pnames=c("04035", "04037", "04041"), yrstart=1995,
 yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1"),
-dcol="dates", qwcols=c("R","P"))
+dcol="dates", qwcols=c("R","P"), mclass = 1)
  \dontrun{
-myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit2", pnames=c("04035", "04037", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30","seda1"),
-dcol="dates", qwcols=c("R","P"))
-myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit3", pnames=c("04035", "04037", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30","flowa1",
-"seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
+myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"), 
+dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4)
 }
 # trend model results
 myfit1[[1]]
