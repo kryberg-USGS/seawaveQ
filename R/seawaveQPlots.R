@@ -171,7 +171,7 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
   for (j in seq(xlow, xup - 1, 1)) {
     mtext(side=1, line = 0.5, at = (j + 0.5), cex = 0.75, as.character(j))
     lines(c(j, j), c(ylow, ylow + ytck), lwd = 1)
-    lines(c(j, j), c(yup, yup - ytck), lw d =1)
+    lines(c(j, j), c(yup, yup - ytck), lwd =1)
   }
   for (j in seq(ylow, yup, 1)) {
     mtext(side = 2, line = 0.5, at = j, adj = 1, cex = 0.75, las = 1, 
