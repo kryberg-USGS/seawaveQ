@@ -21,7 +21,11 @@
 #' @param qwcols is a character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param mclass has not been implemented yet, but will provide
+#' @param mclass indicates the class of model one wants to use.
+#' A class 1 model is the the traditional SEAWAVE-Q model that has a
+#' linear time tredn. A class 2 model is a newer option for longer
+#' trend periods that uses a set of restricted cubic splines on the 
+#' time variable to provide a more flexible model. 
 #' additional model options.
 #' @keywords models
 #' @keywords regression
@@ -108,7 +112,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   for (j in 1:14) {
     for (k in 1:4) {
       j2 <- (j - 1) * 4 + k
-      awave <- compwaveconv(cmaxt, j, k, mclass=1)
+      awave <- compwaveconv(cmaxt, j, k)
       ipkt <- floor(360 * tseas)
       ipkt[ipkt==0] <- 1
       wavest <- awave[ipkt]
