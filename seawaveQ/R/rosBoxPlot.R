@@ -51,7 +51,7 @@
 #' 
 #' Lee, Lopaka, 2012, Nondetects and data analysis for environmental 
 #' data: R package version 1.5-4, 
-#' \url{http://CRAN.R-project.org/package=NADA}.
+#' \url{https://CRAN.R-project.org/package=NADA}.
 #' 
 #' Oblinger Childress, C.J., Foreman, W.T., Connor, B.F., and Maloney, 
 #' T.J., 1999, New reporting procedures based on long-term method 
