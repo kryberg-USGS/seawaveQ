@@ -79,6 +79,7 @@
 #'      labels=c("0.0000001", "0.000001","0.00001", "0.0001", "0.001",
 #'               "0.01", "0.1", "1"), cex.axis=0.7)
 rosBoxPlot <- function(data, site = "", qwcols = c("R", "P"), ...) {
+  require(NADA)
   # parameter columns
   pmatch <- paste(qwcols[2], "[[:digit:]]", sep = "")
   parms <- grep(pmatch, dimnames(data)[[2]])
