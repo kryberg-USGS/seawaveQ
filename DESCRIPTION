@@ -1,11 +1,17 @@
 Package: seawaveQ
-Type: Package
-Title: U.S. Geological Survey seawaveQ model
 Version: 2.0.0
+Title: SEAWAVE-Q model
 Date: 2018-07-09
-Author: Karen R. Ryberg [aut, cre], Aldo V. Vecchia [aut], Benjamin York [ctb]
+Authors@R: c(person("Karen", "Ryberg", role = c("aut", "rec"),
+                    email = "kryberg@usgs.gov"),
+             person("Aldo", "Vecchia", role = "aut"),
+             person("Benjamin", "York", role = "ctb"),
+                    email = "byork@usgs.gov"))
+Author: Karen R. Ryberg [aut, cre], 
+  Aldo V. Vecchia [aut], 
+  Benjamin York [ctb]
 Maintainer: Karen R. Ryberg <kryberg@usgs.gov>
-License: Unlimited
+License: Unlimited | file LICENSE
 LazyLoad: yes
 Description: A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables
 Depends: R (>= 3.0.0)
