@@ -89,7 +89,7 @@ rosBoxPlot <- function(data, site = "", qwcols = c("R", "P"), ...) {
   mynames <- dimnames(data)[[2]][parms]
 
   censored <- as.matrix(data[, quals])
-  censored <- censored = ="<"
+  censored <- censored == "<"
   my.res <- list()
   for (i in 1:length(parms) ) {
     my.list <- list(obs = obs[, i][!is.na(obs[, i])], 
