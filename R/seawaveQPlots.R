@@ -158,7 +158,7 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
   # ts plot of data and model 
   ytmp <- cadjx0
   sp95 <- 1.645 * scltmp2
-  plot(c(tyr, tyrpr), c(ytmp, ytmpxx), type = "p", pch = "", xaxs = "i",
+  plot(c(tyr, tyrpr), c(ytmp, fitadjx02), type = "p", pch = "", xaxs = "i",
        yaxs = "i", xaxt = "n", yaxt = "n", xlab = "", ylab = "", 
        xlim = c(xlow, xup), ylim = c(ylow, yup))
   points(tyr[centmp], ytmp[centmp], pch = 1, cex = 1, col = 2)
@@ -166,8 +166,8 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
     
   # plot discrete predictions for days with observations
   # points(tyr, fitadjxdat, pch = 16, cex = 1, col = "blue")
-  lines(tyrpr, ytmpxx, col = 1, lwd = 1.5)
-  lines(tyrpr, ytmpxx2, lwd = 3, col = "black")
+  lines(tyrpr, fitadjx02, col = 1, lwd = 1.5)
+  lines(tyrpr, fitadjx12, lwd = 3, col = "black")
   for (j in seq(xlow, xup - 1, 1)) {
     mtext(side=1, line = 0.5, at = (j + 0.5), cex = 0.75, as.character(j))
     lines(c(j, j), c(ylow, ylow + ytck), lwd = 1)
