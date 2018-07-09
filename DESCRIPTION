@@ -3,9 +3,7 @@ Type: Package
 Title: U.S. Geological Survey seawaveQ model
 Version: 2.0.0
 Date: 2018-07-09
-Author: Karen R. Ryberg [aut, cre],
-Aldo V. Vecchia [aut],
-Benjamin York [ctb]
+Author: Karen R. Ryberg [aut, cre], Aldo V. Vecchia [aut], Benjamin York [ctb]
 Maintainer: Karen R. Ryberg <kryberg@usgs.gov>
 License: Unlimited
 LazyLoad: yes
