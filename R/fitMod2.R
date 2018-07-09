@@ -22,7 +22,7 @@
 #' @param qwcols is a character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param mclass indicates the class on model one wants to use.
+#' @param mclass indicates the class of model one wants to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time tredn. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
