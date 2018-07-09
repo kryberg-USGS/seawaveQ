@@ -26,7 +26,6 @@
 #' linear time tredn. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model. 
-#' additional model options.
 #' @keywords models
 #' @keywords regression
 #' @keywords survival
