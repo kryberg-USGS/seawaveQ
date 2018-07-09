@@ -107,7 +107,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   stpars <- matrix(nrow = 2, ncol = (4 + 2 * nexvars + (numknots - 1) + 1))
   aovout <- vector("list", 1)
   aicout <- vector("list", 2)
-  bicout <- vector("list", 2
+  bicout <- vector("list", 2)
   # parx and aovtmp are temporary objects to store results 
   # for 56 model possibilities
   parx <- matrix(nrow = 56, ncol = (dim(stpars)[[2]] - 1))
