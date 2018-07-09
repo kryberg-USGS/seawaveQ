@@ -1,1 +1,14 @@
-exportPattern("^[[:alpha:]]+")
+export(cenScatPlot)
+export(combineData)
+export(compwaveconv)
+export(fitMod)
+export(fitswavecav)
+export(prepData)
+export(rosBoxPlot)
+export(seawaveQPlots)
+importFrom("grDevices", "dev.off", "pdf")
+importFrom("graphics", "boxplot", "legend", "lines", "mtext", "par",
+             "plot", "points", "text", "title")
+importFrom("stats", "extractAIC", "pnorm", "qnorm", "quantile",
+             "runif", "supsmu")
+importFrom("utils", "sessionInfo")

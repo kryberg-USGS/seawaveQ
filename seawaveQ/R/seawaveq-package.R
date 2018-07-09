@@ -12,7 +12,7 @@
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
 #' Version: \tab 2.0.0\cr
-#' Date: \tab 2018--07--07\cr
+#' Date: \tab 2018--07--09\cr
 #' License: \tab Unlimited | file LICENSE \cr
 #' LazyLoad: \tab yes\cr
 #' }
@@ -32,15 +32,15 @@
 #' Oelsner, G.P., Sprague, L.A., Murphy, J.C., Zuellig, R.E., Johnson, H.M., 
 #' Ryberg, K.R., Falcone, J.A., Stets, E.G., Vecchia, A.V., Riskin, M.L., 
 #' De Cicco, L.A., Mills, T.J., and Farmer, W.H., 2017, Water-quality trends 
-#' in the nation’s rivers and streams, 1972–2012—Data preparation, statistical 
+#' in the nation's rivers and streams, 1972--2012---Data preparation, statistical 
 #' methods, and trend results: U. S. Geological Survey Scientific Investigations 
-#' Report 2017–5006, 136 p., http://pubs.er.usgs.gov/publication/sir20175006.
+#' Report 2017--5006, 136 p., http://pubs.er.usgs.gov/publication/sir20175006.
 #'
 #' Ryberg, K.R. and Gilliom, R.J., 2015, Trends in pesticide concentrations 
 #' and use for major rivers of the United States: Science of The Total Environment, 
-#' v. 538, p. 431–444, https://doi.org/10.1016/j.scitotenv.2015.06.095.
+#' v. 538, p. 431--444, https://doi.org/10.1016/j.scitotenv.2015.06.095.
 #'
-#' Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ--An R package providing 
+#' Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ---An R package providing 
 #' a model and utilities for analyzing trends in chemical concentrations 
 #' in streams with a seasonal wave (seawave) and adjustment for 
 #' streamflow (Q) and other ancillary variables: U.S. Geological Survey 
@@ -48,23 +48,23 @@
 #' \url{http://dx.doi.org/10.3133/ofr20131255}.
 #' 
 #' #' Ryberg, K.R., Vecchia, A.V., Gilliom, R.J., and Martin, J.D., 2014, 
-#' Pesticide trends in major rivers of the United States, 1992-2010: 
-#' U.S. Geological Survey Scientific Investigations Report 2014–5135, 
+#' Pesticide trends in major rivers of the United States, 1992--2010: 
+#' U.S. Geological Survey Scientific Investigations Report 2014--5135, 
 #' 74 p., \url{http://pubs.er.usgs.gov/publication/sir20145135}.
 #'
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., Gilliom, R.J., 2010, Trends 
 #' in pesticide concentrations in urban streams in the United States, 
-#' 1992-2008: U.S. Geological Survey Scientific Investigations Report 
-#' 2010-5139, 101 p., \url{http://pubs.usgs.gov/sir/2010/5139/}.
+#' 1992--2008: U.S. Geological Survey Scientific Investigations Report 
+#' 2010--5139, 101 p., \url{https://pubs.usgs.gov/sir/2010/5139/}.
 #'
 #' Sullivan, D.J., Vecchia, A.V., Lorenz, D.L., Gilliom, R.J., Martin, 
 #' J.D., 2009, Trends in pesticide concentrations in corn-belt streams, 
-#' 1996-2006: U.S. Geological Survey Scientific Investigations Report 
-#' 2009-5132, 75 p. \url{http://pubs.usgs.gov/sir/2009/5132/}.
+#' 1996--2006: U.S. Geological Survey Scientific Investigations Report 
+#' 2009--5132, 75 p. \url{https://pubs.usgs.gov/sir/2009/5132/}.
 #' 
 #' Vecchia, A.V., Gilliom, R.J., Sullivan, D.J., Lorenz, D.L., and 
 #' Martin, J.D., 2009, Trends in concentrations and use of agricultural 
-#' herbicides for Corn Belt rivers, 1996-2006:  Environmental Science 
+#' herbicides for Corn Belt rivers, 1996--2006:  Environmental Science 
 #' and Technology, v. 43, p. 9,096-9,102.
 #'
 #' Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008, Modeling 
