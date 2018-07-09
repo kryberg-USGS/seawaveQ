@@ -121,7 +121,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   for (j in 1:14) {
     for (k in 1:4) {
       j2 <- (j - 1) * 4 + k
-      awave <- compwaveconv(cmaxt, j, k, mclass = 2)
+      awave <- compwaveconv(cmaxt, j, k)
       ipkt <- floor(360 * tseas)
       ipkt[ipkt == 0] <- 1
       wavest <- awave[ipkt]
