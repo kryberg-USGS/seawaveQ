@@ -1,0 +1,652 @@
+
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "seawaveQ"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "seawaveQ-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('seawaveQ')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("IllRivValleyCty")
+> ### * IllRivValleyCty
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: IllRivValleyCty
+> ### Title: Water-quality data for 05586100 Illinois River at Valley City,
+> ###   Ill.
+> ### Aliases: IllRivValleyCty
+> ### Keywords: datasets datasets
+> 
+> ### ** Examples
+> 
+> data(swData)
+> 
+> # summary of water-quality concentrations
+> apply(IllRivValleyCty[,grep("P[[:digit:]]", 
++ dimnames(IllRivValleyCty)[[2]])], 2, summary)
+            P04035     P04037     P82630      P82668
+Min.    0.00500000 0.00500000 0.01000000 0.002000000
+1st Qu. 0.01300000 0.00900000 0.01000000 0.002000000
+Median  0.03200000 0.01400000 0.01000000 0.002000000
+Mean    0.04153374 0.01694611 0.01494545 0.003067485
+3rd Qu. 0.05300000 0.02250000 0.01000000 0.002000000
+Max.    0.31000000 0.04900000 0.27000000 0.064000000
+NA's    5.00000000 1.00000000 3.00000000 5.000000000
+> 
+> # simple boxplot of water-quality concentrations
+> rosBoxPlot(IllRivValleyCty)
+Loading required package: NADA
+Loading required package: survival
+
+Attaching package: ‘NADA’
+
+The following object is masked from ‘package:stats’:
+
+    cor
+
+Warning in ros(my.list$obs, my.list$cen) :
+  Input > 80% censored -- Results are tenuous.
+
+Warning in ros(my.list$obs, my.list$cen) :
+  Input > 80% censored -- Results are tenuous.
+
+> 
+> # same boxplot function with many additional plotting arguments
+> rosBoxPlot(IllRivValleyCty, 
++            site="05586100 Illinois River at Valley City, Ill.", log="y", 
++            yaxt="n", ylim=c(0.0000001, 1), qwcols=c("R", "P"), 
++            ylab=c("Concentration, micrograms per liter"), col="skyblue1", 
++            cex.axis=0.7, cex.sub=0.8, par(tcl=0.5, las=1, 
++                                                         yaxs="i", 
++                                                         mgp=c(3,0.5,0), 
++                                                         mar=c(5,5,2,2),
++                                                         cex.main=0.9))
+Warning in ros(my.list$obs, my.list$cen) :
+  Input > 80% censored -- Results are tenuous.
+
+Warning in ros(my.list$obs, my.list$cen) :
+  Input > 80% censored -- Results are tenuous.
+
+> axis(2, at=c(0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1), 
++      labels=c("0.0000001", "0.000001", "0.00001", "0.0001", "0.001", "0.01", 
++               "0.1", "1"), cex.axis=0.7)
+> 
+> # scatter plot of simazine concentrations
+> cenScatPlot(IllRivValleyCty, pname="04035")
+> 
+> # scatter plot with many additional plotting arguments
+> par(las=1, tcl=0.5)
+> cenScatPlot(IllRivValleyCty, pname="04035", 
++             site="05586100 Illinois River at Valley City, Ill.",
++             ylabel="Simazine concentration, in micrograms per liter", 
++             legcex=0.7, 
++             ylim=c(0,0.4), yaxs="i", cex.lab=0.9, cex.axis=0.9,
++             xlim=c(as.Date("1996-01-01"), as.Date("2012-01-01")), 
++             xaxs="i", xaxt="n")
+> axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
++            "2012-01-01")
+> axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008",
++                                    "2012"), cex.axis=0.9)
+> 
+> # Prometon scatter plot
+> cenScatPlot(IllRivValleyCty, pname="04037", 
++             site="05586100 Illinois River at Valley City, Ill.",
++             ylabel="Prometon concentration, in micrograms per liter", 
++             legcex=0.7, 
++             ylim=c(0,0.06), yaxs="i", cex.lab=0.9, cex.axis=0.9,
++             xlim=c(as.Date("1996-01-01"), 
++                    as.Date("2012-01-01")), xaxs="i", 
++             xaxt="n")
+> axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", 
++            "2012-01-01")
+> axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008",
++                                                "2012"), cex.axis=0.9)
+> 
+> # Metribuzin scatter plot
+> cenScatPlot(IllRivValleyCty, pname="82630", 
++             site="05586100 Illinois River at Valley City, Ill.",
++             ylabel="Metribuzin concentration, in micrograms per liter", 
++             legcex=0.7, 
++             ylim=c(0,0.3), yaxs="i", cex.lab=0.9, cex.axis=0.9,
++             xlim=c(as.Date("1996-01-01"), 
++                    as.Date("2012-01-01")), xaxs="i", 
++             xaxt="n")
+> axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", 
++            "2012-01-01")
+> axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008",
++                                                "2012"), cex.axis=0.9)
+> # EPTC scatter plot
+> cenScatPlot(IllRivValleyCty, pname="82668", 
++             site="05586100 Illinois River at Valley City, Ill.",
++             ylabel="EPTC concentration, in micrograms per liter", 
++             legcex=0.7, ylim=c(0,0.08), yaxs="i", cex.lab=0.9, 
++             cex.axis=0.9, xlim=c(as.Date("1996-01-01"), 
++                    as.Date("2012-01-01")), xaxs="i", xaxt="n")
+> axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", 
++            "2012-01-01")
+> axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008","2012"), 
++      cex.axis=0.9)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("IllRivValleyCty", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+
+detaching ‘package:NADA’, ‘package:survival’
+
+> nameEx("cenScatPlot")
+> ### * cenScatPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cenScatPlot
+> ### Title: Scatter plot of water-quality data
+> ### Aliases: cenScatPlot
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> data(swData)
+> # scatter plot of Simazine concentrations
+> cenScatPlot(IllRivValleyCty, pname = "04035")
+> # scatter plot with many additional plotting arguments
+> par(las = 1, tcl = 0.5)
+> cenScatPlot(IllRivValleyCty, pname = "04035", 
++             site = "05586100 Illinois River at Valley City, IL",
++             ylabel = "Simazine concentration, in micrograms per liter", 
++             legcex = 0.7, ylim = c(0, 0.4), yaxs = "i", cex.lab = 0.9, 
++             cex.axis = 0.9, xlim = c(as.Date("1996-01-01", "%Y-%m-%d"), 
++             as.Date("2012-01-01", "%Y-%m-%d")), xaxs = "i", xaxt = "n")
+> axdates <- c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
++            "2012-01-01")
+> axis(1, as.Date(axdates, "%Y-%m-%d"), 
++      labels = c("1996", "2000", "2004", "2008", "2012"), cex.axis = 0.9)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cenScatPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("combineData")
+> ### * combineData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: combineData
+> ### Title: Combine water-quality sample data and continuous ancillary
+> ###   variables
+> ### Aliases: combineData
+> ### Keywords: manip
+> 
+> ### ** Examples
+> 
+> data(swData)
+> MoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha, 
++ qwcols = c("staid", "dates", "R", "P"))
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("combineData", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("compwaveconv")
+> ### * compwaveconv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: compwaveconv
+> ### Title: Seasonal Wave Computation
+> ### Aliases: compwaveconv
+> ### Keywords: datagen
+> 
+> ### ** Examples
+> 
+> # evaluate seasonal wave for specified decimal seasons
+> # these example decimal dates represent days at points 0.25, 0.5, and 
+> # 0.75 percent of the way through the year and the end of the year
+> dseas <- c(0.25, 0.5, 0.75, 1)
+> swave <- compwaveconv(cmaxt = 0.483, jmod = 2, hlife = 4)
+> swave[floor(360 * dseas)]
+[1] -0.48020095  0.44686809 -0.09991506 -0.35626218
+> plot(seq(0, 1, 1/360), swave, typ = "l")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("compwaveconv", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cqwMoRivOmaha")
+> ### * cqwMoRivOmaha
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cqwMoRivOmaha
+> ### Title: Continuously monitored (daily) data for 06610000 Missouri River
+> ###   at Omaha, Neb.
+> ### Aliases: cqwMoRivOmaha
+> ### Keywords: datasets datasets
+> 
+> ### ** Examples
+> 
+>   data(swData)
+>   
+>   # summary of water-quality concentrations
+>   apply(cqwMoRivOmaha[,3:8], 2, summary)
+$dflow
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  12500   29100   35300   40206   50600  116000 
+
+$flowa30
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's 
+-0.376411 -0.100795 -0.011561 -0.000803  0.132489  0.419460        29 
+
+$flowa1
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's 
+-0.307712 -0.025792 -0.000615 -0.001651  0.023916  0.372424        29 
+
+$dsed
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   69.0   222.0   295.5   388.2   420.0  5120.0 
+
+$seda30
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+-0.42777 -0.13446 -0.02517  0.00033  0.11305  0.59334       29 
+
+$seda1
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+-0.53361 -0.09237 -0.01945 -0.00154  0.06321  0.97236       29 
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cqwMoRivOmaha", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("examplecavdat")
+> ### * examplecavdat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: examplecavdat
+> ### Title: Example continuous ancillary variable data.
+> ### Aliases: examplecavdat
+> ### Keywords: datasets datasets
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(examplecavdat)
+    yrx mox dax jdayx   flowa30        flowa1
+30 1995  10  30   394 0.2448010 -0.0002333428
+31 1995  10  31   395 0.2458124  0.0034430711
+32 1995  11   1   396 0.2466736  0.0065602288
+33 1995  11   2   397 0.2476630  0.0108191029
+34 1995  11   3   398 0.2486832  0.0162713648
+35 1995  11   4   399 0.2490564  0.0107279489
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("examplecavdat", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("examplecavmat")
+> ### * examplecavmat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: examplecavmat
+> ### Title: Example continuous ancillary variable matrix.
+> ### Aliases: examplecavmat
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(examplecavmat)
+       flowa30       flowa1
+1 -0.111771936 -0.041600453
+2 -0.155914620  0.075222364
+3 -0.043752697 -0.008021798
+4 -0.004315925  0.066689687
+5  0.073100169  0.063475721
+6  0.126711034 -0.003283307
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("examplecavmat", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("examplecdatsub")
+> ### * examplecdatsub
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: examplecdatsub
+> ### Title: Example water-quality data.
+> ### Aliases: examplecdatsub
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+>   data(swData)
+>   head(examplecdatsub)
+   yrc moc dac jdayc R04041 P04041      flowa30       flowa1
+1 1996   1  13   469      <  0.008 -0.111771936 -0.041600453
+2 1996   2  13   500      <  0.008 -0.155914620  0.075222364
+3 1996   3  13   529      <  0.008 -0.043752697 -0.008021798
+4 1996   3  28   544      _  0.009 -0.004315925  0.066689687
+5 1996   4   9   556      _  0.014  0.073100169  0.063475721
+6 1996   4  23   570      _  0.012  0.126711034 -0.003283307
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("examplecdatsub", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("examplecentmp")
+> ### * examplecentmp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: examplecentmp
+> ### Title: Example logical vector.
+> ### Aliases: examplecentmp
+> 
+> ### ** Examples
+> 
+> data(swData)
+> examplecentmp
+  [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [13] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [25] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+ [37] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [49]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+ [61]  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [73]  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+ [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+ [97]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[109]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("examplecentmp", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampleclog")
+> ### * exampleclog
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampleclog
+> ### Title: Example of logarithmically transformed concentration data.
+> ### Aliases: exampleclog
+> 
+> ### ** Examples
+> 
+> data(swData)
+> exampleclog
+  [1] -2.09691001 -2.09691001 -2.09691001 -2.04575749 -1.85387196 -1.92081875
+  [7] -1.30980392 -0.85387196 -0.65757732 -0.03151705 -0.50863831 -2.09691001
+ [13] -2.09691001 -2.09691001 -2.09691001 -1.63827216 -1.85387196 -1.55284197
+ [19] -1.67778071 -1.72124640 -1.65757732 -1.55284197 -0.92081875 -1.16749109
+ [25] -1.38721614 -1.65757732 -1.95860731 -2.09691001 -2.09691001 -2.09691001
+ [31] -2.09691001 -2.09691001 -2.09691001 -2.00000000 -0.74472749 -0.50863831
+ [37] -0.56863624 -0.08618615 -0.82390874 -1.43179828 -2.09691001 -1.76955108
+ [43] -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+ [49] -2.09691001 -1.92081875 -2.00000000 -1.52287875 -1.09691001 -0.85387196
+ [55] -1.72124640 -1.85387196 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+ [61] -2.09691001 -2.04575749 -2.09691001 -2.09691001 -1.82390874 -2.09691001
+ [67] -0.85387196 -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+ [73] -2.09691001 -2.09691001 -2.09691001 -1.95860731 -2.04575749 -2.00000000
+ [79] -2.09691001 -2.09691001 -1.92081875 -2.09691001 -2.09691001 -2.09691001
+ [85] -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+ [91] -2.09691001 -2.09691001 -2.09691001 -1.48148606 -2.09691001 -2.09691001
+ [97] -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+[103] -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+[109] -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001 -2.09691001
+[115] -2.09691001
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampleclog", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampleqwcols")
+> ### * exampleqwcols
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampleqwcols
+> ### Title: Example data indicators.
+> ### Aliases: exampleqwcols
+> 
+> ### ** Examples
+> 
+>   data(swData)
+>   exampleqwcols
+[1] "R" "P"
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampleqwcols", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("examplestpars")
+> ### * examplestpars
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: examplestpars
+> ### Title: Example matrix for internal use.
+> ### Aliases: examplestpars
+> 
+> ### ** Examples
+> 
+>   data(swData)
+>   examplestpars
+     [,1] [,2]      [,3]      [,4]      [,5]     [,6]       [,7]        [,8]
+[1,]    1   15 0.4284281 -43.90813 -2.276655 2.163275 -0.2506287 0.005866443
+[2,]   NA   NA        NA        NA        NA       NA         NA          NA
+         [,9]      [,10]     [,11]      [,12]     [,13]   [,14]     [,15]
+[1,] 2.955458 0.08621904 0.2612676 0.03774915 0.5207124 0.78638 0.4808743
+[2,]       NA         NA        NA         NA        NA      NA        NA
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("examplestpars", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampletndlin")
+> ### * exampletndlin
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampletndlin
+> ### Title: Example numeric vector used internally.
+> ### Aliases: exampletndlin
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(exampletndlin)
+[1] -2.965847 -2.882514 -2.799180 -2.758197 -2.726776 -2.688525
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampletndlin", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampletndlinpr")
+> ### * exampletndlinpr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampletndlinpr
+> ### Title: Example numeric vector used internally.
+> ### Aliases: exampletndlinpr
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(exampletndlinpr)
+[1] -3.169399 -3.166667 -3.165301 -3.162568 -3.159836 -3.157104
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampletndlinpr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampletseas")
+> ### * exampletseas
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampletseas
+> ### Title: Example numeric vector used internally.
+> ### Aliases: exampletseas
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(exampletseas)
+[1] 0.03415301 0.11748634 0.20081967 0.24180328 0.27322404 0.31147541
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampletseas", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampletseaspr")
+> ### * exampletseaspr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampletseaspr
+> ### Title: Example numeric vector used internally.
+> ### Aliases: exampletseaspr
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(exampletseaspr)
+[1] 0.8306011 0.8333333 0.8346995 0.8374317 0.8401639 0.8428962
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampletseaspr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampletyr")
+> ### * exampletyr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampletyr
+> ### Title: Example numeric vector used internally.
+> ### Aliases: exampletyr
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(exampletyr)
+[1] 1996.034 1996.117 1996.201 1996.242 1996.273 1996.311
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampletyr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("exampletyrpr")
+> ### * exampletyrpr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: exampletyrpr
+> ### Title: Example numeric vector used internally.
+> ### Aliases: exampletyrpr
+> 
+> ### ** Examples
+> 
+> data(swData)
+> head(exampletyrpr)
+[1] 1995.831 1995.833 1995.835 1995.837 1995.840 1995.843
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("exampletyrpr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("fitMod")
+> ### * fitMod
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: fitMod
+> ### Title: Internal function that fits the seawaveQ model.
+> ### Aliases: fitMod
+> ### Keywords: models regression survival ts
+> 
+> ### ** Examples
+> 
+> data(swData)
+> myRes <- fitMod(cdatsub=examplecdatsub, cavdat=examplecavdat, 
++ yrstart=1995, yrend=2003, tndbeg=1995, tndend=2003, tanm="myfit3", 
++ pnames=c("04041"), qwcols=c("R", "P"))
+Computing the best seasonal wave.
+Error in survreg(Surv(time = clogtmp, time2 = indcen, type = "left") ~  : 
+  could not find function "survreg"
+Calls: fitMod
+Execution halted

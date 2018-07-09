@@ -1,0 +1,33 @@
+
+
+Monday 10 Jun 2013 15:00:31 PM CDT
+R version 3.0.1 (2013-05-16)
+seawaveQ version 0.7.0
+x86_64-apple-darwin10.8.0 (64-bit)
+
+Final model survreg results for 04041
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xxxmat - 1, dist = "gaussian")
+                Value Std. Error        z         p
+xxxmatintcpt  -2.2697     0.0853 -26.5946 7.85e-156
+xxxmatwavest   2.1769     0.2594   8.3929  4.74e-17
+xxxmattndlin  -0.2489     0.0368  -6.7576  1.40e-11
+xxxmatflowa30 -0.0283     0.5138  -0.0551  9.56e-01
+xxxmatflowa1   2.9890     0.7801   3.8317  1.27e-04
+Log(scale)    -0.8579     0.1036  -8.2828  1.20e-16
+
+Scale= 0.424 
+
+Gaussian distribution
+Loglik(model)= -43.1   Loglik(intercept only)= -103.7
+	Chisq= 121.33 on 4 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+
+AIC (Akaike's An Information Criterion) is:  98.11042 
+BIC (Bayesian Information Criterion) is:  114.58 
+Model class is 1
+Pulse input function is 4
+Half life is 3
+Seasonal value of the maximum concentration is 0.4808743.
