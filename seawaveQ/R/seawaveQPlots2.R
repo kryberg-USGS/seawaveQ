@@ -94,7 +94,8 @@ seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr,
                             tyrpr, pnames, tanm, mclass = 2, numknots) {
   # produce plots for selected model
   # set up output file for graphs 
-  # output graphs to a pdfgraphfile <- paste(tanm, pnames, ".pdf", sep = "")
+  # output graphs to a pdf
+  graphfile <- paste(tanm, pnames, ".pdf", sep = "")
   gmes <- paste("Plots saved to ", graphfile, ".", sep = "")
   message(gmes)
   pdf(graphfile, height = 11, width = 8.5)

@@ -56,7 +56,6 @@
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
                      pnames, qwcols, mclass = 2, numknots = 4) {
-  require(rms)
   yr <- cdatsub[[1]]
   mo <- cdatsub[[2]]
   da <- cdatsub[[3]]

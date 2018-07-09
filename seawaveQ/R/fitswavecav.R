@@ -162,9 +162,7 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart=0,
 			yrend=0, tndbeg=0, tndend=0, iwcav=c("none"), 
 			dcol="dates", qwcols=c("R", "P"), mclass=1, 
 			numk = 4) {
-  require(lubridate)
   # perform data checks and check arguments
-							
   dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, \n 
              greater than or equal to 0.")
   if (!is.numeric(c(yrstart, yrend, tndbeg, tndend))) 
