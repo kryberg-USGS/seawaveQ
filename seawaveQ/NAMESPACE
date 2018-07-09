@@ -12,7 +12,7 @@ importFrom("graphics", "boxplot", "legend", "lines", "mtext", "par",
 importFrom("stats", "extractAIC", "pnorm", "qnorm", "quantile",
              "runif", "supsmu")
 importFrom("utils", "sessionInfo")
-importFrom("survival", "survreg")
+importFrom("survival", "survreg", "Surv")
 importFrom("rms", "rcs")
 importFrom("NADA", "ros")
 importFrom("lubridate", "year", "month", "day")
