@@ -107,7 +107,7 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
   ipkt[ipkt==0] <- 1
   
   # call function to compute seasonal wave
-  wavexx <- compwaveconv(cmaxt, mod1, hlife1, mclass=1)
+  wavexx <- compwaveconv(cmaxt, mod1, hlife1)
 
   wavest <- wavexx[ipkt]
   intcpt <- rep(1, length(wavest))
