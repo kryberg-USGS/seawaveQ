@@ -260,19 +260,20 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
 	  
     # check to see if at least 10 noncensored values
     if (sum(!centmp) > 9) {
-      if (mclass == 1) {
-        fitmsg <- paste("Fitting model for ", pnames[iipar], sep = "")
-        message(fitmsg)
-        myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
-                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                         qwcols)
-      } else {
+      if (mclass == 2) {
         fitmsg <- paste("Fitting model for ", pnames[iipar], 
                         ", using restriced cubic splines.", sep = "")
         message(fitmsg)
-        myRes <- fitMod2(cdatsub, cavdat, yrstart, yrend, 
-                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                         qwcols, mclass = mclass, numk = numk)
+        myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
+                        tndbeg, tndend, tanm, pnames = pnames[iipar], 
+                        qwcols, mclass = 2, numk = numk)
+      } else {
+        fitmsg <- paste("Fitting model for ", pnames[iipar], 
+                        ", using a linear trend model.", sep = "")
+        message(fitmsg)
+        myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
+                        tndbeg, tndend, tanm, pnames = pnames[iipar], 
+                        qwcols, mclass = 1)
       }
       stpars <- myRes[[1]]
       aovout <- myRes[[2]]
