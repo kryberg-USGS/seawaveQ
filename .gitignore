@@ -15,3 +15,4 @@ oldRDs/
 seawaveQ_2.0.0.tar.gz
 seawaveQ.Rcheck/
 /*.Rd
+/*.R
