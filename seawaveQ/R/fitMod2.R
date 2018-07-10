@@ -205,7 +205,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       jmod, "\nHalf life is ", hlife, "\nSeasonal value of the maximum concentration is ", 
       round(cmaxt, digits = 2), ".", "\n", sep = "")
   sink()
-  plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, 
+  plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlinpr, 
                             tndrcs, tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
                            yrstart, yrend, tyr, tyrpr, pnames, tanm, numk = numk)
   myRes <- list(stpars, aovout, plotDat)

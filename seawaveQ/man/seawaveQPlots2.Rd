@@ -114,15 +114,6 @@ distributions. The plotting position used a censored concentration is
 performed, a new set of randomized residuals is generated and thus the 
 plotting positions for censored values can change.
 }
-\examples{
-data(swData)
-myPlots <- seawaveQPlots(stpars=examplestpars, cmaxt=0.4808743, 
-tseas=exampletseas, tseaspr=exampletseaspr, tndlin=exampletndlin,
-tndlinpr=exampletndlinpr, cdatsub=examplecdatsub, cavdat=examplecavdat, 
-cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
-yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
-pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numk = 4)
-}
 \references{
 #' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
 Applications to Linear Models, Logisitc Regression, and Survival
