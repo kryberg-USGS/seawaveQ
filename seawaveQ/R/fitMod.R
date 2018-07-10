@@ -62,7 +62,7 @@
 #' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
 #' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
-                   pnames, qwcols, mclass=1, numk = 4) {
+                   pnames, qwcols, mclass = 1, numk = 4) {
   yr <- cdatsub[[1]]
   mo <- cdatsub[[2]]
   da <- cdatsub[[3]]
@@ -121,7 +121,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   nsm <- length(ysm)
   cmaxt <- xsm[order(ysm)[nsm]]
   
-  if (mclass = 2) {
+  if (mclass == 2) {
     # nexvars is the number of explanatory variables (wave, trend, 
     # and continuous variables, if any)
     # stpars and aovout store the model output
