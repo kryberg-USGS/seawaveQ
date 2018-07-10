@@ -70,7 +70,6 @@
 #' "00945" for sulfate).  
 #' @param tanm is an a character identifier that names the trend 
 #' analysis run.  It is used to label output files.
-#' @param 
 #' @param mclass indicates the class on model one wants to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time trend. A class 2 model is a newer option for longer

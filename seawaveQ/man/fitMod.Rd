@@ -5,7 +5,7 @@
 \title{Internal function that fits the seawaveQ model.}
 \usage{
 fitMod(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, pnames, qwcols,
-  mclass = 1)
+  mclass = 1, numk = 4)
 }
 \arguments{
 \item{cdatsub}{is the concentration data}
@@ -39,7 +39,11 @@ column headers for concentration data (default is P for parameter).}
 A class 1 model is the the traditional SEAWAVE-Q model that has a
 linear time tredn. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
-time variable to provide a more flexible model.}
+time variable to provide a more flexible model. The default is 1.
+(Harrell, Jr., 2010 and 2018).}
+
+\item{numk}{is the number of knots in the restricted cubic spline model
+(mclass = 2). The default is 4, and the recommended number is 3--7.}
 }
 \value{
 a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
@@ -50,7 +54,8 @@ information about the data and the model(s) selected (see
 the summary of the survival regression call.  The third element of the 
 list is itself a list containing the observed concentrations (censored 
 and uncensored) and the predicted concentrations used by 
-\code{\link{seawaveQPlots}} to generate the plots.
+\code{\link{seawaveQPlots}} or \code{\link{seawaveQPlots2}} to generate the 
+plots.
 }
 \description{
 fitMod is called from within \link{fitswavecav} but
@@ -64,13 +69,21 @@ yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3",
 pnames = c("04041"), qwcols = c("R", "P"))
 }
 \references{
-Allison, P.D. 1995: Survival analysis using the SAS system---A 
+Allison, P.D., 1995, Survival analysis using the SAS system---A 
 practical guide: Cary, North Carolina, SAS Publishing, 304 p.
+
+Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+Applications to Linear Models, Logisitc Regression, and Survival
+Analysis: New York, Springer-Verlag, 568 p.
+
+Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 }
 \author{
 Aldo V. Vecchia and Karen R. Ryberg
 }
 \keyword{models}
+\keyword{multivariate}
 \keyword{regression}
 \keyword{survival}
 \keyword{ts}
