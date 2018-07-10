@@ -24,7 +24,7 @@
 #' column headers for concentration data (default is P for parameter).
 #' @param mclass indicates the class of model one wants to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
-#' linear time tredn. A class 2 model is a newer option for longer
+#' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model 
 #' (Harrell, Jr., 2010 and 2018). The default is 2 with this function.
