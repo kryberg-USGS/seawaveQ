@@ -26,7 +26,8 @@
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time tredn. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
-#' time variable to provide a more flexible model. 
+#' time variable to provide a more flexible model 
+#' (Harrell, Jr., 2010 and 2018). The default is 2 with this function.
 #' @param numk is the number of knots in the restricted cubic spline model.
 #' The default is 4, and the recommended number is 3--7.
 #' @keywords models
@@ -52,8 +53,13 @@
 #' tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
 #' mclass = 2, numk = 4)
 #' @references
-#' Allison, P.D. 1995: Survival analysis using the SAS system---A 
+#' Allison, P.D., 1995, Survival analysis using the SAS system---A 
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
+#' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+#' Applications to Linear Models, Logisitc Regression, and Survival
+#' Analysis: New York, Springer-Verlag, 568 p.
+#' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+#' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
                      pnames, qwcols, mclass = 2, numk = 4) {
   yr <- cdatsub[[1]]
@@ -85,8 +91,16 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   tndlin <- tyr - tmid
   tndlin[tyr < tndbeg] <- tndbeg - tmid
   tndlin[tyr > tndend + 1] <- tndend - tmid
+  
+  # create a linear tail-restricted cubic spline function,  
+  # with a particular number of knots, 
+  # using the observation dates in the trend period
   tndrcs <- rcs(tndlin, numk)
 
+  # created the time series for continuous (daily )modeling of 
+  # pesticide concentrations and create a linear tail-restricted 
+  # cubic spline function, using the knots from the 
+  # data used to build the model
   tndlinpr <- tyrpr - tmid
   tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
   tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
