@@ -77,14 +77,13 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   }  else {
     cavmat <- as.matrix(cdatsub)
   }
-  # compute variables for decimal season, year, trend 
+  # compute variables for decimal season, year, and trend 
   tseas <- dyr - floor(dyr)
   tyr <- dyr
   tyrpr <- dyrpr
   tseaspr <- (dyrpr - floor(dyrpr))
   tmid <- (tndbeg + tndend)/2
-  
-  tndlin <- tyr - tmid
+    tndlin <- tyr - tmid
   tndlin[tyr < tndbeg] <- tndbeg - tmid
   tndlin[tyr > tndend + 1] <- tndend - tmid
   
@@ -93,7 +92,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   # using the observation dates in the trend period
   tndrcs <- rcs(tndlin, numk)
 
-  # created the time series for continuous (daily )modeling of 
+  # create the time series for continuous (daily) modeling of 
   # pesticide concentrations and create a linear tail-restricted 
   # cubic spline function, using the knots from the 
   # data used to build the model
@@ -102,6 +101,7 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
   tndrcspr <- rcs(tndlinpr, attributes(tndrcs)$parms)
 
+  
   # find cmaxt (decimal season of max concentration)
   tmpsm <- supsmu(tseas, clog)
   xsm <- tmpsm$x
@@ -117,12 +117,14 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   aovout <- vector("list", 1)
   aicout <- vector("list", 2)
   bicout <- vector("list", 2)
+  
   # parx and aovtmp are temporary objects to store results 
   # for 56 model possibilities
   parx <- matrix(nrow = 56, ncol = (dim(stpars)[[2]] - 1))
   aovtmp <- vector("list", 56)
   aictmp <- vector("list", 56)
   bictmp <- vector("list", 56)
+  
   # ready to loop through 56 model choices 
   # (14 models x 4 halflives)
   wvmsg <- paste("Computing the best seasonal wave.")
@@ -145,6 +147,8 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       }
       nctmp <- length(xmat[1, ])
       clogtmp <- clog
+      
+      # requires survival package
       tmpouta <- survreg(Surv(time = clogtmp, time2 = indcen, 
                               type = "left") ~ xmat - 1, dist = "gaussian")
       parx[j2, ] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
@@ -153,7 +157,8 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
                                                   row.names(summary(tmpouta)$table)), 4])
       aovtmp[[j2]] <- summary(tmpouta)
       aictmp[[j2]] <- extractAIC(tmpouta)[2]
-      bictmp[[j2]] <- extractAIC(tmpouta, k = log(length(tmpouta$linear.predictors)))[2]
+      bictmp[[j2]] <- extractAIC(tmpouta, 
+                                 k = log(length(tmpouta$linear.predictors)))[2]
     }
   }
   # find largest likelihood (smallest negative likelihood)
@@ -195,13 +200,14 @@ fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       "\n", sep = " ")
   jmod <- floor((stpars[1, 2] - 1)/4) + 1
   hlife <- stpars[1, 2] - (jmod - 1) * 4
-  cat("Model class is ", mclass, "\nPulse input function is ", 
-      jmod, "\nHalf life is ", hlife, "\nSeasonal value of the maximum concentration is ", 
+  cat("Model class is ", mclass, "\nPulse input function is ", jmod, 
+      "\nHalf life is ", hlife, 
+      "\nSeasonal value of the maximum concentration is ", 
       round(cmaxt, digits = 2), ".", "\n", sep = "")
   sink()
-  plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlinpr, 
-                            tndrcs, tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
-                           yrstart, yrend, tyr, tyrpr, pnames, tanm, numk = numk)
+  plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, 
+                            tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
+                            yrstart, yrend, tyr, tyrpr, pnames, tanm, numk = numk)
   myRes <- list(stpars, aovout, plotDat)
   myRes
 }
