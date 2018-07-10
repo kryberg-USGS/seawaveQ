@@ -46,11 +46,11 @@
 #' @author Karen R. Ryberg
 #' @export
 #' @references
-#' Helsel, D.R., 2005, Nondetects and data analysis: New York, John 
-#' Wiley and Sons.
+#' Helsel, D.R., 2012, Statistics for Censored Environmental Data Using Minitab 
+#' and R: Hoboken, New Jersey, John Wiley and Sons, Inc., 344 p.
 #' 
-#' Lee, Lopaka, 2012, Nondetects and data analysis for environmental 
-#' data: R package version 1.5-4, 
+#' Lee, Lopaka, 2017, Nondetects and data analysis for environmental 
+#' data: R package version 1.6-1, 
 #' \url{https://CRAN.R-project.org/package=NADA}.
 #' 
 #' Oblinger Childress, C.J., Foreman, W.T., Connor, B.F., and Maloney, 
