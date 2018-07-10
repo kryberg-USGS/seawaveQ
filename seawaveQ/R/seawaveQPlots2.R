@@ -44,10 +44,12 @@
 #' cdatsub.
 #' @param tseaspr is the decimal season date used to model concentration 
 #' using the continuous data set cavdat.
-#' @param tndlin is the decimal time centered on the midpoint of the trend
-#' for the sample data, cdatasub.
-#' @param tndlinpr is is the decimal time centered on the midpoint of the 
-#' trend for the continuous data, cavdat.
+#' @param tndrcs is the decimal time centered on the midpoint of the trend
+#' for the sample data, cdatasub, then converted to a linear tail-restricted 
+#' cubic spline with a particular number of knots (Harrell, Jr., 2010 and 2018).
+#' @param tndrcspr is is the decimal time centered on the midpoint of the 
+#' trend for the continuous data, cavdat, then converted to a linear 
+#' tail-restricted cubic spline using the knots from tndrcs.
 #' @param cdatsub is the concentration data
 #' @param cavdat is the continuous (daily) ancillary data
 #' @param cavmat is a matrix containing the continuous ancillary 
@@ -94,10 +96,15 @@
 #' cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
 #' yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
 #' pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numk = 4)
-seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, 
-                            tndrcs, tndrcspr, cdatsub, 
-                            cavdat, cavmat, clog, centmp, yrstart, yrend, tyr, 
-                            tyrpr, pnames, tanm, mclass = 2, numk) {
+#' @references
+#' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+#' Applications to Linear Models, Logisitc Regression, and Survival
+#' Analysis: New York, Springer-Verlag, 568 p.
+#' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+#' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
+seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
+                           cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
+                           yrend, tyr, tyrpr, pnames, tanm, mclass = 2, numk) {
   # produce plots for selected model
   # set up output file for graphs 
   # output graphs to a pdf
