@@ -25,11 +25,15 @@
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time tredn. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
-#' time variable to provide a more flexible model.
+#' time variable to provide a more flexible model. The default is 1.
+#' (Harrell, Jr., 2010 and 2018). 
+#' @param numk is the number of knots in the restricted cubic spline model
+#' (mclass = 2). The default is 4, and the recommended number is 3--7.
 #' @keywords models
 #' @keywords regression
 #' @keywords survival
 #' @keywords ts
+#' @keywords multivariate
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @return a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
 #' a text file showing the best model survival regression call and 
@@ -39,7 +43,8 @@
 #' the summary of the survival regression call.  The third element of the 
 #' list is itself a list containing the observed concentrations (censored 
 #' and uncensored) and the predicted concentrations used by 
-#' \code{\link{seawaveQPlots}} to generate the plots.
+#' \code{\link{seawaveQPlots}} or \code{\link{seawaveQPlots2}} to generate the 
+#' plots.
 #' @export
 #' @examples
 #' data(swData)
@@ -47,10 +52,17 @@
 #' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3", 
 #' pnames = c("04041"), qwcols = c("R", "P"))
 #' @references
-#' Allison, P.D. 1995: Survival analysis using the SAS system---A 
+#' Allison, P.D., 1995, Survival analysis using the SAS system---A 
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
+#' 
+#' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+#' Applications to Linear Models, Logisitc Regression, and Survival
+#' Analysis: New York, Springer-Verlag, 568 p.
+#' 
+#' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+#' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
-                   pnames, qwcols, mclass=1) {
+                   pnames, qwcols, mclass=1, numk = 4) {
   yr <- cdatsub[[1]]
   mo <- cdatsub[[2]]
   da <- cdatsub[[3]]
@@ -66,12 +78,11 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   
   #  set up matrix with continuous variables
   if (length(cdatsub[1,]) > 6) {
-    cavmat <- as.matrix(cdatsub[,7:length(cdatsub[1,])])   
+    cavmat <- as.matrix(cdatsub[, 7:length(cdatsub[1, ])])   
   } else {
     cavmat <- as.matrix(cdatsub)
   }
-  # compute variables for decimal season and year and linear 
-  # trend
+  # compute variables for decimal season, year, and trend
   tseas <- dyr - floor(dyr)
   tyr <- dyr
   tyrpr <- dyrpr
@@ -80,76 +91,150 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   tndlin <- tyr - tmid
   tndlin[tyr < tndbeg] <- tndbeg - tmid
   tndlin[tyr > tndend + 1] <- tndend - tmid 
-  tndlinpr <- tyrpr - tmid
-  tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
-  tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
+  
+  if (mclass == 2) {
+    # create a linear tail-restricted cubic spline function,  
+    # with a particular number of knots, 
+    # using the observation dates in the trend period
+    tndrcs <- rcs(tndlin, numk)
+  
+    # create the time series for continuous (daily) modeling of 
+    # pesticide concentrations and create a linear tail-restricted 
+    # cubic spline function, using the knots from the 
+    # data used to build the model
+    tndlinpr <- tyrpr - tmid
+    tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
+    tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
+    tndrcspr <- rcs(tndlinpr, attributes(tndrcs)$parms)
+  } else {
+    # create the time series for continuous (daily) modeling of 
+    # pesticide concentrations 
+    tndlinpr <- tyrpr - tmid
+    tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
+    tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
+  }
+  
   # find cmaxt (decimal season of max concentration)
   tmpsm <- supsmu(tseas, clog)
   xsm <- tmpsm$x
   ysm <- tmpsm$y
   nsm <- length(ysm)
   cmaxt <- xsm[order(ysm)[nsm]]
-    
-  # nexvars is the number of explanatory variables (wave, trend, 
-  # and continuous variables, if any)
-  # stpars and aovout store the model output
-  nexvars <- 2 + length(cdatsub[1,]) - 6
-  stpars <- matrix(nrow = 2,ncol = 6 + 2 * (nexvars + 1))
-  aovout <- vector('list', 1)
-  aicout <- vector('list', 2)
-  bicout <- vector('list', 2)
-  # parx and aovtmp are temporary objects to store results 
-  # for 56 model possibilities
-  parx <- matrix(nrow = 56, ncol = 5 + 2 * (nexvars + 1))
-  aovtmp <- vector('list', 56)
-  aictmp <- vector('list', 56)
-  bictmp <- vector('list', 56)
-  # ready to loop through 56 model choices 
-  # (14 models x 4 halflives)
-  wvmsg <- paste("Computing the best seasonal wave.")
-  message(wvmsg)
-  for (j in 1:14) {
-    for (k in 1:4) {
-      j2 <- (j - 1) * 4 + k
-      awave <- compwaveconv(cmaxt, j, k)
-      ipkt <- floor(360 * tseas)
-      ipkt[ipkt == 0] <- 1
-      wavest <- awave[ipkt]
-      ipkt <- floor(360 * tseaspr)
-      ipkt[ipkt == 0] <- 1
-      wavestpr <- awave[ipkt]
-      indcen <- !centmp
-      intcpt <- rep(1, length(wavest))
-      xmat <- cbind(intcpt, wavest, tndlin)
-      if (length(cdatsub[1,]) > 6) { 
-        xmat <- cbind(xmat, cavmat) 
+  
+  if (mclass = 2) {
+    # nexvars is the number of explanatory variables (wave, trend, 
+    # and continuous variables, if any)
+    # stpars and aovout store the model output
+    nexvars <- 2 + (length(cdatsub[1, ]) - 6) + (numk - 1) 
+    stpars <- matrix(nrow = 2, ncol = (4 + 2 * nexvars + (numk - 1) + 1))
+    aovout <- vector("list", 1)
+    aicout <- vector("list", 2)
+    bicout <- vector("list", 2)
+  
+    # parx and aovtmp are temporary objects to store results 
+    # for 56 model possibilities
+    parx <- matrix(nrow = 56, ncol = (dim(stpars)[[2]] - 1))
+    aovtmp <- vector("list", 56)
+    aictmp <- vector("list", 56)
+    bictmp <- vector("list", 56)
+  
+    # ready to loop through 56 model choices 
+    # (14 models x 4 halflives)
+    wvmsg <- paste("Computing the best seasonal wave.")
+    message(wvmsg)
+    for (j in 1:14) {
+      for (k in 1:4) {
+        j2 <- (j - 1) * 4 + k
+        awave <- compwaveconv(cmaxt, j, k)
+        ipkt <- floor(360 * tseas)
+        ipkt[ipkt == 0] <- 1
+        wavest <- awave[ipkt]
+        ipkt <- floor(360 * tseaspr)
+        ipkt[ipkt == 0] <- 1
+        wavestpr <- awave[ipkt]
+        indcen <- !centmp
+        intcpt <- rep(1, length(wavest))
+        xmat <- cbind(intcpt, wavest, tndrcs)
+        if (length(cdatsub[1, ]) > 6) {
+          xmat <- cbind(xmat, cavmat)
+        }
+        nctmp <- length(xmat[1, ])
+        clogtmp <- clog
+      
+        # requires survival package
+        tmpouta <- survreg(Surv(time = clogtmp, time2 = indcen, 
+                                type = "left") ~ xmat - 1, dist = "gaussian")
+        parx[j2, ] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
+                        tmpouta$coef, summary(tmpouta)$table[1:nctmp, 2], 
+                        summary(tmpouta)$table[grep("tndlin", 
+                                                    row.names(summary(tmpouta)$table)), 4])
+        aovtmp[[j2]] <- summary(tmpouta)
+        aictmp[[j2]] <- extractAIC(tmpouta)[2]
+        bictmp[[j2]] <- extractAIC(tmpouta, 
+                                   k = log(length(tmpouta$linear.predictors)))[2]
       }
-      nctmp <- length(xmat[1,])
-      clogtmp <- clog
+    }
+  } else {
+    # nexvars is the number of explanatory variables (wave, trend, 
+    # and continuous variables, if any)
+    # stpars and aovout store the model output
+    nexvars <- 2 + length(cdatsub[1,]) - 6
+    stpars <- matrix(nrow = 2,ncol = 6 + 2 * (nexvars + 1))
+    aovout <- vector("list", 1)
+    aicout <- vector("list", 2)
+    bicout <- vector("list", 2)
+    
+    # parx and aovtmp are temporary objects to store results 
+    # for 56 model possibilities
+    parx <- matrix(nrow = 56, ncol = 5 + 2 * (nexvars + 1))
+    aovtmp <- vector("list", 56)
+    aictmp <- vector("list", 56)
+    bictmp <- vector("list", 56)
+    
+    # ready to loop through 56 model choices 
+    # (14 models x 4 halflives)
+    wvmsg <- paste("Computing the best seasonal wave.")
+    message(wvmsg)
+    for (j in 1:14) {
+      for (k in 1:4) {
+        j2 <- (j - 1) * 4 + k
+        awave <- compwaveconv(cmaxt, j, k)
+        ipkt <- floor(360 * tseas)
+        ipkt[ipkt == 0] <- 1
+        wavest <- awave[ipkt]
+        ipkt <- floor(360 * tseaspr)
+        ipkt[ipkt == 0] <- 1
+        wavestpr <- awave[ipkt]
+        indcen <- !centmp
+        intcpt <- rep(1, length(wavest))
+        xmat <- cbind(intcpt, wavest, tndlin)
+        if (length(cdatsub[1, ]) > 6) { 
+          xmat <- cbind(xmat, cavmat) 
+        }
+        nctmp <- length(xmat[1, ])
+        clogtmp <- clog
         
-      # requires survival package
-      tmpouta <- survreg(Surv(time=clogtmp, time2=indcen, 
-                              type="left") ~ xmat - 1, 
-                         dist = "gaussian")
-      parx[j2,] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
-                       tmpouta$coef, 
-                       summary(tmpouta)$table[1:nctmp, 2], 
-                       summary(tmpouta)$table["xmattndlin", 4]) 
-      aovtmp[[j2]] <- summary(tmpouta)
-      aictmp[[j2]] <- extractAIC(tmpouta)[2]
-      bictmp[[j2]] <- extractAIC(tmpouta, 
-                                 k = log(length(
-                                   tmpouta$linear.predictors)))[2]
+        # requires survival package
+        tmpouta <- survreg(Surv(time=clogtmp, time2=indcen, 
+                                type="left") ~ xmat - 1, dist = "gaussian")
+        parx[j2,] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
+                       tmpouta$coef, summary(tmpouta)$table[1:nctmp, 2], 
+                       summary(tmpouta)$table["xmattndlin", 4])
+        aovtmp[[j2]] <- summary(tmpouta)
+        aictmp[[j2]] <- extractAIC(tmpouta)[2]
+        bictmp[[j2]] <- extractAIC(tmpouta, 
+                                   k = log(length(tmpouta$linear.predictors)))[2]
+      }
     }
   }
   # find largest likelihood (smallest negative likelihood)
-  likx <- (-parx[,4])
+  likx <- (-parx[, 4])
   # eliminate models with negative coefficient for the seasonal wave
   likx[parx[, 6] < 0] <- NA
   # This could be used to penalize models with two seasons of application
   likx[25:56] <- likx[25:56] + 0
   pckone <- order(likx)[1]
-  stpars[1,] <- c(parx[pckone,], cmaxt)
+  stpars[1, ] <- c(parx[pckone, ], cmaxt)
   aovout[[1]] <- aovtmp[[pckone]]
   aicout[[1]] <- aictmp[[pckone]]
   bicout[[1]] <- bictmp[[pckone]]
@@ -183,14 +268,20 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   hlife <- stpars[1, 2] - (jmod - 1) * 4
   cat("Model class is ", mclass, "\nPulse input function is ", jmod,
       "\nHalf life is ", hlife, 
-      "\nSeasonal value of the maximum concentration is ", cmaxt, ".", 
-      "\n", sep = "")
+      "\nSeasonal value of the maximum concentration is ", 
+      round(cmaxt, digits = 2), ".", "\n", sep = "")
   sink()
   
-  plotDat <- seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
+  if (mclass == 2) {
+      plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, 
+                            tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
+                            yrstart, yrend, tyr, tyrpr, pnames, tanm, numk = numk)
+    myRes <- list(stpars, aovout, plotDat)
+  } else {
+    plotDat <- seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
                 tndlinpr, cdatsub, cavdat, cavmat, clog, centmp, 
                 yrstart, yrend, tyr, tyrpr, pnames, tanm)  
-  
-  myRes <- list(stpars, aovout, plotDat)
+    myRes <- list(stpars, aovout, plotDat)
+  }
   myRes
 }
