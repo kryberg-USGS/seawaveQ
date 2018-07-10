@@ -1,8 +1,8 @@
 #' Internal function that fits the seawaveQ model with restricted cubic splines.
 #' 
 #' fitMod2 is called from within \link{fitswavecav} but
-#' can be invoked directly.  It fits the seawaveQ model and with 
-#' restricted cubic splines on tim variable returns the model
+#' can be invoked directly.  It fits the seawaveQ model with 
+#' restricted cubic splines on the time variable and returns the model
 #' results.
 #' @param cdatsub is the concentration data
 #' @param cavdat is the continuous (daily) ancillary data
@@ -55,9 +55,11 @@
 #' @references
 #' Allison, P.D., 1995, Survival analysis using the SAS system---A 
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
+#' 
 #' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
 #' Applications to Linear Models, Logisitc Regression, and Survival
 #' Analysis: New York, Springer-Verlag, 568 p.
+#' 
 #' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
 #' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 fitMod2 <- function (cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 

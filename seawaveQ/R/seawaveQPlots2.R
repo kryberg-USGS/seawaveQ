@@ -86,7 +86,14 @@
 #' concentrations used for the plot.
 #' @export
 #' @references
+#' #' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+#' Applications to Linear Models, Logisitc Regression, and Survival
+#' Analysis: New York, Springer-Verlag, 568 p.
+#' 
+#' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+#' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 #' Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 
+#' 
 #' theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
 #' @examples
 #' data(swData)
@@ -96,12 +103,6 @@
 #' cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
 #' yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
 #' pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numk = 4)
-#' @references
-#' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
-#' Applications to Linear Models, Logisitc Regression, and Survival
-#' Analysis: New York, Springer-Verlag, 568 p.
-#' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
-#' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
                            cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
                            yrend, tyr, tyrpr, pnames, tanm, mclass = 2, numk) {

@@ -17,10 +17,10 @@ Description: A model and utilities for analyzing trends in chemical concentratio
 Depends: R (>= 3.0.0)
 Imports: survival, NADA, lubridate, rms
 Suggests: waterData
-URL:  http://dx.doi.org/10.3133/ofr20131255
+URL: http://dx.doi.org/10.3133/ofr20131255
 Copyright: This software is in the public domain because it contains materials
     that originally came from the United States Geological Survey, an agency of
     the United States Department of Interior. For more information, see the
     official USGS copyright policy at
     https://www.usgs.gov/visual-id/credit_usgs.html#copyright
-    
+RoxygenNote: 6.0.1

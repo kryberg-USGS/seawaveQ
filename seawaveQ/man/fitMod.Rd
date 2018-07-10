@@ -59,9 +59,9 @@ results.
 }
 \examples{
 data(swData)
-myRes <- fitMod(cdatsub=examplecdatsub, cavdat=examplecavdat, 
-yrstart=1995, yrend=2003, tndbeg=1995, tndend=2003, tanm="myfit3", 
-pnames=c("04041"), qwcols=c("R", "P"))
+myRes <- fitMod(cdatsub = examplecdatsub, cavdat = examplecavdat, 
+yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3", 
+pnames = c("04041"), qwcols = c("R", "P"))
 }
 \references{
 Allison, P.D. 1995: Survival analysis using the SAS system---A 

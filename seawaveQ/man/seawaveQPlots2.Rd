@@ -4,9 +4,9 @@
 \alias{seawaveQPlots2}
 \title{Internal function that generates plots of data and model results.}
 \usage{
-seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, tndrcs,
-  tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, yrstart, yrend, tyr, tyrpr,
-  pnames, tanm, mclass = 2, numk)
+seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, cdatsub, cavdat,
+  cavmat, clog, centmp, yrstart, yrend, tyr, tyrpr, pnames, tanm, mclass = 2,
+  numk)
 }
 \arguments{
 \item{stpars}{is a matrix of information about the best seawaveQ model
@@ -20,11 +20,13 @@ cdatsub.}
 \item{tseaspr}{is the decimal season date used to model concentration 
 using the continuous data set cavdat.}
 
-\item{tndlin}{is the decimal time centered on the midpoint of the trend
-for the sample data, cdatasub.}
+\item{tndrcs}{is the decimal time centered on the midpoint of the trend
+for the sample data, cdatasub, then converted to a linear tail-restricted 
+cubic spline with a particular number of knots (Harrell, Jr., 2010 and 2018).}
 
-\item{tndlinpr}{is is the decimal time centered on the midpoint of the 
-trend for the continuous data, cavdat.}
+\item{tndrcspr}{is is the decimal time centered on the midpoint of the 
+trend for the continuous data, cavdat, then converted to a linear 
+tail-restricted cubic spline using the knots from tndrcs.}
 
 \item{cdatsub}{is the concentration data}
 
@@ -57,8 +59,14 @@ analyze (if using USGS parameters, omit the the starting 'P', such as
 \item{tanm}{is an a character identifier that names the trend 
 analysis run.  It is used to label output files.}
 
-\item{mclass}{has not been implemented yet, but will provide
-additional model options.}
+\item{mclass}{indicates the class on model one wants to use.
+A class 1 model is the the traditional SEAWAVE-Q model that has a
+linear time trend. A class 2 model is a newer option for longer
+trend periods that uses a set of restricted cubic splines on the 
+time variable to provide a more flexible model.}
+
+\item{numk}{is the number of knots in the restricted cubic spline model.
+The default is 4, and the recommended number is 3--7.}
 }
 \value{
 a pdf file containing plots of the data and modeled 
@@ -116,7 +124,14 @@ yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr,
 pnames=c("04041"), tanm="examplePlots04041", mclass = 2, numk = 4)
 }
 \references{
+#' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+Applications to Linear Models, Logisitc Regression, and Survival
+Analysis: New York, Springer-Verlag, 568 p.
+
+Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 
+
 theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
 }
 \author{

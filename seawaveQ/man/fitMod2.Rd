@@ -37,9 +37,10 @@ column headers for concentration data (default is P for parameter).}
 
 \item{mclass}{indicates the class of model one wants to use.
 A class 1 model is the the traditional SEAWAVE-Q model that has a
-linear time tredn. A class 2 model is a newer option for longer
+linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
-time variable to provide a more flexible model.}
+time variable to provide a more flexible model 
+(Harrell, Jr., 2010 and 2018). The default is 2 with this function.}
 
 \item{numk}{is the number of knots in the restricted cubic spline model.
 The default is 4, and the recommended number is 3--7.}
@@ -57,8 +58,8 @@ and uncensored) and the predicted concentrations used by
 }
 \description{
 fitMod2 is called from within \link{fitswavecav} but
-can be invoked directly.  It fits the seawaveQ model and with 
-restricted cubic splines on tim variable returns the model
+can be invoked directly.  It fits the seawaveQ model with 
+restricted cubic splines on the time variable and returns the model
 results.
 }
 \examples{
@@ -69,8 +70,15 @@ tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
 mclass = 2, numk = 4)
 }
 \references{
-Allison, P.D. 1995: Survival analysis using the SAS system---A 
+Allison, P.D., 1995, Survival analysis using the SAS system---A 
 practical guide: Cary, North Carolina, SAS Publishing, 304 p.
+
+Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
+Applications to Linear Models, Logisitc Regression, and Survival
+Analysis: New York, Springer-Verlag, 568 p.
+
+Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 }
 \author{
 Karen R. Ryberg and Aldo V. Vecchia
