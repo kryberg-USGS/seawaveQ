@@ -46,12 +46,6 @@
 #' and uncensored) and the predicted concentrations used by 
 #' \code{\link{seawaveQPlots}} to generate the plots.
 #' @export
-#' @examples
-#' data(swData)
-#' myRes <- fitMod2(cdatsub = examplecdatsub, cavdat = examplecavdat, 
-#' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, 
-#' tanm = "myfit3", pnames = c("04041"), qwcols = c("R", "P"),
-#' mclass = 2, numk = 4)
 #' @references
 #' Allison, P.D., 1995, Survival analysis using the SAS system---A 
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
