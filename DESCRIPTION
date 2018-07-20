@@ -1,7 +1,7 @@
 Package: seawaveQ
 Version: 2.0.0
 Title: SEAWAVE-Q model
-Date: 2018-07-09
+Date: 2018-07-20
 Authors@R: c(person("Karen", "Ryberg", role = c("aut", "cre"),
                     email = "kryberg@usgs.gov"),
              person("Aldo", "Vecchia", role = "aut"),
