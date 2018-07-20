@@ -1,6 +1,6 @@
 #' Internal function that generates plots of data and model results.
 #' 
-#' seawaveQPlots2 is usually called from within \code{\link{fitMod2}} but
+#' seawaveQPlots2 is usually called from within \code{\link{fitMod}} but
 #' can be invoked directly.  It generates plots of data and model results, 
 #' as well as diagnostic plots, and returns the observed and predicted 
 #' concentrations so that users may plot the concentrations using 

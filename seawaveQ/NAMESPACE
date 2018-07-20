@@ -7,11 +7,12 @@ export(prepData)
 export(rosBoxPlot)
 export(seawaveQPlots)
 export(seawaveQPlots2)
+export(loadCalculations)
 importFrom("grDevices", "dev.off", "pdf")
 importFrom("graphics", "boxplot", "legend", "lines", "mtext", "par",
              "plot", "points", "text", "title")
 importFrom("stats", "extractAIC", "pnorm", "qnorm", "quantile",
-             "runif", "supsmu")
+             "runif", "supsmu", "aggregate")
 importFrom("utils", "sessionInfo")
 importFrom("survival", "survreg", "Surv")
 importFrom("rms", "rcs")

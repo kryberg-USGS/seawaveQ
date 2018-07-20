@@ -112,8 +112,7 @@
 #'  pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
 #' }
 #' @seealso The functions that \code{fitswavecav} calls internally: \cr
-#' \code{\link{prepData}} and \code{\link{fitMod}} for linear trend models or 
-#' \code{\link{fitMod2}} for models using restricted cubic splines.
+#' \code{\link{prepData}} and \code{\link{fitMod}}.
 #' @export
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @examples

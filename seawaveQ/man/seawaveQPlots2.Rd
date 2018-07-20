@@ -75,7 +75,7 @@ the observed concentrations (censored and uncensored) and the predicted
 concentrations used for the plot.
 }
 \description{
-seawaveQPlots2 is usually called from within \code{\link{fitMod2}} but
+seawaveQPlots2 is usually called from within \code{\link{fitMod}} but
 can be invoked directly.  It generates plots of data and model results, 
 as well as diagnostic plots, and returns the observed and predicted 
 concentrations so that users may plot the concentrations using 

@@ -56,13 +56,13 @@
 #' tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 #' dcol = "dates", qwcols = c("R", "P"))
-#' MoRivOmahaLoadsYr <- MergeDailyPestPredict(cqwMoRivOmaha[,1:3], myfit1[[4]], 
+#' MoRivOmahaLoadsYr <- loadCalculations(cqwMoRivOmaha[,1:3], myfit1[[4]], 
 #' myfit1[[1]])
 #' MoRivOmahaLoadsYr
 #' @references
 #' Cohn, T.A., DeLong, L.L., Gilroy, E.J., Hirsch, R.M., and Wells, D.K., 1989, 
 #' Estimating constituent loads: Water Resources Research, v. 25, no. 5, 
-#' p. 937–942.
+#' p. 937--942.
 #'
 #' Oelsner, G.P., Sprague, L.A., Murphy, J.C., Zuellig, R.E., Johnson, H.M., 
 #' Ryberg, K.R., Falcone, J.A., Stets, E.G., Vecchia, A.V., Riskin, M.L., 
@@ -72,13 +72,9 @@
 #' Scientific Investigations Report 2017--5006, 136 p., 
 #' \url{https://doi.org/10.3133/sir20175006}.
 #' 
-MergeDailyPestPredict <- function(dailyDat, pestPredict, modRes, yrtype = 1) {
-  require(plyr)
-  require(reshape2)
-  require(lubridate)
+loadCalculations <- function(dailyDat, pestPredict, modRes, yrtype = 1) {
   # compute a decimal day that matches the one in seawaveQ results
   DecimalTime <- function(date) {
-    require(lubridate)
     yr <- year(date)
     mo <- month(date)
     da <- day(date)

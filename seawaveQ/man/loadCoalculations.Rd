@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadCalculations.R
 \name{loadCoalculations}
 \alias{loadCoalculations}
-\alias{MergeDailyPestPredict}
+\alias{loadCalculations}
 \title{Fit seasonal wave and continuous ancillary data for trend 
 analysis}
 \format{The data frame returned has one row for each pesticide-year at
@@ -14,7 +14,7 @@ a particular site and four columns. The general format is as follows: \cr
  load \tab numeric \tab the load in kilograms per year \cr
 }}
 \usage{
-MergeDailyPestPredict(dailyDat, pestPredict, modRes, yrtype = 1)
+loadCalculations(dailyDat, pestPredict, modRes, yrtype = 1)
 }
 \arguments{
 \item{dailyDat}{is the dail streamflow data in the form of a data.frame
@@ -72,14 +72,14 @@ myfit1 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
 tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 dcol = "dates", qwcols = c("R", "P"))
-MoRivOmahaLoadsYr <- MergeDailyPestPredict(cqwMoRivOmaha[,1:3], myfit1[[4]], 
+MoRivOmahaLoadsYr <- loadCalculations(cqwMoRivOmaha[,1:3], myfit1[[4]], 
 myfit1[[1]])
 MoRivOmahaLoadsYr
 }
 \references{
 Cohn, T.A., DeLong, L.L., Gilroy, E.J., Hirsch, R.M., and Wells, D.K., 1989, 
 Estimating constituent loads: Water Resources Research, v. 25, no. 5, 
-p. 937–942.
+p. 937--942.
 
 Oelsner, G.P., Sprague, L.A., Murphy, J.C., Zuellig, R.E., Johnson, H.M., 
 Ryberg, K.R., Falcone, J.A., Stets, E.G., Vecchia, A.V., Riskin, M.L., 

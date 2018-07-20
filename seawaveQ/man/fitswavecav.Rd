@@ -182,8 +182,7 @@ Journal of the American Water Resources Association, v. 44, no. 5, p.
 }
 \seealso{
 The functions that \code{fitswavecav} calls internally: \cr
-\code{\link{prepData}} and \code{\link{fitMod}} for linear trend models or 
-\code{\link{fitMod2}} for models using restricted cubic splines.
+\code{\link{prepData}} and \code{\link{fitMod}}.
 }
 \author{
 Aldo V. Vecchia and Karen R. Ryberg
