@@ -23,7 +23,7 @@
 #' calculation and bias correction.
 #' Users may modify this function to convert to units other than kilograms
 #' per year.
-#' @param dailyDat is the dail streamflow data in the form of a data.frame
+#' @param dailyDat is the daily streamflow data in the form of a data.frame
 #' with three columns representing a station ID, date, and streamflow
 #' @param pestPredict is the continuous (daily) estimation of pesticide
 #' concentrations for one or more pesticides at a single site. This should be
