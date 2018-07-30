@@ -21,14 +21,14 @@
 #' that case, a randomized residual was generated from a conditional 
 #' normal distribution \cr \cr
 #' \code{resran  <-  scl * qnorm(runif(1) * pnorm(rescen / scl))}, \cr \cr
-#' where scl is the scale parameter from the survival regression model, 
+#' where \code{scl} is the scale parameter from the survival regression model, 
 #' \code{pnorm} is the R function for computing cumulative normal 
 #' probabilities, \code{runif} is the R function for generating a 
 #' random variable from the uniform distribution, and \code{qnorm} 
 #' is the R function for computing quantiles of the normal distribution.  
 #' Under the assumption that the model residuals are uncorrelated, 
 #' normally distributed random variables with mean zero and standard 
-#' deviation scl, the randomized residuals generated in this manner are an 
+#' deviation \code{scl}, the randomized residuals generated in this manner are an 
 #' unbiased sample of the true (but unknown) residuals for the censored 
 #' data.  This is an application of the probability integral transform 
 #' (Mood and others, 1974) to generate random variables from continuous 
@@ -68,7 +68,7 @@
 #' @param pnames is the parameter (water-quality constituents) to 
 #' analyze (if using USGS parameters, omit the the starting 'P', such as 
 #' "00945" for sulfate).  
-#' @param tanm is an a character identifier that names the trend 
+#' @param tanm is a character identifier that names the trend 
 #' analysis run.  It is used to label output files.
 #' @param mclass indicates the class on model one wants to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
