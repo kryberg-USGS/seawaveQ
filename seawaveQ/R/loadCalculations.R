@@ -4,7 +4,7 @@
 #' (a mass per volume)and an associated streamflow rate (volume per time). This
 #' function generates an annual time series of pesticide loads on either a
 #' calendar year basis or a water year basis.
-#' @name loadCoalculations
+#' @name loadCalculations
 #' @title Fit seasonal wave and continuous ancillary data for trend 
 #' analysis
 #' @note In this load calculation function, daily pesticide concentration 
