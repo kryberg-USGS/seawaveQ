@@ -271,16 +271,18 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       "\nSeasonal value of the maximum concentration is ", 
       round(cmaxt, digits = 2), ".", "\n", sep = "")
   sink()
-  
   if (mclass == 2) {
-      plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, 
-                            tndrcspr, cdatsub, cavdat, cavmat, clog, centmp, 
-                            yrstart, yrend, tyr, tyrpr, pnames, tanm, numk = numk)
+    plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
+                              cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
+                              yrend, tyr, tyrpr, pnames, tanm, mclass = 2, 
+                              numk = numk)
+    # myRes <- list(stpars, aovout, plotDat, tndrcspr)
     myRes <- list(stpars, aovout, plotDat)
+    myRes
   } else {
     plotDat <- seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
-                tndlinpr, cdatsub, cavdat, cavmat, clog, centmp, 
-                yrstart, yrend, tyr, tyrpr, pnames, tanm)  
+                              tndlinpr, cdatsub, cavdat, cavmat, clog, centmp,
+                              yrstart, yrend, tyr, tyrpr, pnames, tanm)
     myRes <- list(stpars, aovout, plotDat)
   }
   myRes

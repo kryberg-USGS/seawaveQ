@@ -2,18 +2,42 @@
 % Please edit documentation in R/loadCalculations.R
 \name{loadCalculations}
 \alias{loadCalculations}
-\title{Fit seasonal wave and continuous ancillary data for trend 
-analysis}
-\format{The data frame returned has one row for each pesticide-year at
+\title{Calculate annual loads and summarize trends}
+\format{The first data frame returned has one row for each pesticide-year at
 a particular site and four columns. The general format is as follows: \cr
 \tabular{lll}{
  pstaid \tab character \tab The station identification number \cr
  pcode \tab character \tab The parameter code for which a load was calculated\cr
  year or wyear \tab numeric \tab The year or water year for which a load was calculated \cr
  load \tab numeric \tab the load in kilograms per year \cr
+}
+The second data frame returned has one row for each pesticide at
+a particular site and 11 columns. The general format is as follows: \cr
+\tabular{lll}{
+ pcode \tab character \tab The parameter code for which load trends were calculated\cr
+ mclass \tab numeric \tab a value of 1 or 2\cr
+ mclass \tab numeric \tab a value of 1 or 2\cr
+ alpha \tab numeric \tab a significance level \cr
+ ltndPpor \tab numeric \tab the load trend in percent over the period of record \cr
+ luciPpor \tab numeric \tab the load upper confidence interval for the trend in\cr
+  \tab \tab percent over the period of record \cr
+ llciPpor \tab numeric \tab the load lower confidence interval for the trend in\cr
+  \tab \tab percent over the period of record \cr
+ baseLoad \tab numeric \tab the base load, the load for the first year of trend period \cr
+ ltndOrigPORPercentBase \tab numeric \tab the load trend in original units over\cr
+  \tab \tab the period of record\cr
+  \tab \tab (calculation based on percent per year and base load)\cr
+ luciOrigPORPercentBase \tab numeric \tab the load trend upper confidence interval\cr
+  \tab \tab for the trend in original units over the period of record\cr
+  \tab \tab (calculation based on percent per year and base load)\cr
+ llciOrigPORPercentBase \tab numeric \tab the load trend lower confidence interval\cr
+  \tab \tab for the trend in original units over the period of record\cr
+  \tab \tab (calculation based on percent per year and base load)\cr
+ ltndlklhd \tab numeric \tab is the load trend likelihood \cr
 }}
 \usage{
-loadCalculations(dailyDat, pestPredict, modRes, yrtype = 1)
+loadCalculations(dailyDat, pestPredict, modRes, concTrends, yrtype = 1,
+  alpha = 0.1)
 }
 \arguments{
 \item{dailyDat}{is the daily streamflow data in the form of a data.frame
@@ -27,29 +51,37 @@ in the form of the fourth element of the list returned by \code{fitswavecav}.}
 and include the scale parameter for one or more pesticide trend models at
 a single site. The scale parameter is used in the bias correction.}
 
+\item{concTrends}{the SEAWAVE-Q trend in flow-normalized annual load cannot 
+be different (computationally) from the trend in flow-normalized annual 
+concentration when there is no trend in flow (Oelsner and others, 2017).}
+
 \item{yrtype}{allows one to calculate annual loads based on a calendar 
 year or a water year, where a water year is the 12-month period October 1 
 through September 30 designated by the calendar year in which it ends. A 
 yrtype of 1 represents a calendar year and is the default because that
 is the way the original model was developed. A yrtype of 2 represents a
 water year.}
+
+\item{alpha}{is the significance level or alpha value for statistical
+significance and confidence intervals}
 }
 \value{
-a data frame.
+two data frames, the first contains the annual loads, the second
+contains the trend summary.
 }
 \description{
-Function to calculate pesticide loads in kilograms per year.
+Function to calculate pesticide loads in kilograms per year and to summarize trends.
 }
 \details{
 Parameter load (mass) is the product of water-quality concentration 
-(a mass per volume)and an associated streamflow rate (volume per time). This
+(a mass per volume) and an associated streamflow rate (volume per time). This
 function generates an annual time series of pesticide loads on either a
-calendar year basis or a water year basis.
+calendar year basis or a water year basis and summarizes load trends.
 }
 \note{
 In this load calculation function, daily pesticide concentration 
 estimates provided by the \code{fitswavecav} function are corrected for 
-retransformation bias (the concentration model is built on #' the base-10 
+retransformation bias (the concentration model is built on the base-10 
 logarithm of concentration; therefore, a bias correction is required when 
 transforming back to the original units) and then used to calculate daily 
 loads. The bias correction is based on the quasi-maximum likelihood estimator 
@@ -71,8 +103,8 @@ myfit1 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
 tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 dcol = "dates", qwcols = c("R", "P"))
-MoRivOmahaLoadsYr <- loadCalculations(cqwMoRivOmaha[,1:3], myfit1[[4]], 
-myfit1[[1]])
+MoRivOmahaLoadsYr <- loadCalculations(cqwMoRivOmaha[, 1:3], myfit1[[4]], 
+myfit1[[1]], myfit1[[6]])
 MoRivOmahaLoadsYr
 }
 \references{

@@ -8,6 +8,7 @@ export(rosBoxPlot)
 export(seawaveQPlots)
 export(seawaveQPlots2)
 export(loadCalculations)
+export(pesticideTrendCalcs)
 importFrom("grDevices", "dev.off", "pdf")
 importFrom("graphics", "boxplot", "legend", "lines", "mtext", "par",
              "plot", "points", "text", "title")

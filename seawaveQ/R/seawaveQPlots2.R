@@ -280,12 +280,12 @@ seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr,
   }
   text(xlow + 0.5 * (xup - xlow), yup - 3 * ytck, adj = 0, 
        cex = 0.8, "Fitted 95th percentile concentration")
-  lines(c(xlow + 0.45 * (xup - xlow), xlow + 0.49 * (xup - 
-                                                       xlow)), c(yup - 3 * ytck, yup - 3 * ytck), lwd = 2, col = 2)
+  lines(c(xlow + 0.45 * (xup - xlow), xlow + 0.49 * 
+            (xup - xlow)), c(yup - 3 * ytck, yup - 3 * ytck), lwd = 2, col = 2)
   text(xlow + 0.5 * (xup - xlow), yup - 6 * ytck, adj = 0, 
        cex = 0.8, "Fitted median concentration")
-  lines(c(xlow + 0.45 * (xup - xlow), xlow + 0.49 * (xup - 
-                                                       xlow)), c(yup - 6 * ytck, yup - 6 * ytck), lwd = 2, col = 1)
+  lines(c(xlow + 0.45 * (xup - xlow), xlow + 0.49 * 
+            (xup - xlow)), c(yup - 6 * ytck, yup - 6 * ytck), lwd = 2, col = 1)
   mtext(pnames, side = 3, line = 0.5, adj = 0.1, cex = 1)
   mtext(tanm, side = 3, line = 0.5, adj = 0.5, cex = 1)
   mtext("Concentration, in micrograms per liter", side = 2, 
@@ -312,8 +312,8 @@ seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr,
          col = 2)
   lines(c(xlow, xup), c(xlow, xup), col = 1, lwd = 2)
   for (j in seq(xlow, xup, 1)) {
-    mtext(side = 1, line = 0.5, at = j, cex = 0.75, format(10^j, 
-                                                           scientific = FALSE, big.mark = ","))
+    mtext(side = 1, line = 0.5, at = j, cex = 0.75, 
+          format(10^j, scientific = FALSE, big.mark = ","))
     lines(c(j, j), c(ylow, ylow + ytck), lwd = 1)
     lines(c(j, j), c(yup, yup - ytck), lwd = 1)
   }
@@ -443,10 +443,12 @@ seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr,
   }
   obsDat$dectime <- round(obsDat$dectime, digits = 3)
   predDat <- data.frame(cbind(dectime = tyrpr, pred = ytmpxx))
-  dimnames(predDat)[[2]][2] <- paste("P", pnames, sep = "")
+  dimnames(predDat)[[2]][2] <- paste0("P", pnames)
   predDat <- subset(predDat, dectime <= yrend & dectime >= 
                       yrstart)
   predDat$dectime <- round(predDat$dectime, digits = 3)
-  plotDat <- list(obsDat, predDat)
+  trendLine <- data.frame(trendLine = 10 ^ (fitadjx12))
+  dimnames(trendLine)[[2]][1] <- paste0("P", pnames, "TL")
+  plotDat <- list(obsDat, predDat, trendLine)
   plotDat
 }

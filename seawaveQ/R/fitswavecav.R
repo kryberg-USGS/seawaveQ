@@ -75,6 +75,8 @@
 #' time variable to provide a more flexible model. 
 #' @param numk is the number of knots in the restricted cubic spline model.
 #' The default is 4, and the recommended number is 3--7.
+#' @param alpha is the significance level or alpha values for statistical
+#' significance and confidence intervals
 #' @keywords models regression ts survival multivariate
 #' @return a pdf file containing plots of the data and modeled 
 #' concentration, a text file containing a summary of the survival 
@@ -84,12 +86,15 @@
 #' element is the observed concentration data (censored and uncensored). 
 #' The fourth element is the concentration data predicted by the model.  
 #' The fifth element provides summary statistics for the predicted 
-#' concentrations.
+#' concentrations. The sixth element is a data.frame that provides a summary of 
+#' the trends with the columns pname (parameter name), mclass (a value of 1, 
+#' indicating a linear trend model), and the columns described in 
+#' \code{\link{pesticideTrendCalcs}}
 #' @format The data frame returned has one row for each chemical analyzed 
 #' and the number of columns depend on the number of continuous ancillary
 #' variables used. The general format is as follows: \cr
 #' \tabular{lll}{
-#'  pname \tab character \tab Parameter analyzed \cr
+#'  pname \tab character \tab Parameter analyzed\cr
 #'  mclass \tab numeric \tab A value of 1 or 2\cr
 #'  jmod \tab numeric \tab The choice of pulse input function, an 
 #'  integer 1--14. \cr
@@ -136,6 +141,8 @@
 #' head(myfit1[[4]])
 #' # summary statistics for predicted concentrations
 #' head(myfit1[[5]])
+#' # summary of trends
+#' head(myfit1[[6]])
 #' @references
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 #' Trends in pesticide concentrations in urban streams in the United 
@@ -157,7 +164,7 @@
 fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0, 
                         yrend = 0, tndbeg = 0, tndend = 0, iwcav = c("none"), 
 			dcol = "dates", qwcols = c("R", "P"), mclass = 1, 
-			numk = 4) {
+			numk = 4, alpha = 0.10) {
   # perform data checks and check arguments
   dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, \n 
              greater than or equal to 0.")
@@ -278,6 +285,9 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
       aovout <- myRes[[2]]
       obsDat <- myRes[[3]][[1]]
       predDat <- myRes[[3]][[2]]
+      if (mclass == 2) {
+        trendLine <- myRes[[3]][[3]]
+      }
       mycol <- paste("P", pnames[iipar], sep = "")
       predSummary <- data.frame(analysis = tanm, pname = pnames[iipar], 
                                 predMeanConc = round(mean(predDat[, mycol]), 
@@ -350,6 +360,18 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
         predSumAll <- predSummary
       }
     }
+    if (exists("trendLine") & mclass == 2) {
+      if (iipar == 1) {
+        trendLineAll <- trendLine
+      }
+      else if (iipar > 1 & exists("trendLineAll")) {
+        trendLineAll <- cbind(trendLineAll, trendLine)
+      }
+      else {
+        message("Model is misspecified.")
+        trendLineAll <- trendLine
+      }
+    }
   }
   if (exists("stparsoutall")) {
     mod1 <- floor((stparsoutall[, 2] - 1)/4) + 1
@@ -363,30 +385,83 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
     if (iwcav[1] != "none") {
       names(stparsoutall) <- c("pname", "mclass", "jmod", 
                                "hlife", "cmaxt", "scl", "loglik", 
-                               paste("c", names(myRes[[2]][[1]]$coefficients), sep = ""), 
-                               paste("se", names(myRes[[2]][[1]]$coefficients), 
-                                     sep = ""), 
-                               paste("pval", 
+                               paste0("c", names(myRes[[2]][[1]]$coefficients)), 
+                               paste0("se", names(myRes[[2]][[1]]$coefficients)), 
+                               paste0("pval", 
                                      names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
-                                                                              names(myRes[[2]][[1]]$coefficients))],
-                                     sep = ""))
+                                                                              names(myRes[[2]][[1]]$coefficients))]))
     }
     else if (iwcav[1] == "none") {
       names(stparsoutall) <- c("pname", "mclass", "jmod", 
                                "hlife", "cmaxt", "scl", "loglik", 
-                               paste("c", names(myRes[[2]][[1]]$coefficients), sep = ""), 
-                               paste("se", names(myRes[[2]][[1]]$coefficients), 
-                                     sep = ""), 
-                               paste("pval", 
+                               paste0("c", names(myRes[[2]][[1]]$coefficients)), 
+                               paste0("se", names(myRes[[2]][[1]]$coefficients)), 
+                               paste0("pval", 
                                      names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
-                                                                              names(myRes[[2]][[1]]$coefficients))],
-                                     sep = ""))
+                                                                              names(myRes[[2]][[1]]$coefficients))]))
     }
     obsdatall$dectime <- round(obsdatall$dectime, digits = 3)
     preddatall$dectime <- round(preddatall$dectime, digits = 3)
-    fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, 
-                   predSumAll)
-    fitRes
+    
+    if (mclass == 1 ) { 
+      yr <- tndbeg; mo <- 7; da <- 1
+      dyr <- yr + (mo - 1) / 12 + (da - 0.5) / 366
+      tmid <- (tndbeg + tndend) / 2
+      yrpr <- c(tndbeg, tndbeg, tndend, tndend)
+      mopr <- c(1, 7, 7, 12)
+      dapr <- c(1, 1, 1, 31)
+      dyrpr <- yrpr + (mopr - 1) / 12 + (dapr - 0.5) / 366
+      tseas <- dyr - floor(dyr)
+      tyr <- dyr
+      tyrpr <- dyrpr
+      tseaspr <- (dyrpr - floor(dyrpr))
+      tmid <- (tndbeg + tndend) / 2
+      tndlin <- tyr - tmid
+      tndlin[tyr < tndbeg] <- tndbeg - tmid
+      tndlin[tyr > tndend + 1] <- tndend - tmid
+      tndlinpr <- tyrpr - tmid
+      tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
+      tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
+      trends <- data.frame(stparsoutall[, 1:2])
+      mycolNams <- c("alpha", "baseConc", "ctndPpor", "cuciPpor", "clciPpor",
+                   "ctndOrigPORPercentBase", "cuciOrigPORPercentBase", 
+                   "clciOrigPORPercentBase", "ctndlklhd")
+      trends[mycolNams] <- NA
+      for (i in 1:dim(stparsoutall)[[1]]) {
+        trends[i, 3:11] <- pesticideTrendCalcs(tndbeg, tndend, 
+                                               stparsoutall$cxmattndlin[i], 
+                                               stparsoutall$pvalxmattndlin[i], 
+                                               alpha, stparsoutall$sexmattndlin[i], 
+                                               stparsoutall$scl[i],
+                                               exp((stparsoutall$cxmatintcpt[i] + 
+                                                      stparsoutall$cxmattndlin[i] * 
+                                                      tndlinpr[1]) * log(10)),
+                                               mclass)
+      }
+      fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, 
+                     predSumAll, trends)
+      fitRes
+    } else if (mclass == 2) {
+      trends <- data.frame(stparsoutall[, 1:2])
+      trends$alpha <- alpha
+      mycolNams <- c("baseConc", "endConc", "rcsctndPpor", "rcsctndOrigPORPercentBase")
+      trends[mycolNams] <- NA
+      for (i in 1:dim(stparsoutall)[[1]]) {
+        colHead <- paste0("P", stparsoutall[i, 1], "TL")
+        baseConc <- trendLineAll[1, colHead]
+        endConc <- trendLineAll[dim(trendLineAll)[[1]], colHead]
+        rcsctndPpor <- 100 * (trendLineAll[dim(trendLineAll)[[1]], colHead] / trendLineAll[1, colHead] - 1)
+        rcsctndOrigPORPercentBase <- baseConc * trendLineAll[dim(trendLineAll)[[1]], colHead] / trendLineAll[1, colHead] - baseConc
+        trends[i, 4:7] <- c(round(baseConc, digits = 4), round(endConc, digits = 4), 
+                            round(rcsctndPpor, digits = 4), 
+                            round(rcsctndOrigPORPercentBase, digits = 4))
+      }
+      fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, 
+                     predSumAll, trends)
+      fitRes
+    } else {
+      message("Problem consolidating results.")
+    }
   } else {
     message("No constituent had 10 or more uncensored values.")
   }

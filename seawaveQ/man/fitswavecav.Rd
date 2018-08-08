@@ -8,7 +8,7 @@ analysis}
 and the number of columns depend on the number of continuous ancillary
 variables used. The general format is as follows: \cr
 \tabular{lll}{
- pname \tab character \tab Parameter analyzed \cr
+ pname \tab character \tab Parameter analyzed\cr
  mclass \tab numeric \tab A value of 1 or 2\cr
  jmod \tab numeric \tab The choice of pulse input function, an 
  integer 1--14. \cr
@@ -33,7 +33,7 @@ variables used. The general format is as follows: \cr
 \usage{
 fitswavecav(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, yrend = 0,
   tndbeg = 0, tndend = 0, iwcav = c("none"), dcol = "dates",
-  qwcols = c("R", "P"), mclass = 1, numk = 4)
+  qwcols = c("R", "P"), mclass = 1, numk = 4, alpha = 0.1)
 }
 \arguments{
 \item{cdat}{is the concentration data}
@@ -82,6 +82,9 @@ time variable to provide a more flexible model.}
 
 \item{numk}{is the number of knots in the restricted cubic spline model.
 The default is 4, and the recommended number is 3--7.}
+
+\item{alpha}{is the significance level or alpha values for statistical
+significance and confidence intervals}
 }
 \value{
 a pdf file containing plots of the data and modeled 
@@ -92,7 +95,10 @@ of the list is the summary of the survival regression call.  The third
 element is the observed concentration data (censored and uncensored). 
 The fourth element is the concentration data predicted by the model.  
 The fifth element provides summary statistics for the predicted 
-concentrations.
+concentrations. The sixth element is a data.frame that provides a summary of 
+the trends with the columns pname (parameter name), mclass (a value of 1, 
+indicating a linear trend model), and the columns described in 
+\code{\link{pesticideTrendCalcs}}
 }
 \description{
 Function to prepare data and fit the seawaveQ model.
@@ -160,6 +166,8 @@ head(myfit1[[3]])
 head(myfit1[[4]])
 # summary statistics for predicted concentrations
 head(myfit1[[5]])
+# summary of trends
+head(myfit1[[6]])
 }
 \references{
 Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
