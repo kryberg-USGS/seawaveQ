@@ -33,7 +33,8 @@ variables used. The general format is as follows: \cr
 \usage{
 fitswavecav(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, yrend = 0,
   tndbeg = 0, tndend = 0, iwcav = c("none"), dcol = "dates",
-  qwcols = c("R", "P"), mclass = 1, numk = 4, alpha = 0.1)
+  qwcols = c("R", "P"), mclass = 1, numk = 4, alpha = 0.1,
+  bootRCS = FALSE, nboot = 1000)
 }
 \arguments{
 \item{cdat}{is the concentration data}
@@ -85,6 +86,14 @@ The default is 4, and the recommended number is 3--7.}
 
 \item{alpha}{is the significance level or alpha values for statistical
 significance and confidence intervals}
+
+\item{bootRCS}{is a logical value indicating whether or not to perform
+block bootstrapping for an attained significance level for the trend
+with restricted cubic splines. No bootstrapping is performed for the linear
+trend model.}
+
+\item{nboot}{is the number of bootstrap replicates. A large number, 10,000,
+is recommended, but this takes a long time.}
 }
 \value{
 a pdf file containing plots of the data and modeled 
@@ -148,26 +157,26 @@ in the text and Appendix 1 of Ryberg and others (2010).
 \examples{
 data(swData)
 modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
-myfit1 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
-tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+myfitLinearTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+tanm = "myfitLinearTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 dcol = "dates", qwcols = c("R", "P"))
-myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
-tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
-yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"), 
-dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4)
 # trend model results
-myfit1[[1]]
+myfitLinearTrend[[1]]
 # example regression call
-myfit1[[2]][[1]]
+myfitLinearTrend[[2]][[1]]
 # first few lines of observed concentrations
-head(myfit1[[3]])
+head(myfitLinearTrend[[3]])
 # first few lines of predicted concentrations
-head(myfit1[[4]])
+head(myfitLinearTrend[[4]])
 # summary statistics for predicted concentrations
-head(myfit1[[5]])
+myfitLinearTrend[[5]]
 # summary of trends
-head(myfit1[[6]])
+myfitLinearTrend[[6]]
+myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+tanm = "myfitRCSTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
+dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
 }
 \references{
 Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 

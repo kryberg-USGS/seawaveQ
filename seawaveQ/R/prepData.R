@@ -76,7 +76,7 @@ prepData <- function(cdat, cavdat, yrstart, yrend, dcol, pnames,
   cavdat$mox <- month(cavdat[, dcol])
   cavdat$dax <- day(cavdat[, dcol])
   cavdat$jdayx <- julian(cavdat[, dcol], 
-                         origin=as.Date(paste(yrstart - 1, 
+                         origin = as.Date(paste(yrstart - 1, 
                                               "-10-01", sep = "")))
   # determine column headings of ancillary data
   mycols <- c("yrx", "mox", "dax", "jdayx")  
@@ -98,6 +98,6 @@ prepData <- function(cdat, cavdat, yrstart, yrend, dcol, pnames,
     }
     cavdat <- cavdat[pcktmp, ]
   }
-  myData<-list(cdat, cavdat)
+  myData <- list(cdat, cavdat)
   myData
-}  
+}

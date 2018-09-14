@@ -11,8 +11,9 @@ trend period, load trend in original units over the trend period, confidence
 interval for the laod trend in original units over the trend period, load
 trend likelihood.
 
-Addition of a model option with restriced cubic splines for a more flexible
-deption of long-term ternds.
+Addition of a model option with restricted cubic splines for a more flexible
+deption of long-term ternds. Added bootstrapping to calculate a p-value for
+the restricted cubic spline models.
 
 Updated the vignette.
 

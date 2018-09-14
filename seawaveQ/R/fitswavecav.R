@@ -77,6 +77,12 @@
 #' The default is 4, and the recommended number is 3--7.
 #' @param alpha is the significance level or alpha values for statistical
 #' significance and confidence intervals
+#' @param bootRCS is a logical value indicating whether or not to perform
+#' block bootstrapping for an attained significance level for the trend
+#' with restricted cubic splines. No bootstrapping is performed for the linear
+#' trend model.
+#' @param nboot is the number of bootstrap replicates. A large number, 10,000,
+#' is recommended, but this takes a long time. 
 #' @keywords models regression ts survival multivariate
 #' @return a pdf file containing plots of the data and modeled 
 #' concentration, a text file containing a summary of the survival 
@@ -123,26 +129,26 @@
 #' @examples
 #' data(swData)
 #' modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
-#' myfit1 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
-#' tanm = "myfit1", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+#' myfitLinearTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+#' tanm = "myfitLinearTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 #' dcol = "dates", qwcols = c("R", "P"))
-#' myfit2 <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
-#' tanm = "myfit2", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
-#' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("seda30", "seda1"), 
-#' dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4)
 #' # trend model results
-#' myfit1[[1]]
+#' myfitLinearTrend[[1]]
 #' # example regression call
-#' myfit1[[2]][[1]]
+#' myfitLinearTrend[[2]][[1]]
 #' # first few lines of observed concentrations
-#' head(myfit1[[3]])
+#' head(myfitLinearTrend[[3]])
 #' # first few lines of predicted concentrations
-#' head(myfit1[[4]])
+#' head(myfitLinearTrend[[4]])
 #' # summary statistics for predicted concentrations
-#' head(myfit1[[5]])
+#' myfitLinearTrend[[5]]
 #' # summary of trends
-#' head(myfit1[[6]])
+#' myfitLinearTrend[[6]]
+#' myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+#' tanm = "myfitRCSTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
+#' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
+#' dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
 #' @references
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 #' Trends in pesticide concentrations in urban streams in the United 
@@ -161,10 +167,11 @@
 #' variability and  trends in pesticide concentrations in streams: 
 #' Journal of the American Water Resources Association, v. 44, no. 5, p. 
 #' 1308--1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
-fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0, 
+fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, 
                         yrend = 0, tndbeg = 0, tndend = 0, iwcav = c("none"), 
-			dcol = "dates", qwcols = c("R", "P"), mclass = 1, 
-			numk = 4, alpha = 0.10) {
+                        dcol = "dates", qwcols = c("R", "P"), mclass = 1, 
+                        numk = 4, alpha = 0.10, bootRCS = FALSE, 
+                        nboot = 1000) {
   # perform data checks and check arguments
   dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, \n 
              greater than or equal to 0.")
@@ -229,6 +236,8 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
     }
   }
 	
+  cdatBoot <- cdat
+  cavdatBoot <- cavdat
   # prepare concentration data
   # prepare continous ancillary data
   # myfun <- function(x) deparse(substitute(x)) 
@@ -240,21 +249,21 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
   cavdat <- myData[[2]]
   pnamesf <- vector(length = 0)
   for (iipar in (1:npars)) {
-    if (exists("stpars")) {
+    suppressWarnings(if (exists("stpars")) {
       rm(stpars)
-    }
-    if (exists("aovout")) {
+    })
+    suppressWarnings(if (exists("aovout")) {
       rm(aovout)
-    }
-    if (exists("obsDat")) {
+    })
+    suppressWarnings(if (exists("obsDat")) {
       rm(obsDat)
-    }
-    if (exists("predDat")) {
+    })
+    suppressWarnings(if (exists("predDat")) {
       rm(predDat)
-    }
-    if (exists("predSummary")) {
+    })
+    suppressWarnings(if (exists("predSummary")) {
       rm(predSummary)
-    }
+    })
     matches <- unique(grep(paste(iwcav, collapse = "|"), 
                            names(cdat)))
     spcols <- c(1:4, grep(pnames[iipar], names(cdat)), matches)
@@ -390,8 +399,7 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
                                paste0("pval", 
                                      names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
                                                                               names(myRes[[2]][[1]]$coefficients))]))
-    }
-    else if (iwcav[1] == "none") {
+    } else if (iwcav[1] == "none") {
       names(stparsoutall) <- c("pname", "mclass", "jmod", 
                                "hlife", "cmaxt", "scl", "loglik", 
                                paste0("c", names(myRes[[2]][[1]]$coefficients)), 
@@ -442,9 +450,272 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
                      predSumAll, trends)
       fitRes
     } else if (mclass == 2) {
+      # modified functions to do bootstrapping with less output and messages
+      fitswavecavBoot <- function(cdat, cavdat, pnames, yrstart = 0,
+                                  yrend = 0, tndbeg = 0, tndend = 0, iwcav = c("none"), 
+                                  dcol = "dates", qwcols = c("R", "P"), mclass = 2, 
+                                  numk = 4, nboot = 10000) {
+        
+        mclassmes <- c("Bootstrap options is for models of class 2 only.")
+        if (mclass != 2) {
+          stop(mclassmes)
+        }
+        pestMessage <- c("Bootstrap function if for one pesticide-site combination at a time.")
+        if (length(pnames) > 1 ) {
+          stop(pestMessage)
+        }
+        
+        myData <- prepData(cdat, cavdat, yrstart, yrend, dcol, pnames, iwcav, qwcols) 
+        cdat <- myData[[1]]
+        cavdat <- myData[[2]]
+        pnamesf <- vector(length = 0)
+        matches <- unique(grep(paste(iwcav, collapse = "|"), names(cdat)))
+        spcols <- c(1:4, grep(pnames, names(cdat)), matches)
+        cdatiipar <- cdat[, spcols]
+        cdatsub <- subset(cdatiipar, 
+                          !is.na(cdatiipar[, paste(qwcols[2], pnames, sep = "")]))
+        
+        # create new dataset
+        myyrs <- unique(cdatsub$yrc)
+        newyrs <- sample(myyrs, size = length(myyrs))
+        replacements <- cbind(myyrs, newyrs)
+        for (i in 1:length(myyrs) ) {
+          pck <- cdatsub$yrc == myyrs[i]
+          if (i == 1) {
+            newdat <- cdatsub[pck,]
+            newdat$yrc <- newyrs[i]
+          } else if (i > 1) {
+            newdat2 <- cdatsub[pck,]
+            newdat2$yrc <- newyrs[i]
+            newdat <- rbind.data.frame(newdat, newdat2)
+          }
+        }
+        o <- order(newdat$yrc, newdat$jdayc)
+        cdatsub <- newdat
+        
+        cencol <- paste(qwcols[1], pnames, sep = "")
+        centmp <- cdatsub[, cencol] == "<"
+        
+        myRes <- fitModBoot(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend,  
+                            pnames = pnames, qwcols, mclass = 2, numk = numk)
+        stpars <- myRes[[1]]
+        trendLine <- myRes[[3]][[1]]
+        pnamesf <- c(pnamesf, pnames)
+        if (exists("stpars")) {
+          stpars <- round(stpars, 5)
+          row.names(stpars) <- NULL
+          stparsout <- matrix(stpars[1, ], nrow = 1)
+          stparsoutall <- stparsout
+        }
+        if (exists("trendLine") & mclass == 2) {
+          trendLineAll <- trendLine
+        } 
+        mod1 <- floor((stparsoutall[, 2] - 1)/4) + 1
+        hlife1 <- stparsoutall[, 2] - (mod1 - 1) * 4
+        nxtmp <- length(stparsoutall[1, ])
+        stparsoutall <- cbind(mclass, mod1, hlife1, stparsoutall[, nxtmp], 
+                              matrix(stparsoutall[, -c(1, 2, nxtmp)], 
+                                     nrow = dim(stparsoutall)[1]))
+        stparsoutall <- data.frame(pnamesf, stparsoutall)
+        if (iwcav[1] != "none") {
+          names(stparsoutall) <- c("pname", "mclass", "jmod", "hlife", "cmaxt", "scl", 
+                                   "loglik", 
+                                   paste0("c", names(myRes[[2]][[1]]$coefficients)), 
+                                   paste0("se", names(myRes[[2]][[1]]$coefficients)), 
+                                   paste0("pval", 
+                                          names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
+                                                                                   names(myRes[[2]][[1]]$coefficients))]))
+        } else if (iwcav[1] == "none") {
+          names(stparsoutall) <- c("pname", "mclass", "jmod", "hlife", "cmaxt", "scl", 
+                                   "loglik", 
+                                   paste0("c", names(myRes[[2]][[1]]$coefficients)), 
+                                   paste0("se", names(myRes[[2]][[1]]$coefficients)), 
+                                   paste0("pval", 
+                                          names(myRes[[2]][[1]]$coefficients)[grep("tndlin", 
+                                                                                   names(myRes[[2]][[1]]$coefficients))]))
+        }
+        
+        trends <- data.frame(stparsoutall[, 1:2])
+        mycolNams <- c("baseConc", "endConc", "rcsctndPpor", "rcsctndOrigPORPercentBase")
+        trends[mycolNams] <- NA
+        for (i in 1:dim(stparsoutall)[[1]]) {
+          colHead <- paste0("P", stparsoutall[i, 1], "TL")
+          baseConc <- trendLineAll[1, colHead]
+          endConc <- trendLineAll[dim(trendLineAll)[[1]], colHead]
+          rcsctndPpor <- 100 * (trendLineAll[dim(trendLineAll)[[1]], colHead] / trendLineAll[1, colHead] - 1)
+          rcsctndOrigPORPercentBase <- baseConc * trendLineAll[dim(trendLineAll)[[1]], colHead] / trendLineAll[1, colHead] - baseConc
+          trends[i, 3:6] <- c(round(baseConc, digits = 4), round(endConc, digits = 4), 
+                              round(rcsctndPpor, digits = 4), 
+                              round(rcsctndOrigPORPercentBase, digits = 4))
+        }
+        fitRes <- trends
+        fitRes
+      }
+      
+      fitModBoot <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, 
+                             pnames, qwcols, mclass = 1, numk = 4) {
+        yr <- cdatsub[[1]]
+        mo <- cdatsub[[2]]
+        da <- cdatsub[[3]]
+        dyr <- yr + (mo - 1) / 12 + (da - 0.5) / 366
+        yrpr <- cavdat[[1]]
+        mopr <- cavdat[[2]]
+        dapr <- cavdat[[3]]
+        dyrpr <- yrpr + (mopr - 1) / 12 + (dapr - 0.5) / 366
+        ccol <- paste(qwcols[2], pnames, sep = "")
+        clog <- log10(cdatsub[, ccol])
+        cencol <- paste(qwcols[1], pnames, sep = "")
+        centmp <- cdatsub[, cencol] == '<'
+        
+        #  set up matrix with continuous variables
+        if (length(cdatsub[1,]) > 6) {
+          cavmat <- as.matrix(cdatsub[, 7:length(cdatsub[1, ])])   
+        } else {
+          cavmat <- as.matrix(cdatsub)
+        }
+        # compute variables for decimal season, year, and trend
+        tseas <- dyr - floor(dyr)
+        tyr <- dyr
+        tyrpr <- dyrpr
+        tseaspr <- (dyrpr - floor(dyrpr))
+        tmid <- (tndbeg + tndend) / 2
+        tndlin <- tyr - tmid
+        tndlin[tyr < tndbeg] <- tndbeg - tmid
+        tndlin[tyr > tndend + 1] <- tndend - tmid 
+        
+        tndrcs <- rcs(tndlin, numk)
+        
+        tndlinpr <- tyrpr - tmid
+        tndlinpr[tyrpr < tndbeg] <- tndbeg - tmid
+        tndlinpr[tyrpr > tndend + 1] <- tndend - tmid
+        tndrcspr <- rcs(tndlinpr, attributes(tndrcs)$parms)
+        
+        # find cmaxt (decimal season of max concentration)
+        tmpsm <- supsmu(tseas, clog)
+        xsm <- tmpsm$x
+        ysm <- tmpsm$y
+        nsm <- length(ysm)
+        cmaxt <- xsm[order(ysm)[nsm]]
+        
+        # nexvars is the number of explanatory variables (wave, trend, 
+        # and continuous variables, if any)
+        # stpars and aovout store the model output
+        nexvars <- 2 + (length(cdatsub[1, ]) - 6) + (numk - 1) 
+        stpars <- matrix(nrow = 2, ncol = (4 + 2 * nexvars + (numk - 1) + 1))
+        aovout <- vector("list", 1)
+        aicout <- vector("list", 2)
+        bicout <- vector("list", 2)
+        
+        # parx and aovtmp are temporary objects to store results 
+        # for 56 model possibilities
+        parx <- matrix(nrow = 56, ncol = (dim(stpars)[[2]] - 1))
+        aovtmp <- vector("list", 56)
+        aictmp <- vector("list", 56)
+        bictmp <- vector("list", 56)
+        
+        # ready to loop through 56 model choices 
+        # (14 models x 4 halflives)
+        for (j in 1:14) {
+          for (k in 1:4) {
+            j2 <- (j - 1) * 4 + k
+            awave <- compwaveconv(cmaxt, j, k)
+            ipkt <- floor(360 * tseas)
+            ipkt[ipkt == 0] <- 1
+            wavest <- awave[ipkt]
+            ipkt <- floor(360 * tseaspr)
+            ipkt[ipkt == 0] <- 1
+            wavestpr <- awave[ipkt]
+            indcen <- !centmp
+            intcpt <- rep(1, length(wavest))
+            xmat <- cbind(intcpt, wavest, tndrcs)
+            if (length(cdatsub[1, ]) > 6) {
+              xmat <- cbind(xmat, cavmat)
+            }
+            nctmp <- length(xmat[1, ])
+            clogtmp <- clog
+            
+            # requires survival package
+            tmpouta <- survreg(Surv(time = clogtmp, time2 = indcen, 
+                                    type = "left") ~ xmat - 1, dist = "gaussian")
+            parx[j2, ] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
+                            tmpouta$coef, summary(tmpouta)$table[1:nctmp, 2], 
+                            summary(tmpouta)$table[grep("tndlin", 
+                                                        row.names(summary(tmpouta)$table)), 4])
+            aovtmp[[j2]] <- summary(tmpouta)
+            aictmp[[j2]] <- extractAIC(tmpouta)[2]
+            bictmp[[j2]] <- extractAIC(tmpouta, 
+                                       k = log(length(tmpouta$linear.predictors)))[2]
+          }
+        }
+        
+        # find largest likelihood (smallest negative likelihood)
+        likx <- (-parx[, 4])
+        # eliminate models with negative coefficient for the seasonal wave
+        likx[parx[, 6] < 0] <- NA
+        # This could be used to penalize models with two seasons of application
+        likx[25:56] <- likx[25:56] + 0
+        pckone <- order(likx)[1]
+        stpars[1, ] <- c(parx[pckone, ], cmaxt)
+        aovout[[1]] <- aovtmp[[pckone]]
+        aicout[[1]] <- aictmp[[pckone]]
+        bicout[[1]] <- bictmp[[pckone]]
+        
+        jmod <- floor((stpars[1, 2] - 1) / 4) + 1
+        hlife <- stpars[1, 2] - (jmod - 1) * 4
+        
+        plotDat <- seawaveQNoPlots(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
+                                   cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
+                                   yrend, tyr, tyrpr, pnames, mclass = 2, 
+                                   numk = numk)
+        # myRes <- list(stpars, aovout, plotDat, tndrcspr)
+        myRes <- list(stpars, aovout, plotDat)
+        myRes
+      }
+      
+      seawaveQNoPlots <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
+                                  cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
+                                  yrend, tyr, tyrpr, pnames, mclass = 2, numk) {
+        pckone <- stpars[1, 2]
+        mod1 <- floor((pckone - 1)/4) + 1
+        hlife1 <- pckone - (mod1 - 1) * 4
+        ipkt <- floor(360 * tseas)
+        ipkt[ipkt == 0] <- 1
+        
+        # call function to compute seasonal wave
+        wavexx <- compwaveconv(cmaxt, mod1, hlife1)
+        wavest <- wavexx[ipkt]
+        intcpt <- rep(1, length(wavest))
+        ipktpr <- floor(360 * tseaspr)
+        ipktpr[ipktpr == 0] <- 1
+        wavestpr <- wavexx[ipktpr]
+        intcptpr <- rep(1, length(wavestpr))
+        
+        xmat <- cbind(intcpt, wavest, tndrcs)
+        if (length(cdatsub[1, ]) > 6) {
+          xmat <- cbind(xmat, cavmat)
+          cavmatpr <- as.matrix(cavdat[, 5:length(cavdat[1, ])])
+        }
+        xmatpr <- cbind(intcptpr, wavestpr, tndrcspr)
+        if (length(cdatsub[1, ]) > 6) {
+          xmatpr <- cbind(xmatpr, cavmatpr)
+        }
+        
+        partmp <- stpars[1, 5:(5 + length(xmat[1, ]) - 1)]
+        
+        # trend line
+        rcscols <- grep("tndlinpr", dimnames(xmatpr)[[2]])
+        partmprcscols <- partmp[rcscols]
+        fitadjx12 <- as.matrix(rowSums(mapply("*", as.data.frame(xmatpr[, c(1, rcscols)]), 
+                                              partmp[c(1, rcscols)])))
+        
+        trendLine <- data.frame(trendLine = 10 ^ (fitadjx12))
+        dimnames(trendLine)[[2]][1] <- paste0("P", pnames, "TL")
+        noPlotDat <- list(trendLine)
+        noPlotDat
+      }
       trends <- data.frame(stparsoutall[, 1:2])
-      trends$alpha <- alpha
-      mycolNams <- c("baseConc", "endConc", "rcsctndPpor", "rcsctndOrigPORPercentBase")
+      mycolNams <- c("baseConc", "endConc", "rcsctndPpor", 
+                     "rcsctndOrigPORPercentBase", "pvalrcstnd", "ctndlklhd")
       trends[mycolNams] <- NA
       for (i in 1:dim(stparsoutall)[[1]]) {
         colHead <- paste0("P", stparsoutall[i, 1], "TL")
@@ -452,12 +723,34 @@ fitswavecav <- function(cdat, cavdat, tanm="trend1", pnames, yrstart = 0,
         endConc <- trendLineAll[dim(trendLineAll)[[1]], colHead]
         rcsctndPpor <- 100 * (trendLineAll[dim(trendLineAll)[[1]], colHead] / trendLineAll[1, colHead] - 1)
         rcsctndOrigPORPercentBase <- baseConc * trendLineAll[dim(trendLineAll)[[1]], colHead] / trendLineAll[1, colHead] - baseConc
-        trends[i, 4:7] <- c(round(baseConc, digits = 4), round(endConc, digits = 4), 
+        trends[i, 3:6] <- c(round(baseConc, digits = 4), round(endConc, digits = 4), 
                             round(rcsctndPpor, digits = 4), 
                             round(rcsctndOrigPORPercentBase, digits = 4))
+        
+        answer <- trends[i, 5]
+        
+        if (bootRCS == TRUE) {
+          bootTrends <- data.frame(rcsctndPpor = numeric(0), 
+                                   rcsctndOrigPORPercentBase = numeric(0), 
+                                   sample = numeric(0))
+          for (j in 1:nboot) {
+            test <- fitswavecavBoot(cdatBoot, cavdatBoot, 
+                                    pnames = pnames[i], yrstart = yrstart, 
+                                    yrend = yrend, tndbeg = tndbeg, tndend = tndend, 
+                                    iwcav = iwcav, dcol = dcol, 
+                                    qwcols = qwcols, mclass = 2, numk = 4,
+                                    nboot = nboot)
+            bootTrends[j, 1:3] <- c(test$rcsctndPpor, test$rcsctndOrigPORPercentBase, j)
+          }
+          cntMoreExtrTnds <- dim(subset(bootTrends, abs(rcsctndPpor) >= abs(answer)))[[1]]
+          pvalrcstnd <- cntMoreExtrTnds/nboot
+          ctndlklhd <- 1 - pvalrcstnd / 2
+          trends[i, 7:8] <- c(pvalrcstnd, ctndlklhd)
+        }
       }
       fitRes <- list(stparsoutall, aovoutall, obsdatall, preddatall, 
                      predSumAll, trends)
+
       fitRes
     } else {
       message("Problem consolidating results.")
