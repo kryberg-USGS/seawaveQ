@@ -477,7 +477,7 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
         
         # create new dataset
         myyrs <- unique(cdatsub$yrc)
-        newyrs <- sample(myyrs, size = length(myyrs))
+        newyrs <- sample(myyrs, size = length(myyrs), replace = TRUE)
         replacements <- cbind(myyrs, newyrs)
         for (i in 1:length(myyrs) ) {
           pck <- cdatsub$yrc == myyrs[i]

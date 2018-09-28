@@ -246,15 +246,28 @@ One can now fit the seawaveQ model using the data explored and combined in the p
 + tanm="myfit1", pnames=c("04035", "04041"), yrstart=1995,
 + yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1"),
 + dcol="dates", qwcols=c("R","P"))
+\end{Sinput}
+\begin{Soutput}
+
+\end{Soutput}
+\begin{Sinput}
 > myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
 + tanm="myfit2", pnames=c("04035", "04041"), yrstart=1995,
 + yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30", "seda1"),
 + dcol="dates", qwcols=c("R","P"))
+\end{Sinput}
+\begin{Soutput}
+
+\end{Soutput}
+\begin{Sinput}
 > myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
 + tanm="myfit3", pnames=c("04035", "04041"), yrstart=1995,
 + yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1",
 + "seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
 \end{Sinput}
+\begin{Soutput}
+
+\end{Soutput}
 \end{Schunk}
 
 \section{Model Output}
@@ -268,43 +281,55 @@ The model fitting process finds the best pulse input function and model half-lif
 > myfit1[[1]]
 \end{Sinput}
 \begin{Soutput}
-  pname mclass jmod hlife   cmaxt     scl    loglik     cint
-1 04035      1    3     1 0.48087 0.27216 -32.82218 -2.49433
-2 04041      1    4     3 0.48087 0.42843 -43.90813 -2.27666
-    cwave     ctnd cflowa30 cflowa1   seint  sewave   setnd
-1 0.55360 -0.02850  0.05509 2.09772 0.04908 0.11183 0.02191
-2 2.16327 -0.25063  0.00587 2.95546 0.08622 0.26127 0.03775
-  seflowa30 seflowa1
-1   0.30734  0.46967
-2   0.52071  0.78638
+  pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
+1 04035      1    3     1 0.48087 0.27199 -32.79163    -2.49349
+2 04041      1    4     3 0.48087 0.42405 -43.05521    -2.26965
+  cxmatwavest cxmattndlin cxmatflowa30 cxmatflowa1 sexmatintcpt
+1     0.55437    -0.02793      0.05386     2.10427      0.04910
+2     2.17692    -0.24887     -0.02829     2.98901      0.08534
+  sexmatwavest sexmattndlin sexmatflowa30 sexmatflowa1
+1      0.11172      0.02112       0.30492      0.46888
+2      0.25938      0.03683       0.51375      0.78007
+  pvalxmattndlin
+1        0.18598
+2        0.00000
 \end{Soutput}
 \begin{Sinput}
 > myfit2[[1]]
 \end{Sinput}
 \begin{Soutput}
-  pname mclass jmod hlife   cmaxt     scl    loglik     cint
-1 04035      1    5     3 0.48087 0.24680 -24.33186 -2.68415
-2 04041      1    3     2 0.48087 0.41225 -40.46237 -2.13390
-    cwave     ctnd cseda30  cseda1   seint  sewave   setnd
-1 0.79622 -0.02478 0.25178 0.59654 0.06853 0.18670 0.01637
-2 1.57758 -0.22234 1.14307 0.62894 0.07579 0.19086 0.02996
-  seseda30 seseda1
-1  0.17377 0.10251
-2  0.29031 0.18224
+  pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
+1 04035      1    5     3 0.48087 0.24677 -24.32398    -2.68378
+2 04041      1    3     2 0.48087 0.40826 -39.64286    -2.12752
+  cxmatwavest cxmattndlin cxmatseda30 cxmatseda1 sexmatintcpt
+1     0.79650    -0.02405     0.25361    0.59703      0.06852
+2     1.58343    -0.22011     1.13733    0.63650      0.07514
+  sexmatwavest sexmattndlin sexmatseda30 sexmatseda1
+1      0.18671      0.01585      0.17293     0.10253
+2      0.18937      0.02931      0.28745     0.18127
+  pvalxmattndlin
+1        0.12907
+2        0.00000
 \end{Soutput}
 \begin{Sinput}
 > myfit3[[1]]
 \end{Sinput}
 \begin{Soutput}
-  pname mclass jmod hlife   cmaxt     scl    loglik     cint
-1 04035      1    5     3 0.48087 0.24625 -23.83840 -2.67858
-2 04041      1    3     2 0.48087 0.39523 -38.65962 -2.08402
-    cwave     ctnd cflowa30  cflowa1 cseda30  cseda1   seint
-1 0.76537 -0.01883  0.17756 -0.36824 0.22666 0.66734 0.06725
-2 1.70493 -0.24244 -0.57741  1.53888 1.04420 0.29466 0.07942
-   sewave   setnd seflowa30 seflowa1 seseda30 seseda1
-1 0.18450 0.01991   0.30663  0.64400  0.20480 0.15247
-2 0.20191 0.03459   0.50123  1.12286  0.31298 0.27108
+  pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
+1 04035      1    5     3 0.48087 0.24621 -23.83644    -2.67838
+2 04041      1    3     2 0.48087 0.38981 -37.63645    -2.07403
+  cxmatwavest cxmattndlin cxmatflowa30 cxmatflowa1 cxmatseda30
+1     0.76533    -0.01817      0.17914    -0.36126     0.22732
+2     1.71880    -0.24112     -0.61646     1.58972     1.03880
+  cxmatseda1 sexmatintcpt sexmatwavest sexmattndlin
+1    0.66650      0.06724      0.18443      0.01918
+2    0.29012      0.07836      0.19990      0.03359
+  sexmatflowa30 sexmatflowa1 sexmatseda30 sexmatseda1
+1       0.30546      0.64210      0.20464     0.15225
+2       0.49387      1.11121      0.30870     0.26845
+  pvalxmattndlin
+1        0.34346
+2        0.00000
 \end{Soutput}
 \begin{Sinput}
 > # get the second element of the list for each model/constituent combination
@@ -316,20 +341,20 @@ The model fitting process finds the best pulse input function and model half-lif
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xxxmat - 1, dist = "gaussian")
-                Value Std. Error       z        p
-xxxmatintcpt  -2.4943     0.0491 -50.826 0.00e+00
-xxxmatwavest   0.5536     0.1118   4.950 7.41e-07
-xxxmattndlin  -0.0285     0.0219  -1.301 1.93e-01
-xxxmatflowa30  0.0551     0.3073   0.179 8.58e-01
-xxxmatflowa1   2.0977     0.4697   4.466 7.96e-06
-Log(scale)    -1.3013     0.1205 -10.797 3.57e-27
+    xmat - 1, dist = "gaussian")
+              Value Std. Error      z       p
+xmatintcpt  -2.4935     0.0491 -50.78 < 2e-16
+xmatwavest   0.5544     0.1117   4.96 7.0e-07
+xmattndlin  -0.0279     0.0211  -1.32    0.19
+xmatflowa30  0.0539     0.3049   0.18    0.86
+xmatflowa1   2.1043     0.4689   4.49 7.2e-06
+Log(scale)  -1.3020     0.1205 -10.80 < 2e-16
 
 Scale= 0.272 
 
 Gaussian distribution
 Loglik(model)= -32.8   Loglik(intercept only)= -60.9
-	Chisq= 56.1 on 4 degrees of freedom, p= 1.9e-11 
+	Chisq= 56.16 on 4 degrees of freedom, p= 1.9e-11 
 Number of Newton-Raphson Iterations: 5 
 n= 115 
 
@@ -338,20 +363,20 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xxxmat - 1, dist = "gaussian")
-                 Value Std. Error        z         p
-xxxmatintcpt  -2.27666     0.0862 -26.4055 1.19e-153
-xxxmatwavest   2.16327     0.2613   8.2799  1.23e-16
-xxxmattndlin  -0.25063     0.0377  -6.6393  3.15e-11
-xxxmatflowa30  0.00587     0.5207   0.0113  9.91e-01
-xxxmatflowa1   2.95546     0.7864   3.7583  1.71e-04
-Log(scale)    -0.84763     0.1038  -8.1685  3.12e-16
+    xmat - 1, dist = "gaussian")
+              Value Std. Error      z       p
+xmatintcpt  -2.2697     0.0853 -26.59 < 2e-16
+xmatwavest   2.1769     0.2594   8.39 < 2e-16
+xmattndlin  -0.2489     0.0368  -6.76 1.4e-11
+xmatflowa30 -0.0283     0.5138  -0.06 0.95609
+xmatflowa1   2.9890     0.7801   3.83 0.00013
+Log(scale)  -0.8579     0.1036  -8.28 < 2e-16
 
-Scale= 0.428 
+Scale= 0.424 
 
 Gaussian distribution
-Loglik(model)= -43.9   Loglik(intercept only)= -103.7
-	Chisq= 119.63 on 4 degrees of freedom, p= 0 
+Loglik(model)= -43.1   Loglik(intercept only)= -103.7
+	Chisq= 121.33 on 4 degrees of freedom, p= 2.8e-25 
 Number of Newton-Raphson Iterations: 6 
 n= 115 
 \end{Soutput}
@@ -363,20 +388,20 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xxxmat - 1, dist = "gaussian")
-               Value Std. Error      z        p
-xxxmatintcpt -2.6841     0.0685 -39.17 0.00e+00
-xxxmatwavest  0.7962     0.1867   4.26 2.00e-05
-xxxmattndlin -0.0248     0.0164  -1.51 1.30e-01
-xxxmatseda30  0.2518     0.1738   1.45 1.47e-01
-xxxmatseda1   0.5965     0.1025   5.82 5.90e-09
-Log(scale)   -1.3992     0.1184 -11.82 3.16e-32
+    xmat - 1, dist = "gaussian")
+             Value Std. Error      z       p
+xmatintcpt -2.6838     0.0685 -39.17 < 2e-16
+xmatwavest  0.7965     0.1867   4.27 2.0e-05
+xmattndlin -0.0241     0.0158  -1.52    0.13
+xmatseda30  0.2536     0.1729   1.47    0.14
+xmatseda1   0.5970     0.1025   5.82 5.8e-09
+Log(scale) -1.3993     0.1184 -11.82 < 2e-16
 
 Scale= 0.247 
 
 Gaussian distribution
 Loglik(model)= -24.3   Loglik(intercept only)= -60.9
-	Chisq= 73.08 on 4 degrees of freedom, p= 5.1e-15 
+	Chisq= 73.09 on 4 degrees of freedom, p= 5e-15 
 Number of Newton-Raphson Iterations: 6 
 n= 115 
 
@@ -385,20 +410,20 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xxxmat - 1, dist = "gaussian")
-              Value Std. Error      z         p
-xxxmatintcpt -2.134     0.0758 -28.15 2.10e-174
-xxxmatwavest  1.578     0.1909   8.27  1.39e-16
-xxxmattndlin -0.222     0.0300  -7.42  1.15e-13
-xxxmatseda30  1.143     0.2903   3.94  8.24e-05
-xxxmatseda1   0.629     0.1822   3.45  5.58e-04
-Log(scale)   -0.886     0.1029  -8.61  7.00e-18
+    xmat - 1, dist = "gaussian")
+             Value Std. Error      z       p
+xmatintcpt -2.1275     0.0751 -28.31 < 2e-16
+xmatwavest  1.5834     0.1894   8.36 < 2e-16
+xmattndlin -0.2201     0.0293  -7.51 6.0e-14
+xmatseda30  1.1373     0.2874   3.96 7.6e-05
+xmatseda1   0.6365     0.1813   3.51 0.00045
+Log(scale) -0.8959     0.1027  -8.73 < 2e-16
 
-Scale= 0.412 
+Scale= 0.408 
 
 Gaussian distribution
-Loglik(model)= -40.5   Loglik(intercept only)= -103.7
-	Chisq= 126.52 on 4 degrees of freedom, p= 0 
+Loglik(model)= -39.6   Loglik(intercept only)= -103.7
+	Chisq= 128.16 on 4 degrees of freedom, p= 9.6e-27 
 Number of Newton-Raphson Iterations: 6 
 n= 115 
 \end{Soutput}
@@ -410,22 +435,22 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xxxmat - 1, dist = "gaussian")
-                Value Std. Error       z        p
-xxxmatintcpt  -2.6786     0.0673 -39.828 0.00e+00
-xxxmatwavest   0.7654     0.1845   4.148 3.35e-05
-xxxmattndlin  -0.0188     0.0199  -0.946 3.44e-01
-xxxmatflowa30  0.1776     0.3066   0.579 5.63e-01
-xxxmatflowa1  -0.3682     0.6440  -0.572 5.67e-01
-xxxmatseda30   0.2267     0.2048   1.107 2.68e-01
-xxxmatseda1    0.6673     0.1525   4.377 1.20e-05
-Log(scale)    -1.4014     0.1188 -11.800 3.92e-32
+    xmat - 1, dist = "gaussian")
+              Value Std. Error      z       p
+xmatintcpt  -2.6784     0.0672 -39.83 < 2e-16
+xmatwavest   0.7653     0.1844   4.15 3.3e-05
+xmattndlin  -0.0182     0.0192  -0.95    0.34
+xmatflowa30  0.1791     0.3055   0.59    0.56
+xmatflowa1  -0.3613     0.6421  -0.56    0.57
+xmatseda30   0.2273     0.2046   1.11    0.27
+xmatseda1    0.6665     0.1522   4.38 1.2e-05
+Log(scale)  -1.4016     0.1188 -11.80 < 2e-16
 
 Scale= 0.246 
 
 Gaussian distribution
 Loglik(model)= -23.8   Loglik(intercept only)= -60.9
-	Chisq= 74.06 on 6 degrees of freedom, p= 6e-14 
+	Chisq= 74.07 on 6 degrees of freedom, p= 6e-14 
 Number of Newton-Raphson Iterations: 6 
 n= 115 
 
@@ -434,25 +459,220 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xxxmat - 1, dist = "gaussian")
-               Value Std. Error      z         p
-xxxmatintcpt  -2.084     0.0794 -26.24 9.36e-152
-xxxmatwavest   1.705     0.2019   8.44  3.07e-17
-xxxmattndlin  -0.242     0.0346  -7.01  2.39e-12
-xxxmatflowa30 -0.577     0.5012  -1.15  2.49e-01
-xxxmatflowa1   1.539     1.1229   1.37  1.71e-01
-xxxmatseda30   1.044     0.3130   3.34  8.49e-04
-xxxmatseda1    0.295     0.2711   1.09  2.77e-01
-Log(scale)    -0.928     0.1035  -8.97  3.00e-19
+    xmat - 1, dist = "gaussian")
+              Value Std. Error      z       p
+xmatintcpt  -2.0740     0.0784 -26.47 < 2e-16
+xmatwavest   1.7188     0.1999   8.60 < 2e-16
+xmattndlin  -0.2411     0.0336  -7.18   7e-13
+xmatflowa30 -0.6165     0.4939  -1.25 0.21195
+xmatflowa1   1.5897     1.1112   1.43 0.15254
+xmatseda30   1.0388     0.3087   3.37 0.00077
+xmatseda1    0.2901     0.2684   1.08 0.27982
+Log(scale)  -0.9421     0.1033  -9.12 < 2e-16
 
-Scale= 0.395 
+Scale= 0.39 
 
 Gaussian distribution
-Loglik(model)= -38.7   Loglik(intercept only)= -103.7
-	Chisq= 130.12 on 6 degrees of freedom, p= 0 
+Loglik(model)= -37.6   Loglik(intercept only)= -103.7
+	Chisq= 132.17 on 6 degrees of freedom, p= 4.5e-26 
 Number of Newton-Raphson Iterations: 6 
 n= 115 
 \end{Soutput}
 \begin{Sinput}
 > # get the first few lines of the third element of the list
 > head(myfit1[[3]])
+\end{Sinput}
+\begin{Soutput}
+   dectime R04035 P04035 R04041 P04041
+1 1996.034      <  0.004      <  0.008
+2 1996.117      <  0.004      <  0.008
+3 1996.201         0.005      <  0.008
+4 1996.242      <  0.004         0.009
+5 1996.273         0.007         0.014
+6 1996.311      <  0.004         0.012
+\end{Soutput}
+\begin{Sinput}
+> head(myfit2[[3]])
+\end{Sinput}
+\begin{Soutput}
+   dectime R04035 P04035 R04041 P04041
+1 1996.034      <  0.004      <  0.008
+2 1996.117      <  0.004      <  0.008
+3 1996.201         0.005      <  0.008
+4 1996.242      <  0.004         0.009
+5 1996.273         0.007         0.014
+6 1996.311      <  0.004         0.012
+\end{Soutput}
+\begin{Sinput}
+> head(myfit3[[3]])
+\end{Sinput}
+\begin{Soutput}
+   dectime R04035 P04035 R04041 P04041
+1 1996.034      <  0.004      <  0.008
+2 1996.117      <  0.004      <  0.008
+3 1996.201         0.005      <  0.008
+4 1996.242      <  0.004         0.009
+5 1996.273         0.007         0.014
+6 1996.311      <  0.004         0.012
+\end{Soutput}
+\begin{Sinput}
+> # get the first few lines of the fourth element of the list
+> head(myfit1[[4]])
+\end{Sinput}
+\begin{Soutput}
+   dectime      P04035      P04041
+1 1995.831 0.002184579 0.007085318
+2 1995.833 0.002223730 0.007255036
+3 1995.835 0.002256099 0.007295828
+4 1995.837 0.002301522 0.007390105
+5 1995.840 0.002361534 0.007548559
+6 1995.843 0.002297257 0.007149901
+\end{Soutput}
+\begin{Sinput}
+> head(myfit2[[4]])
+\end{Sinput}
+\begin{Soutput}
+   dectime      P04035     P04041
+1 1995.831 0.001539907 0.01452533
+2 1995.833 0.001542766 0.01483602
+3 1995.835 0.001543323 0.01511136
+4 1995.837 0.001542208 0.01535307
+5 1995.840 0.001513703 0.01517149
+6 1995.843 0.001430205 0.01425638
+\end{Soutput}
+\begin{Sinput}
+> head(myfit3[[4]])
+\end{Sinput}
+\begin{Soutput}
+   dectime      P04035     P04041
+1 1995.831 0.001708573 0.01084807
+2 1995.833 0.001705451 0.01121241
+3 1995.835 0.001701741 0.01149961
+4 1995.837 0.001694584 0.01181777
+5 1995.840 0.001653297 0.01198216
+6 1995.843 0.001560628 0.01134960
+\end{Soutput}
+\begin{Sinput}
+> # get the summary of predicted concentrations
+> myfit1[[5]]
+\end{Sinput}
+\begin{Soutput}
+  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
+1   myfit1 04035      0.00271 0.00117 0.00150 0.00203 0.00350
+2   myfit1 04041      0.01576 0.00013 0.00043 0.00218 0.00831
+  predQ90
+1 0.00535
+2 0.04093
+\end{Soutput}
+\begin{Sinput}
+> myfit2[[5]]
+\end{Sinput}
+\begin{Soutput}
+  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
+1   myfit2 04035      0.00257 0.00085 0.00113 0.00180 0.00339
+2   myfit2 04041      0.01618 0.00018 0.00057 0.00237 0.00942
+  predQ90
+1 0.00528
+2 0.03975
+\end{Soutput}
+\begin{Sinput}
+> myfit3[[5]]
+\end{Sinput}
+\begin{Soutput}
+  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
+1   myfit3 04035      0.00259 0.00093 0.00119 0.00179 0.00341
+2   myfit3 04041      0.01678 0.00021 0.00060 0.00251 0.00895
+  predQ90
+1 0.00529
+2 0.03893
+\end{Soutput}
+\begin{Sinput}
+> 
+\end{Sinput}
+\end{Schunk}
+\vspace{5 mm}
+The first element of the list, the data frame, contains information about each model including the pesticide analyzed; the model class (an option in \textbf{seawaveQ} that is not currently implemented but that will provide additional model options in the future); the choice of model or pulse input function, an integer 1 through 14; the model half-life in months, an integer, 1 to 4 months; the decimal season of maximum concentration; the scale factor from the survreg.object; the log-likelihood for the model; the coefficient for the model intercept; the coefficient for the seasonal wave; the coefficient for the trend component of the model; 0 or more values representing coefficients for the continuous ancillary variables; the standard error for the intercept; the standard error for the seasonal wave; the standard error for the trend; and 0 or more columns representing standard errors for the continuous ancillary variables.
+
+The second element of the list is provided so that users could extract the attributes of the survival regression summary programmatically (rather than viewing them in the text file) and create  their own summaries or plots of the results.  The third, fourth, and fifth elements of the list are provided for user-generated plots and further user analysis.
+
+\begin{Schunk}
+\begin{Sinput}
+> attributes(myfit1[[2]][[1]])
+\end{Sinput}
+\begin{Soutput}
+$names
+ [1] "call"         "df"           "loglik"       "iter"        
+ [5] "idf"          "scale"        "coefficients" "var"         
+ [9] "table"        "correlation"  "parms"        "n"           
+[13] "chi"          "robust"      
+
+$class
+[1] "summary.survreg"
+\end{Soutput}
+\begin{Sinput}
+> myfit1[[2]][[1]]$n
+\end{Sinput}
+\begin{Soutput}
+[1] 115
+\end{Soutput}
+\begin{Sinput}
+> myfit1[[2]][[1]]$table
+\end{Sinput}
+\begin{Soutput}
+                  Value Std. Error           z            p
+xmatintcpt  -2.49349164 0.04910211 -50.7817616 0.000000e+00
+xmatwavest   0.55436953 0.11171616   4.9623039 6.966189e-07
+xmattndlin  -0.02793350 0.02112089  -1.3225534 1.859839e-01
+xmatflowa30  0.05385545 0.30491533   0.1766243 8.598035e-01
+xmatflowa1   2.10426938 0.46888353   4.4878296 7.195245e-06
+Log(scale)  -1.30197275 0.12051232 -10.8036489 3.307909e-27
+\end{Soutput}
+\begin{Sinput}
+> 
+\end{Sinput}
+\end{Schunk}
+\vspace{5 mm}
+
+The text file for the first of the function calls above is inserted here as an example.  Users may run the model fitting code themselves and view the resulting text files for all three models.  The results for all three are too long to include in this vignette.
+
+\vspace{5 mm}
+
+\verbatiminput{myfit1_survregCall.txt}%
+
+\vspace{5 mm}
+
+The plots written to a pdf file for the first pesticide, 04035, simazine, in the first model, myfit1, are included below.  As with the text results, the plots for all three models and all pesticides are too numerous to include here.  Users are encouraged to run the code themselves and examine all of the plots.
+
+\includepdf[pages={-}]{myfit104035.pdf}
+
+\vspace{5 mm}
+
+The plotting position used for representing censored values in the model plots (produced by the internal function \textit{seawaveQPlots} that is further described in the package help documentation) is an important consideration for interpreting model fit.  Plotting values obtained by using the censoring limit, or something smaller such as one-half of the censoring limit, produce plots that are difficult to interpret if there are a large number of censored values.  Therefore, to make the plots more representative of diagnostic plots used for standard (non-censored) regression,  a method for substituting randomized residuals in place of censored residuals was used.   If a log-transformed concentration is censored at a particular limit, $logC < L$, then the residual for that concentration is censored as well, $logC - fitted(logC) < L - fitted(logC) = rescen)$.  In that case, a randomized residual was generated from a conditional normal distribution, as shown in the following R code:
+\begin{verbatim}
+	resran  <-  scl * qnorm(runif(1) * pnorm(rescen / scl))
+\end{verbatim}
+where \textit{scl} is the scale parameter from the survival regression model, \textit{pnorm} is the R function for computing cumulative normal probabilities, \textit{runif} is the R function for generating a random variable from the uniform distribution, and \textit{qnorm} is the R function for computing quantiles of the normal distribution.  Under the assumption that the model residuals are uncorrelated, normally distributed random variables with mean zero and standard deviation \textit{scl}, the randomized residuals generated in this manner are an unbiased sample of the true (but unknown) residuals for the censored data.  This is an application of the probability integral transform (Mood and others, 1974) to generate random variables from continuous distributions.  The plotting position using a censored concentration is $fitted(logC) + resran$.  Note that each time a new model fit is performed, a new set of randomized residuals is generated and thus the plotting positions for censored values can change.
+
+\section{References Cited}
+Helsel, D.R., 2005, Nondetects and data analysis: New York, John Wiley and Sons.
+
+Lee, Lopaka, 2012, Nondetects and data analysis for environmental data: R package version 1.5-4,
+\url{http://CRAN.R-project.org/package=NADA}.
+
+Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
+
+Oblinger Childress, C.J., Foreman,W.T., Connor, B.F., and Maloney, T.J., 1999, New reporting procedures based on long-term method detection levels and some considerations for interpretations of water-quality data provided by the U.S. Geological Survey: U.S. Geological Survey Open-File Report 99--193, 19 p. (Also available at \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.)
+
+Ryberg, K.R. and Vecchia, A.V., 2012, waterData---An R package for retrieval, analysis, and anomaly calculation of daily hydrologic time series data, version 1.0: U.S. Geological Survey Open-File Report 2012--1168; 8 p., accessed March 1, 2013, at \url{http://pubs.usgs.gov/of/2012/1168/}.
+
+Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ---An R package providing a model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables: U.S. Geological Survey Open-File Report 2013--1255, 13 p., with 3 appendixes, \url{http://dx.doi.org/10.3133/ofr20131255}. 
+
+Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, Trends in pesticide concentrations in urban streams in the United States, 1992-2008: U.S. Geological Survey Scientific Investigations Report 2010--5139; 101 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2010/5139/}.
+
+Sullivan, D.J., Vecchia, A.V., Lorenz, D.L., Gilliom, R.J., and Martin, J.D., 2009, Trends in pesticide concentrations in corn-belt streams, 1996--2006: U.S. Geological Survey Scientific Investigations Report 2009--5132; 75 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2009/5132/}.
+
+Vecchia, A.V., Gilliom, R.J., Sullivan, D.J., Lorenz, D.L., and Martin, J.D., 2009, Trends in concentrations and use of agricultural herbicides for Corn Belt rivers, 1996--2006:  Environmental Science and Technology, v. 43; p. 9,096-9,102, accessed May 1, 2012, at \url{http://water.usgs.gov/nawqa/pubs/es902122j.pdf}.
+
+Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, Modeling variability and trends in pesticide concentrations in streams: Journal of the American Water Resources Association, v. 44, no. 5; pp. 1,308-1,324, accessed May 1, 2012, at \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
+
+\end{document}  
