@@ -12,83 +12,83 @@
 #' @note The assumed data format is one with columns for water-quality
 #' concentration values and a related column for qualification of 
 #' those values, such as in the case of left-censored values less 
-#' than a particular value.  For example, a water-quality sample
+#' than a particular value. For example, a water-quality sample
 #' was collected and the laboratory analysis indicated that the 
-#' concentration was less than 0.01 micrograms per liter.  The 
+#' concentration of simazine was less than 0.01 micrograms per liter. The 
 #' USGS parameter code for simazine is 04035 (U.S. Geological Survey, 
-#' 2013b).  When the data are retrieved through the National Water 
+#' 2013b). When the data are retrieved through the National Water 
 #' Information System: Web Interface 
-#' (\url{http://waterdata.usgs.gov/nwis}; U.S. Geological Survey, 2013a), 
+#' (\url{https://waterdata.usgs.gov/nwis}; U.S. Geological Survey, 2013a), 
 #' the concentration values are in a column labeled P04035 and the 
 #' qualification information, or remark codes, are in a column labeled 
-#' R04035.  To use this function, the argument pnames would be the unique 
+#' R04035. To use this function, the argument pnames would be the unique 
 #' identifier for simazine values and qualifications, 04035, and the 
 #' qwcols argument would be c("R", "P") to indicate that the 
 #' qualification column starts with an R and the values column starts with 
 #' a P. \cr
-#' Other users may have data in different format that can be 
-#' changed to use with this function.  For example, a user may have
+#' Other users may have data in different formats that can be 
+#' modified to use with this function. For example, a user may have
 #' concentration values and qualification codes in one column, such
-#' as a column labeled simzaine with the values 0.05, 0.10, <0.01, 
-#' <0.01, and 0.90.  In this case, the less thans and any other 
-#' qualification codes should be placed in a separate column.  The
+#' as a column labeled simazine with the values 0.05, 0.10, <0.01, 
+#' <0.01, and 0.90. In this case, the less thans and any other 
+#' qualification codes should be placed in a separate column. The
 #' column names for the qualification codes and the concentration values
 #' should be the same with the exception of different beginning
-#' letters to indicate which column is which.  The columns could be
-#' named Rsimazine and Psimazine.  Then the argument pnames = "simazine" 
+#' letters to indicate which column is which. The columns could be
+#' named Rsimazine and Psimazine. Then the argument pnames = "simazine" 
 #' and the argument qwcols = c("R", "P"). \cr
 #' Users should exercise caution when their water-quality data have 
 #' multiple censoring limits and may want to recensor the data to a 
-#' single censoring level.  Censoring and recensoring issues are discussed
+#' single censoring level. Censoring and recensoring issues are discussed
 #' in the text and Appendix 1 of Ryberg and others (2010).
-#' @param cdat is the concentration data
-#' @param cavdat is the continuous (daily) ancillary data
-#' @param tanm is a character identifier that names the trend 
-#' analysis run.  It is used to label output files.
-#' @param pnames are the parameters (water-quality constituents) to 
+#' @param cdat The concentration data.
+#' @param cavdat The continuous (daily) ancillary data.
+#' @param tanm A character identifier that names the trend 
+#' analysis run. It is used to label output files.
+#' @param pnames The parameters (water-quality constituents) to 
 #' analyze (omit the the starting character, for example for sulfate data 
 #' indicated by P00945, enter "00945").  
-#' @param yrstart is the starting year of the analysis (treated as January
-#' 1 of that year).  Zero means the start date will be determined by the 
+#' @param yrstart The starting year of the analysis (treated as January
+#' 1 of that year). Zero means the start date will be determined by the 
 #' start date of cavdat, the continuous ancillary data.
-#' @param yrend is the ending year of the analysis (treated as December 31
-#' of that year).  Zero means the end date will be determined by the end 
+#' @param yrend The ending year of the analysis (treated as December 31
+#' of that year). Zero means the end date will be determined by the end 
 #' date of cavdat, the continuous ancillary data.
-#' @param tndbeg is the beginning (in whole or decimal years) of the 
+#' @param tndbeg The beginning (in whole or decimal years) of the 
 #' trend period. Zero means the begin date will be the beginning of the
 #' concentration data, cdat.
-#' @param tndend is the end of the trend (treated as December 31
+#' @param tndend The end of the trend (treated as December 31
 #' of that year). Zero means the end date will be the end of the 
 #' concentration data, cdat.
-#' @param iwcav is a character vector indicating which continuous
+#' @param iwcav A character vector indicating which continuous
 #' ancillary variables to include, if none are used for analysis,
 #' use iwcav=c("none").
-#' @param dcol is the column name for the dates, should be the same for 
-#' both cdat and cavdat
-#' @param qwcols is a character vector with the beginning of the
+#' @param dcol The column name for the dates, should be the same for 
+#' both cdat and cavdat.
+#' @param qwcols A character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param mclass indicates the class on model one wants to use.
+#' @param mclass Indicates the class of model to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model. 
-#' @param numk is the number of knots in the restricted cubic spline model.
+#' @param numk The number of knots in the restricted cubic spline model.
 #' The default is 4, and the recommended number is 3--7.
-#' @param alpha is the significance level or alpha values for statistical
-#' significance and confidence intervals
-#' @param bootRCS is a logical value indicating whether or not to perform
+#' @param alpha The significance level or alpha values for statistical
+#' significance and confidence intervals.
+#' @param bootRCS A logical value indicating whether or not to perform
 #' block bootstrapping for an attained significance level for the trend
 #' with restricted cubic splines. No bootstrapping is performed for the linear
 #' trend model.
-#' @param nboot is the number of bootstrap replicates. A large number, 10,000,
+#' @param nboot The number of bootstrap replicates. A large number, 10,000,
 #' is recommended, but this takes a long time. 
 #' @keywords models regression ts survival multivariate
-#' @return a pdf file containing plots of the data and modeled 
+#' @return A pdf file containing plots of the data and modeled 
 #' concentration, a text file containing a summary of the survival 
-#' regression call for each model selected, and a list.  The first element
-#' of the list is a data frame described under format.  The second element
-#' of the list is the summary of the survival regression call.  The third 
+#' regression call for each model selected, and a list. The first element
+#' of the list is a data frame described under format. The second element
+#' of the list is the summary of the survival regression call. The third 
 #' element is the observed concentration data (censored and uncensored). 
 #' The fourth element is the concentration data predicted by the model.  
 #' The fifth element provides summary statistics for the predicted 
@@ -103,24 +103,24 @@
 #'  pname \tab character \tab Parameter analyzed\cr
 #'  mclass \tab numeric \tab A value of 1 or 2\cr
 #'  jmod \tab numeric \tab The choice of pulse input function, an 
-#'  integer 1--14. \cr
-#'  hlife \tab numeric \tab the model half-life in months, an integer, 1 to 
+#'  integer 1--14 \cr
+#'  hlife \tab numeric \tab The model half-life in months, an integer, 1 to 
 #'  4 months \cr
-#'  cmaxt \tab numeric \tab the decimal season of maximum concentration \cr
-#'  scl \tab numeric \tab the scale factor from the 
+#'  cmaxt \tab numeric \tab The decimal season of maximum concentration \cr
+#'  scl \tab numeric \tab The scale factor from the 
 #'  \code{survreg.object} \cr
-#'  loglik \tab numeric \tab the log-likelihood for the model \cr
-#'  cint \tab numeric \tab coefficient for model intercept \cr
-#'  cwave \tab numeric \tab coefficient for the seasonal wave \cr
-#'  ctnd[alpahnumeric] \tab numeric \tab coefficient(s) for the trend component(s) of model \cr
+#'  loglik \tab numeric \tab The log-likelihood for the model \cr
+#'  cint \tab numeric \tab Coefficient for model intercept \cr
+#'  cwave \tab numeric \tab Coefficient for the seasonal wave \cr
+#'  ctnd[alpahnumeric] \tab numeric \tab Coefficient(s) for the trend component(s) of model \cr
 #'  c[alphanumeric] \tab numeric \tab 0 or more coefficients for the 
 #'  continuous ancillary variables\cr
-#'  seint \tab numeric \tab standard error for the intercept \cr
-#'  sewave \tab numeric \tab standard error for the seasonal wave \cr
-#'  setnd[alphanumeric] \tab numeric \tab standard error for the trend component(s) \cr
+#'  seint \tab numeric \tab Standard error for the intercept \cr
+#'  sewave \tab numeric \tab Standard error for the seasonal wave \cr
+#'  setnd[alphanumeric] \tab numeric \tab Standard error for the trend component(s) \cr
 #'  se[alphanumeric] \tab numeric \tab  0 or more standard errors for the 
 #'  continuous ancillary variables\cr
-#'  pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
+#'  pvaltnd[alphanumeric] \tab numeric \tab The p-value for the trend component(s) \cr
 #' }
 #' @seealso The functions that \code{fitswavecav} calls internally: \cr
 #' \code{\link{prepData}} and \code{\link{fitMod}}.
@@ -133,17 +133,17 @@
 #' tanm = "myfitLinearTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 #' dcol = "dates", qwcols = c("R", "P"))
-#' # trend model results
+#' # Trend model results
 #' myfitLinearTrend[[1]]
-#' # example regression call
+#' # Example regression call
 #' myfitLinearTrend[[2]][[1]]
-#' # first few lines of observed concentrations
+#' # First few lines of observed concentrations
 #' head(myfitLinearTrend[[3]])
-#' # first few lines of predicted concentrations
+#' # First few lines of predicted concentrations
 #' head(myfitLinearTrend[[4]])
-#' # summary statistics for predicted concentrations
+#' # Summary statistics for predicted concentrations
 #' myfitLinearTrend[[5]]
-#' # summary of trends
+#' # Summary of trends
 #' myfitLinearTrend[[6]]
 #' myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
 #' tanm = "myfitRCSTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
@@ -153,7 +153,7 @@
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 #' Trends in pesticide concentrations in urban streams in the United 
 #' States, 1992--2008: U.S. Geological Survey Scientific Investigations 
-#' Report 2010-5139, 101 p., \url{http://pubs.usgs.gov/sir/2010/5139/}.
+#' Report 2010-5139, 101 p., \url{https://pubs.usgs.gov/sir/2010/5139/}.
 #'
 #' U.S. Geological Survey, 2018a, National Water Information System: 
 #' Web Interface, accessed July 7, 2018, at
@@ -166,7 +166,7 @@
 #' Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008, Modeling 
 #' variability and  trends in pesticide concentrations in streams: 
 #' Journal of the American Water Resources Association, v. 44, no. 5, p. 
-#' 1308--1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
+#' 1308--1324, \url{https://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
 fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, 
                         yrend = 0, tndbeg = 0, tndend = 0, iwcav = c("none"), 
                         dcol = "dates", qwcols = c("R", "P"), mclass = 1, 
@@ -456,11 +456,11 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
                                   dcol = "dates", qwcols = c("R", "P"), mclass = 2, 
                                   numk = 4, nboot = 10000) {
         
-        mclassmes <- c("Bootstrap options is for models of class 2 only.")
+        mclassmes <- c("Bootstrap option is for models of class 2 only.")
         if (mclass != 2) {
           stop(mclassmes)
         }
-        pestMessage <- c("Bootstrap function if for one pesticide-site combination at a time.")
+        pestMessage <- c("Bootstrap function is for one pesticide-site combination at a time.")
         if (length(pnames) > 1 ) {
           stop(pestMessage)
         }
@@ -567,7 +567,7 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
         cencol <- paste(qwcols[1], pnames, sep = "")
         centmp <- cdatsub[, cencol] == '<'
         
-        #  set up matrix with continuous variables
+        # set up matrix with continuous variables
         if (length(cdatsub[1,]) > 6) {
           cavmat <- as.matrix(cdatsub[, 7:length(cdatsub[1, ])])   
         } else {

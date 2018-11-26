@@ -1,33 +1,32 @@
 #' Internal function that fits the seawaveQ model.
 #' 
 #' fitMod is called from within \link{fitswavecav} but
-#' can be invoked directly.  It fits the seawaveQ model and returns the 
+#' can be invoked directly. It fits the seawaveQ model and returns the 
 #' results.
-#' @param cdatsub is the concentration data
-#' @param cavdat is the continuous (daily) ancillary data
-#' @param yrstart is the starting year of the analysis (treated as January
+#' @param cdatsub The concentration data.
+#' @param cavdat The continuous (daily) ancillary data.
+#' @param yrstart The starting year of the analysis (treated as January
 #' 1 of that year).  
-#' @param yrend is the ending year of the analysis (treated as December 31
+#' @param yrend The ending year of the analysis (treated as December 31
 #' of that year).
-#' @param tndbeg is the beginning (in whole or decimal years) of the 
+#' @param tndbeg The beginning (in whole or decimal years) of the 
 #' trend period. 
-#' @param tndend is the end (in whole or decimal years) of the trend 
-#' period. 
-#' @param tanm is a character identifier that names the trend 
-#' analysis run.  It is used to label output files.
-#' @param pnames is the parameter (water-quality constituents) to 
+#' @param tndend The end (in whole or decimal years) of the trend period. 
+#' @param tanm A character identifier that names the trend 
+#' analysis run. It is used to label output files.
+#' @param pnames The parameter (water-quality constituents) to 
 #' analyze (if using USGS parameters, omit the the starting 'P', such as 
 #' "00945" for sulfate).  
-#' @param qwcols is a character vector with the beginning of the
+#' @param qwcols A character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param mclass indicates the class of model one wants to use.
-#' A class 1 model is the the traditional SEAWAVE-Q model that has a
-#' linear time tredn. A class 2 model is a newer option for longer
+#' @param mclass Indicates the class of model to use.
+#' A class 1 model is the traditional SEAWAVE-Q model that has a
+#' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model. The default is 1.
 #' (Harrell, Jr., 2010 and 2018). 
-#' @param numk is the number of knots in the restricted cubic spline model
+#' @param numk The number of knots in the restricted cubic spline model
 #' (mclass = 2). The default is 4, and the recommended number is 3--7.
 #' @keywords models
 #' @keywords regression
@@ -35,12 +34,12 @@
 #' @keywords ts
 #' @keywords multivariate
 #' @author Aldo V. Vecchia and Karen R. Ryberg
-#' @return a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
+#' @return A pdf file containing plots (see \code{\link{seawaveQPlots}}), 
 #' a text file showing the best model survival regression call and 
-#' results, and a list.  The first element of the list contains 
+#' results, and a list. The first element of the list contains 
 #' information about the data and the model(s) selected (see 
 #' \code{\link{examplestpars}}). The second element of the list contains 
-#' the summary of the survival regression call.  The third element of the 
+#' the summary of the survival regression call. The third element of the 
 #' list is itself a list containing the observed concentrations (censored 
 #' and uncensored) and the predicted concentrations used by 
 #' \code{\link{seawaveQPlots}} or \code{\link{seawaveQPlots2}} to generate the 
@@ -56,7 +55,7 @@
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 #' 
 #' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
-#' Applications to Linear Models, Logisitc Regression, and Survival
+#' Applications to Linear Models, Logistic Regression, and Survival
 #' Analysis: New York, Springer-Verlag, 568 p.
 #' 
 #' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
@@ -239,7 +238,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   aicout[[1]] <- aictmp[[pckone]]
   bicout[[1]] <- bictmp[[pckone]]
   
-  # generalized r-squared statistic based on  the likelihood-ratio test
+  # generalized r-squared statistic based on the likelihood-ratio test
   # see Allison (1995, pp. 247-249)
   # Allison, Paul D. 1995. Survival Analysis Using the SAS System: 
   # A Practical Guide. Cary, NC: SAS Institute Inc.
@@ -260,7 +259,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       "\n\nFinal model survreg results for ", pnames, sep = "")
   print(aovout[[1]])
   cat("Generalized r-squared is: ", r2, "\n", sep = " ")
-  cat("AIC (Akaike's An Information Criterion) is: ", round(aicout[[1]], digits = 2), 
+  cat("AIC (Akaike's Information Criterion) is: ", round(aicout[[1]], digits = 2), 
       "\n", sep = " ")
   cat("BIC (Bayesian Information Criterion) is: ", round(bicout[[1]], digits = 2), 
       "\n", sep = " ")

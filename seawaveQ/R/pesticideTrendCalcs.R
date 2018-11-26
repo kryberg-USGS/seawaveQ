@@ -10,21 +10,21 @@
 #' follows:
 #' Likelihood = (1 - (p-value / 2)), where p-value is the p-value for the 
 #' trend coefficient (Oelsner and others, 2017).
-#' @param tndbeg is the beginning (in whole or decimal years) of the 
+#' @param tndbeg The beginning (in whole or decimal years) of the 
 #' trend period. Zero means the begin date will be the beginning of the
 #' concentration data, cdat.
-#' @param tndend is the end of the trend (treated as December 31
+#' @param tndend The end of the trend (treated as December 31
 #' of that year). Zero means the end date will be the end of the 
 #' concentration data, cdat.
-#' @param ctnd is the concentration trend, the coefficient on the time variable.
-#' @param pval is the p-value for the linear trend component.
-#' @param alpha is the significance level or alpha value for statistical
-#' significance and confidence intervals
-#' @param setnd is the standard error for the linear trend component.
-#' @param scl is the scal factor from the \code{survreg.object}.
-#' @param baseConc is the base concentration, the median concentration 
+#' @param ctnd The concentration trend, the coefficient on the time variable.
+#' @param pval The p-value for the linear trend component.
+#' @param alpha The significance level or alpha value for statistical
+#' significance and confidence intervals.
+#' @param setnd The standard error for the linear trend component.
+#' @param scl The scale factor from the \code{survreg.object}.
+#' @param baseConc The base concentration, the median concentration 
 #' (midpoint of the trend line) for the first year of the trend analysis. 
-#' @param mclass indicates the class on model one wants to use.
+#' @param mclass Indicates the class of model to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
@@ -34,26 +34,26 @@
 #' @format The data frame returned has one row for each chemical analyzed 
 #' and the number of columns are defined as follows: \cr
 #' \tabular{lll}{
-#'  pname \tab character \tab parameter analyzed \cr
-#'  mclass \tab numeric \tab a value of 1 or 2\cr
-#'  alpha \tab numeric \tab a significance level \cr
-#'  ctndPpor \tab numeric \tab the concentration trend in percent over the period of record \cr
-#'  cuciPpor \tab numeric \tab the concentration upper confidence interval for the trend in\cr
+#'  pname \tab character \tab Parameter analyzed \cr
+#'  mclass \tab numeric \tab The model class used (value of 1 or 2)\cr
+#'  alpha \tab numeric \tab Significance level \cr
+#'  ctndPpor \tab numeric \tab The concentration trend in percent over the period of record \cr
+#'  cuciPpor \tab numeric \tab The concentration upper confidence interval for the trend in\cr
 #'   \tab \tab percent over the period of record \cr
-#'  clciPpor \tab numeric \tab the concentration lower confidence interval for the trend in\cr
+#'  clciPpor \tab numeric \tab The concentration lower confidence interval for the trend in\cr
 #'   \tab \tab percent over the period of record \cr
-#'  baseConc \tab numeric \tab the base concentration, median concentration or midpoint of\cr
+#'  baseConc \tab numeric \tab The base concentration, median concentration or midpoint of\cr
 #'   \tab \tab trend line, for first year of trend period \cr
-#'  ctndOrigPORPercentBase \tab numeric \tab the concentration trend in original units over\cr
+#'  ctndOrigPORPercentBase \tab numeric \tab The concentration trend in original units over\cr
 #'   \tab \tab the period of record\cr
 #'   \tab \tab (calculation based on percent per year and base concentration)\cr
-#'  cuciOrigPORPercentBase \tab numeric \tab the concentration trend upper confidence interval\cr
+#'  cuciOrigPORPercentBase \tab numeric \tab The concentration trend upper confidence interval\cr
 #'   \tab \tab for the trend in original units over the period of record\cr
 #'   \tab \tab (calculation based on percent per year and base concentration)\cr
-#'  clciOrigPORPercentBase \tab numeric \tab the concentration trend lower confidence interval\cr
+#'  clciOrigPORPercentBase \tab numeric \tab The concentration trend lower confidence interval\cr
 #'   \tab \tab for the trend in original units over the period of record\cr
 #'   \tab \tab (calculation based on percent per year and base concentration)\cr
-#'  ctndlklhd \tab numeric \tab is the concentration trend likelihood \cr
+#'  ctndlklhd \tab numeric \tab The concentration trend likelihood \cr
 #' }
 #' @export
 #' @author Karen R. Ryberg
