@@ -7,16 +7,14 @@
 compwaveconv(cmaxt, jmod, hlife)
 }
 \arguments{
-\item{cmaxt}{is the time of the maximum chemical concentration, decimal
-time in years.}
+\item{cmaxt}{The decimal time in years of the maximum chemical concentration.}
 
-\item{jmod}{is the choice of model or pulse input function, an integer 
-1 through 14.}
+\item{jmod}{The choice of model or pulse input function, an integer 1 through 14.}
 
-\item{hlife}{is the model half-life in months, 1 to 4 months}
+\item{hlife}{The model half-life in months, 1 to 4 months.}
 }
 \value{
-a numeric vector of size 361 with discrete values of the 
+A numeric vector of size 361 with discrete values of the 
 seasonal wave for decimal season \code{seq(0,1,1/360)}.
 }
 \description{
@@ -30,14 +28,14 @@ seasonal wave is better suited for modeling seasonal behavior of
 pesticide data than a mixture of sines and cosines. The pulse input 
 function, represented by jmod, has either one or two distinct 
 application seasons (when pesticides may be transported to the stream) 
-of lengths from 1 to 6 months.  Therefore, 56 (14x4) choices for the 
+of lengths from 1 to 6 months. Therefore, 56 (14x4) choices for the 
 wave function are available.
 The numeric vector is a discrete approximation of the continuous wave 
 function defined on the interval 0 to 1.
 }
 \examples{
-# evaluate seasonal wave for specified decimal seasons
-# these example decimal dates represent days at points 0.25, 0.5, and 
+# Evaluate seasonal wave for specified decimal seasons
+# These example decimal dates represent days at points 0.25, 0.5, and 
 # 0.75 percent of the way through the year and the end of the year
 dseas <- c(0.25, 0.5, 0.75, 1)
 swave <- compwaveconv(cmaxt = 0.483, jmod = 2, hlife = 4)
@@ -49,7 +47,7 @@ Vecchia, A.V., Martin, J.D. and Gilliom, R.J., 2008,
 Modeling variability and trends in pesticide concentrations in streams: 
 JAWRA Journal of the American Water Resources Association, v. 44, p. 
 1308--1324, 
-\url{http://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
+\url{https://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
 }
 \author{
 Aldo V. Vecchia

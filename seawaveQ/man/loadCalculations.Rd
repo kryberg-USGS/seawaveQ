@@ -15,62 +15,61 @@ The second data frame returned has one row for each pesticide at
 a particular site and 11 columns. The general format is as follows: \cr
 \tabular{lll}{
  pcode \tab character \tab The parameter code for which load trends were calculated\cr
- mclass \tab numeric \tab a value of 1 or 2\cr
- mclass \tab numeric \tab a value of 1 or 2\cr
- alpha \tab numeric \tab a significance level \cr
- ltndPpor \tab numeric \tab the load trend in percent over the period of record \cr
- luciPpor \tab numeric \tab the load upper confidence interval for the trend in\cr
+ mclass \tab numeric \tab The class of model (a value of 1 or 2)\cr
+ alpha \tab numeric \tab Significance level \cr
+ ltndPpor \tab numeric \tab The load trend in percent over the period of record \cr
+ luciPpor \tab numeric \tab The load upper confidence interval for the trend in\cr
   \tab \tab percent over the period of record \cr
- llciPpor \tab numeric \tab the load lower confidence interval for the trend in\cr
+ llciPpor \tab numeric \tab The load lower confidence interval for the trend in\cr
   \tab \tab percent over the period of record \cr
- baseLoad \tab numeric \tab the base load, the load for the first year of trend period \cr
- ltndOrigPORPercentBase \tab numeric \tab the load trend in original units over\cr
+ baseLoad \tab numeric \tab The base load, the load for the first year of trend period \cr
+ ltndOrigPORPercentBase \tab numeric \tab The load trend in original units over\cr
   \tab \tab the period of record\cr
   \tab \tab (calculation based on percent per year and base load)\cr
- luciOrigPORPercentBase \tab numeric \tab the load trend upper confidence interval\cr
+ luciOrigPORPercentBase \tab numeric \tab The load trend upper confidence interval\cr
   \tab \tab for the trend in original units over the period of record\cr
   \tab \tab (calculation based on percent per year and base load)\cr
- llciOrigPORPercentBase \tab numeric \tab the load trend lower confidence interval\cr
+ llciOrigPORPercentBase \tab numeric \tab The load trend lower confidence interval\cr
   \tab \tab for the trend in original units over the period of record\cr
   \tab \tab (calculation based on percent per year and base load)\cr
- ltndlklhd \tab numeric \tab is the load trend likelihood \cr
+ ltndlklhd \tab numeric \tab The load trend likelihood \cr
 }}
 \usage{
 loadCalculations(dailyDat, pestPredict, modRes, concTrends, yrtype = 1,
   alpha = 0.1)
 }
 \arguments{
-\item{dailyDat}{is the daily streamflow data in the form of a data.frame
-with three columns representing a station ID, date, and streamflow}
+\item{dailyDat}{The daily streamflow data in the form of a data.frame
+with three columns representing a station ID, date, and streamflow.}
 
-\item{pestPredict}{is the continuous (daily) estimation of pesticide
+\item{pestPredict}{The continuous (daily) estimation of pesticide
 concentrations for one or more pesticides at a single site. This should be
 in the form of the fourth element of the list returned by \code{fitswavecav}.}
 
-\item{modRes}{is the first element of the list returned by \code{fitswavecav} 
-and include the scale parameter for one or more pesticide trend models at
+\item{modRes}{The first element of the list returned by \code{fitswavecav} 
+and includes the scale parameter for one or more pesticide trend models at
 a single site. The scale parameter is used in the bias correction.}
 
-\item{concTrends}{the SEAWAVE-Q trend in flow-normalized annual load cannot 
+\item{concTrends}{The SEAWAVE-Q trend in flow-normalized annual load. Cannot 
 be different (computationally) from the trend in flow-normalized annual 
 concentration when there is no trend in flow (Oelsner and others, 2017).}
 
-\item{yrtype}{allows one to calculate annual loads based on a calendar 
+\item{yrtype}{Allows one to calculate annual loads based on a calendar 
 year or a water year, where a water year is the 12-month period October 1 
 through September 30 designated by the calendar year in which it ends. A 
 yrtype of 1 represents a calendar year and is the default because that
 is the way the original model was developed. A yrtype of 2 represents a
 water year.}
 
-\item{alpha}{is the significance level or alpha value for statistical
-significance and confidence intervals}
+\item{alpha}{The significance level or alpha value for statistical
+significance and confidence intervals.}
 }
 \value{
-two data frames, the first contains the annual loads, the second
+Two data frames, the first contains the annual loads, the second
 contains the trend summary.
 }
 \description{
-Function to calculate pesticide loads in kilograms per year and to summarize trends.
+Function to calculate pesticide loads in kilograms per year and summarize trends.
 }
 \details{
 Parameter load (mass) is the product of water-quality concentration 

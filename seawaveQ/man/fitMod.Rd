@@ -4,54 +4,53 @@
 \alias{fitMod}
 \title{Internal function that fits the seawaveQ model.}
 \usage{
-fitMod(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, pnames, qwcols,
-  mclass = 1, numk = 4)
+fitMod(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, pnames,
+  qwcols, mclass = 1, numk = 4)
 }
 \arguments{
-\item{cdatsub}{is the concentration data}
+\item{cdatsub}{The concentration data.}
 
-\item{cavdat}{is the continuous (daily) ancillary data}
+\item{cavdat}{The continuous (daily) ancillary data.}
 
-\item{yrstart}{is the starting year of the analysis (treated as January
+\item{yrstart}{The starting year of the analysis (treated as January
 1 of that year).}
 
-\item{yrend}{is the ending year of the analysis (treated as December 31
+\item{yrend}{The ending year of the analysis (treated as December 31
 of that year).}
 
-\item{tndbeg}{is the beginning (in whole or decimal years) of the 
+\item{tndbeg}{The beginning (in whole or decimal years) of the 
 trend period.}
 
-\item{tndend}{is the end (in whole or decimal years) of the trend 
-period.}
+\item{tndend}{The end (in whole or decimal years) of the trend period.}
 
-\item{tanm}{is a character identifier that names the trend 
-analysis run.  It is used to label output files.}
+\item{tanm}{A character identifier that names the trend 
+analysis run. It is used to label output files.}
 
-\item{pnames}{is the parameter (water-quality constituents) to 
+\item{pnames}{The parameter (water-quality constituents) to 
 analyze (if using USGS parameters, omit the the starting 'P', such as 
 "00945" for sulfate).}
 
-\item{qwcols}{is a character vector with the beginning of the
+\item{qwcols}{A character vector with the beginning of the
 column headers for remarks code (default is R), and beginning of 
 column headers for concentration data (default is P for parameter).}
 
-\item{mclass}{indicates the class of model one wants to use.
-A class 1 model is the the traditional SEAWAVE-Q model that has a
-linear time tredn. A class 2 model is a newer option for longer
+\item{mclass}{Indicates the class of model to use.
+A class 1 model is the traditional SEAWAVE-Q model that has a
+linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
 time variable to provide a more flexible model. The default is 1.
 (Harrell, Jr., 2010 and 2018).}
 
-\item{numk}{is the number of knots in the restricted cubic spline model
+\item{numk}{The number of knots in the restricted cubic spline model
 (mclass = 2). The default is 4, and the recommended number is 3--7.}
 }
 \value{
-a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
+A pdf file containing plots (see \code{\link{seawaveQPlots}}), 
 a text file showing the best model survival regression call and 
-results, and a list.  The first element of the list contains 
+results, and a list. The first element of the list contains 
 information about the data and the model(s) selected (see 
 \code{\link{examplestpars}}). The second element of the list contains 
-the summary of the survival regression call.  The third element of the 
+the summary of the survival regression call. The third element of the 
 list is itself a list containing the observed concentrations (censored 
 and uncensored) and the predicted concentrations used by 
 \code{\link{seawaveQPlots}} or \code{\link{seawaveQPlots2}} to generate the 
@@ -59,7 +58,7 @@ plots.
 }
 \description{
 fitMod is called from within \link{fitswavecav} but
-can be invoked directly.  It fits the seawaveQ model and returns the 
+can be invoked directly. It fits the seawaveQ model and returns the 
 results.
 }
 \examples{
@@ -73,7 +72,7 @@ Allison, P.D., 1995, Survival analysis using the SAS system---A
 practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 
 Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
-Applications to Linear Models, Logisitc Regression, and Survival
+Applications to Linear Models, Logistic Regression, and Survival
 Analysis: New York, Springer-Verlag, 568 p.
 
 Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 

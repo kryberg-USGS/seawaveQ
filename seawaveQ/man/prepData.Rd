@@ -7,44 +7,44 @@
 prepData(cdat, cavdat, yrstart, yrend, dcol, pnames, iwcav, qwcols)
 }
 \arguments{
-\item{cdat}{is the concentration data.}
+\item{cdat}{The concentration data.}
 
-\item{cavdat}{is the continuous (daily) ancillary data.}
+\item{cavdat}{The continuous (daily) ancillary data.}
 
-\item{yrstart}{is the starting year of the analysis (treated as January
-1 of that year).  Zero means the start date will be determined by the 
+\item{yrstart}{The starting year of the analysis (treated as January
+1 of that year). Zero means the start date will be determined by the 
 start date of cavdat, the continuous ancillary data.}
 
-\item{yrend}{is the ending year of the analysis (treated as December 31
-of that year).  Zero means the end date will be determined by the end 
+\item{yrend}{The ending year of the analysis (treated as December 31
+of that year). Zero means the end date will be determined by the end 
 date of cavdat, the continuous ancillary data.}
 
-\item{dcol}{is the column name for the dates, should be the same for 
+\item{dcol}{The column name for the dates, should be the same for 
 both cdat and cavdat.}
 
-\item{pnames}{are the parameters (water-quality constituents) to 
+\item{pnames}{The parameters (water-quality constituents) to 
 analyze (if using USGS parameters, omit the the starting 'P', such as 
 "00945" for sulfate).}
 
-\item{iwcav}{is a character variable indicating which continuous
+\item{iwcav}{A character variable indicating which continuous
 ancillary variables to include, if none use iwcav=c("none").}
 
-\item{qwcols}{is a character vector with the beginning of the
+\item{qwcols}{A character vector with the beginning of the
 column headers for remarks code (default is R), and beginning of 
 column headers for concentration data (default is P for parameter).}
 }
 \value{
-a list.  The first element is the concentration data with
+A list. The first element is the concentration data with
 additional date information, missing values removed, and extra columns
-removed.  The second element is the continuous ancillary data with
+removed. The second element is the continuous ancillary data with
 additional date information, missing values removed, and extra columns
 removed.
 }
 \description{
 prepData is usually called from within \link{fitswavecav} but
-can be invoked directly.  It performs some date calculations, removes
+can be invoked directly. It performs some date calculations, removes
 rows with missing values for concentration or continous variables, 
-and returns the the concentration and continuous ancillary data to
+and returns the concentration and continuous ancillary data to
 be used by \link{fitswavecav} and its other internal functions.
 }
 \examples{
