@@ -1,7 +1,7 @@
 # seawaveQ
 A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables.
 
-See the following report for a complete description of the project: Ryberg, K.R., and Vecchia, A.V., 2013, seawaveQ—An R package providing a model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables: U.S. Geological Survey Open-File Report 2013–1255, 13 p., with 3 appendixes, http://dx.doi.org/10.3133/ofr20131255.
+See the following report for a complete description of the project: Ryberg, K.R., and Vecchia, A.V., 2013, seawaveQ—An R package providing a model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables: U.S. Geological Survey Open-File Report 2013–1255, 13 p., with 3 appendices, https://dx.doi.org/10.3133/ofr20131255.
 
 # Disclaimer
 ----------
@@ -12,5 +12,5 @@ Although this software program has been used by the USGS, no warranty, expressed
 This software is provided "AS IS."
 
  [
-   ![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)
- ](http://creativecommons.org/publicdomain/zero/1.0/)
+   ![CC0](https://i.creativecommons.org/p/zero/1.0/88x31.png)
+ ](https://creativecommons.org/publicdomain/zero/1.0/)
