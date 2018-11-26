@@ -4,36 +4,36 @@
 #' This function determines the columns within the data set that have
 #' concentration data, based on them having column headings that start
 #' with P (or a user-specificed indicater in the second element of the 
-#' qwcols argument) followed by a number.  The function determines the 
+#' qwcols argument) followed by a number. The function determines the 
 #' associated remark, or qualification columns, based on them having 
-#' column headings that start with R (or a user-specificed indicater in 
+#' column headings that start with R (or a user-specificed indicator in 
 #' the first element of the qwcols argument) followed by numbers that 
 #' match the associated concentration data. Then it determines which 
 #' values are censored, indicated by a less than symbol in the R columns, 
 #' performs regression on order statistics, \link{ros}, using the NADA 
 #' package, and estimates values for the censored concentrations for 
-#' constituents with less than 90-percent censoring.  The water-quality 
+#' constituents with less than 90-percent censoring. The water-quality 
 #' concentrations are then depicted by boxplots.
 #' @name rosBoxPlot
 #' @title Boxplot of water-quality data
-#' @param data is the dataset with columns that begin with P
+#' @param data The dataset with columns that begin with P
 #' followed by a number indicating concentration data and 
 #' columns that begin with R followed by numbers that match those
-#' of the concentration data indicating qualification codes.  See 
+#' of the concentration data indicating qualification codes. See 
 #' example data sets for more information about the data format, 
 #' \link{IllRivValleyCty} and \link{qwMoRivOmaha}.
-#' @param qwcols is a character vector with the beginning of the
+#' @param qwcols A character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param site is a label for the plot title indicating the site where
+#' @param site A label for the plot title indicating the site where
 #' the water-quality samples were collected.
-#' @param ... arguments to be passed to \link{plot} method.
-#' @return a boxplot
+#' @param ... Arguments to be passed to \link{plot} method.
+#' @return A boxplot
 #' @note The regression on order statistics function in R package NADA 
 #' (Lee, 2012), \code{\link{ros}}, is an implementation of a regression on 
 #' order statistics designed for multiply-censored analytical-chemistry 
-#' data (Helsel, 2005).  The method assumes data contains zero to many 
-#' left-censored (less-than) values.  For highly censored data, \link{ros} 
+#' data (Helsel, 2005). The method assumes data contains zero to many 
+#' left-censored (less-than) values. For highly censored data, \link{ros} 
 #' may produce a warning message. Such as, 
 #' \preformatted{Warning messages:
 #' 1: In ros(my.list$obs, my.list$cen) :
@@ -57,16 +57,16 @@
 #' T.J., 1999, New reporting procedures based on long-term method 
 #' detection levels and some considerations for interpretations of 
 #' water-quality data provided by the U.S. Geological Survey: U.S. 
-#' Geogolical Survey Open-File Report 99--193, 19 p. (Also available at 
-#' \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.)
+#' Geological Survey Open-File Report 99--193, 19 p. (Also available at 
+#' \url{https://water.usgs.gov/owq/OFR_99-193/index.html}.)
 #' @examples
 #' data(swData)
-#' # summary of water-quality concentrations
+#' # Summary of water-quality concentrations
 #' apply(IllRivValleyCty[, grep("P[[:digit:]]", 
 #'       dimnames(IllRivValleyCty)[[2]])], 2, summary)
-#' # simple boxplot of water-quality concentrations
+#' # Simple boxplot of water-quality concentrations
 #' rosBoxPlot(IllRivValleyCty)
-#' # same boxplot function with many additional plotting arguments
+#' # Same boxplot function with many additional plotting arguments
 #' rosBoxPlot(IllRivValleyCty, 
 #'            site="05586100 Illinois River at Valley City, IL", 
 #'            log="y", yaxt="n", ylim=c(0.0000001, 1), qwcols=c("R", "P"),
@@ -103,7 +103,7 @@ rosBoxPlot <- function(data, site = "", qwcols = c("R", "P"), ...) {
   }
   boxplot(my.res, ...)
   title(sub = "Censored values estimated using regression on order 
-        statistcs", line = 3)
+        statistics", line = 3)
   if (is.character(site)) {
     title(main = site)
   }
