@@ -1,22 +1,22 @@
 #' Internal function that generates plots of data and model results.
 #' 
 #' seawaveQPlots is usually called from within \code{\link{fitMod}} but
-#' can be invoked directly.  It generates plots of data and model results, 
+#' can be invoked directly. It generates plots of data and model results, 
 #' as well as diagnostic plots, and returns the observed and predicted 
 #' concentrations so that users may plot the concentrations using 
 #' their own functions.
 #' @note The plotting position used for representing censored values in 
 #' the plots produced by \code{\link{seawaveQPlots}} is an important 
-#' consideration for interpreting model fit.  Plotting values obtained by 
+#' consideration for interpreting model fit. Plotting values obtained by 
 #' using the censoring limit, or something smaller such as one-half of the 
 #' censoring limit, produce plots that are difficult to interpret if there 
-#' are a large number of censored values.  Therefore, to make the plots 
+#' are a large number of censored values. Therefore, to make the plots 
 #' more representative of diagnostic plots used for standard 
 #' (non-censored) regression, a method for substituting randomized 
-#' residuals in place of censored residuals was used.   If a 
+#' residuals in place of censored residuals was used. If a 
 #' log-transformed concentration is censored at a particular limit, 
 #' \code{logC < L}, then the residual for that concentration is censored 
-#' as well, \code{logC - fitted(logC) < L - fitted(logC) = rescen}.  In 
+#' as well, \code{logC - fitted(logC) < L - fitted(logC) = rescen}. In 
 #' that case, a randomized residual was generated from a conditional 
 #' normal distribution \cr \cr
 #' \code{resran  <-  scl * qnorm(runif(1) * pnorm(rescen / scl))}, \cr \cr
@@ -29,56 +29,51 @@
 #' normally distributed random variables with mean zero and standard 
 #' deviation \code{scl}, the randomized residuals generated in this manner are an 
 #' unbiased sample of the true (but unknown) residuals for the censored 
-#' data.  This is an application of the probability integral transform 
+#' data. This is an application of the probability integral transform 
 #' (Mood and others, 1974) to generate random variables from continuous 
-#' distributions. The plotting position used a censored concentration is 
-#' \code{fitted(logC) + resran}.  Note that each time a new model fit is 
+#' distributions. The plotting position used for a censored concentration is 
+#' \code{fitted(logC) + resran}. Note that each time a new model fit is 
 #' performed, a new set of randomized residuals is generated and thus the 
 #' plotting positions for censored values can change.
 
-#' @param stpars is a matrix of information about the best seawaveQ model
+#' @param stpars A matrix of information about the best seawaveQ model
 #' for the concentration data, see \code{\link{examplestpars}}.
-#' @param cmaxt is the decimal season of maximum chemical concentration.
-#' @param tseas is the decimal season of each concentration value in 
-#' cdatsub.
-#' @param tseaspr is the decimal season date used to model concentration 
+#' @param cmaxt The decimal season of maximum chemical concentration.
+#' @param tseas The decimal season of each concentration value in cdatsub.
+#' @param tseaspr The decimal season date used to model concentration 
 #' using the continuous data set cavdat.
-#' @param tndlin is the decimal time centered on the midpoint of the trend
+#' @param tndlin The decimal time centered on the midpoint of the trend
 #' for the sample data, cdatasub.
-#' @param tndlinpr is is the decimal time centered on the midpoint of the 
+#' @param tndlinpr The decimal time centered on the midpoint of the 
 #' trend for the continuous data, cavdat.
-#' @param cdatsub is the concentration data
-#' @param cavdat is the continuous (daily) ancillary data
-#' @param cavmat is a matrix containing the continuous ancillary 
-#' variables.
-#' @param clog is a vector of the base-10 logarithms of the concentration 
-#' data.
-#' @param centmp is a logical vector indicating which concentration values
+#' @param cdatsub The concentration data.
+#' @param cavdat The continuous (daily) ancillary data.
+#' @param cavmat A matrix containing the continuous ancillary variables.
+#' @param clog A vector of the base-10 logarithms of the concentration data.
+#' @param centmp A logical vector indicating which concentration values
 #' are censored.
-#' @param yrstart is the starting year of the analysis (treated as January
+#' @param yrstart The starting year of the analysis (treated as January
 #' 1 of that year).  
-#' @param yrend is the ending year of the analysis (treated as December 31
+#' @param yrend The ending year of the analysis (treated as December 31
 #' of that year).  
-#' @param tyr is a vector of decimal dates for the concentration data
-#' @param tyrpr is a vector of decimal dates for the continuous ancillary
-#' varaibles.
-#' @param pnames is the parameter (water-quality constituents) to 
+#' @param tyr A vector of decimal dates for the concentration data.
+#' @param tyrpr A vector of decimal dates for the continuous ancillary variables.
+#' @param pnames The parameter (water-quality constituents) to 
 #' analyze (if using USGS parameters, omit the the starting 'P', such as 
 #' "00945" for sulfate).  
-#' @param tanm is an a character identifier that names the trend 
+#' @param tanm A character identifier that names the trend 
 #' analysis run.  It is used to label output files.
-#' @param mclass has not been implemented yet, but will provide
-#' additional model options.
+#' @param mclass Not implemented yet, but will provide additional model options.
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
-#' @return a pdf file containing plots of the data and modeled 
+#' @return A pdf file containing plots of the data and modeled 
 #' concentrations and regression diagnostic plots and a list containing
 #' the observed concentrations (censored and uncensored) and the predicted
 #' concentrations used for the plot.
 #' @export
 #' @references
 #' Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 
-#' theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
+#' theory of statistics (3rd ed.): New York, McGraw-Hill, Inc., 564 p.
 #' @examples
 #' data(swData)
 #' myPlots <- seawaveQPlots(stpars=examplestpars, cmaxt=0.4808743, 
@@ -288,9 +283,8 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
   mtext(side = 3, line = 0.5, adj = 0.5, cex = 1, tanm)
   mtext("Fitted Concentration, in micrograms per liter", side = 1, 
         outer = FALSE, line = 1.5, cex = 0.8)
-  mtext("Measured Concentration, in micrograms per liter\n(censored 
-        data randomized)", side = 2, outer = FALSE, line = 3.5, 
-        cex = 0.8)
+  mtext("Measured Concentration, in micrograms per liter\n(censored data randomized)", 
+        side = 2, outer = FALSE, line = 3.5, cex = 0.8)
   
    # Fourth plot
   xlow0 <- xlow
