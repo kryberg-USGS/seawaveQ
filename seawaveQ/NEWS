@@ -1,18 +1,18 @@
 Version 2.0.0
 *************
 Added pesticide load calculation.
-Added trend results expressed several way: concentration trend in percent
+Added trend results expressed several ways: concentration trend in percent
 over the trend period, confidence interval for the concentration trend in 
 percent over the trend period, concentration trend in original units over the 
-trend period, confience interval for concentration trend in original units over
+trend period, confidence interval for concentration trend in original units over
 the trend period, concentration trend likelihood, load trend in percent over 
-the trend period, confidence interval for the laod trend in percent over the 
+the trend period, confidence interval for the load trend in percent over the 
 trend period, load trend in original units over the trend period, confidence 
-interval for the laod trend in original units over the trend period, load
+interval for the load trend in original units over the trend period, load
 trend likelihood.
 
 Addition of a model option with restricted cubic splines for a more flexible
-deption of long-term ternds. Added bootstrapping to calculate a p-value for
+description of long-term trends. Added bootstrapping to calculate a p-value for
 the restricted cubic spline models.
 
 Updated the vignette.
