@@ -76,14 +76,14 @@ There are  20 variables.
 \examples{
 data(swData)
 
-# summary of water-quality concentrations
+# Summary of water-quality concentrations
 apply(IllRivValleyCty[,grep("P[[:digit:]]", 
 dimnames(IllRivValleyCty)[[2]])], 2, summary)
 
-# simple boxplot of water-quality concentrations
+# Simple boxplot of water-quality concentrations
 rosBoxPlot(IllRivValleyCty)
 
-# same boxplot function with many additional plotting arguments
+# Same boxplot function with many additional plotting arguments
 rosBoxPlot(IllRivValleyCty, 
            site="05586100 Illinois River at Valley City, Ill.", log="y", 
            yaxt="n", ylim=c(0.0000001, 1), qwcols=c("R", "P"), 
@@ -97,10 +97,10 @@ axis(2, at=c(0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1),
      labels=c("0.0000001", "0.000001", "0.00001", "0.0001", "0.001", "0.01", 
               "0.1", "1"), cex.axis=0.7)
 
-# scatter plot of simazine concentrations
+# Scatter plot of simazine concentrations
 cenScatPlot(IllRivValleyCty, pname="04035")
 
-# scatter plot with many additional plotting arguments
+# Scatter plot with many additional plotting arguments
 par(las=1, tcl=0.5)
 cenScatPlot(IllRivValleyCty, pname="04035", 
             site="05586100 Illinois River at Valley City, Ill.",
@@ -160,7 +160,7 @@ axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008","2012"),
   1999, New reporting procedures based on long-term method detection levels
   and some considerations for interpretations of water-quality data provided
   by the U.S. Geological Survey Open-File Report 99--193, 19 p. (Also 
-  available at \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.)
+  available at \url{https://water.usgs.gov/owq/OFR_99-193/index.html}.)
 }
 \keyword{datasets}
 
