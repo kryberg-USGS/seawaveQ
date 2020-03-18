@@ -11,7 +11,8 @@
 #' defined indicator) followed by alphanumeric characters that match those 
 #' of the associated concentration data.  The R columns contain data 
 #' qualification codes.  See example datasets for more information about 
-#' the data format, \link{IllRivValleyCty} and \link{qwMoRivOmaha}.
+#' the data format, \link{IllRivValleyCty} and \link{qwMoRivOmaha}. This
+#' package assumes that the data are in micrograms per liter.
 #' @param qwcols is a character vector with column headings for 
 #' a station (location) identifier, a dates column identifier, beginning 
 #' of column headers for remarks code (default is R), and beginning of 
