@@ -48,10 +48,10 @@ concentrations for one or more pesticides at a single site. This should be
 in the form of the fourth element of the list returned by \code{fitswavecav}.}
 
 \item{modRes}{is the first element of the list returned by \code{fitswavecav} 
-and include the scale parameter for one or more pesticide trend models at
+and includes the scale parameter for one or more pesticide trend models at
 a single site. The scale parameter is used in the bias correction.}
 
-\item{concTrends}{the SEAWAVE-Q trend in flow-normalized annual load cannot 
+\item{concTrends}{the SEAWAVE-Q trend in flow-normalized annual load. Cannot 
 be different (computationally) from the trend in flow-normalized annual 
 concentration when there is no trend in flow (Oelsner and others, 2017).}
 
@@ -70,7 +70,7 @@ two data frames, the first contains the annual loads, the second
 contains the trend summary.
 }
 \description{
-Function to calculate pesticide loads in kilograms per year and to summarize trends.
+Function to calculate pesticide loads in kilograms per year and summarize trends.
 }
 \details{
 Parameter load (mass) is the product of water-quality concentration 

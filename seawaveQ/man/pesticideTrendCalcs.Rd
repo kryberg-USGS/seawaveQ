@@ -40,21 +40,21 @@ concentration data, cdat.}
 of that year). Zero means the end date will be the end of the 
 concentration data, cdat.}
 
-\item{ctnd}{is the concentration trend, the coefficient on the time variable.}
+\item{ctnd}{is the concentration trend, the coefficient on the time variable}
 
-\item{pval}{is the p-value for the linear trend component.}
+\item{pval}{is the p-value for the linear trend component}
 
 \item{alpha}{is the significance level or alpha value for statistical
 significance and confidence intervals}
 
-\item{setnd}{is the standard error for the linear trend component.}
+\item{setnd}{is the standard error for the linear trend component}
 
-\item{scl}{is the scal factor from the \code{survreg.object}.}
+\item{scl}{is the scale factor from the \code{survreg.object}}
 
 \item{baseConc}{is the base concentration, the median concentration 
-(midpoint of the trend line) for the first year of the trend analysis.}
+(midpoint of the trend line) for the first year of the trend analysis}
 
-\item{mclass}{indicates the class on model one wants to use.
+\item{mclass}{indicates the class of model to use
 A class 1 model is the the traditional SEAWAVE-Q model that has a
 linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 

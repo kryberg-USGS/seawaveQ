@@ -8,10 +8,10 @@ analysis}
 and the number of columns depend on the number of continuous ancillary
 variables used. The general format is as follows: \cr
 \tabular{lll}{
- pname \tab character \tab Parameter analyzed\cr
+ pname \tab character \tab parameter analyzed\cr
  mclass \tab numeric \tab A value of 1 or 2\cr
- jmod \tab numeric \tab The choice of pulse input function, an 
- integer 1--14. \cr
+ jmod \tab numeric \tab the choice of pulse input function, an 
+ integer 1--14 \cr
  hlife \tab numeric \tab the model half-life in months, an integer, 1 to 
  4 months \cr
  cmaxt \tab numeric \tab the decimal season of maximum concentration \cr
@@ -49,11 +49,11 @@ analyze (omit the the starting character, for example for sulfate data
 indicated by P00945, enter "00945").}
 
 \item{yrstart}{is the starting year of the analysis (treated as January
-1 of that year).  Zero means the start date will be determined by the 
+1 of that year). Zero means the start date will be determined by the 
 start date of cavdat, the continuous ancillary data.}
 
 \item{yrend}{is the ending year of the analysis (treated as December 31
-of that year).  Zero means the end date will be determined by the end 
+of that year). Zero means the end date will be determined by the end 
 date of cavdat, the continuous ancillary data.}
 
 \item{tndbeg}{is the beginning (in whole or decimal years) of the 
@@ -75,7 +75,7 @@ both cdat and cavdat}
 column headers for remarks code (default is R), and beginning of 
 column headers for concentration data (default is P for parameter).}
 
-\item{mclass}{indicates the class on model one wants to use.
+\item{mclass}{indicates the class of model to use.
 A class 1 model is the the traditional SEAWAVE-Q model that has a
 linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
@@ -98,9 +98,9 @@ is recommended, but this takes a long time.}
 \value{
 a pdf file containing plots of the data and modeled 
 concentration, a text file containing a summary of the survival 
-regression call for each model selected, and a list.  The first element
-of the list is a data frame described under format.  The second element
-of the list is the summary of the survival regression call.  The third 
+regression call for each model selected, and a list. The first element
+of the list is a data frame described under format. The second element
+of the list is the summary of the survival regression call. The third 
 element is the observed concentration data (censored and uncensored). 
 The fourth element is the concentration data predicted by the model.  
 The fifth element provides summary statistics for the predicted 
@@ -124,30 +124,30 @@ of the temporal trend.
 The assumed data format is one with columns for water-quality
 concentration values and a related column for qualification of 
 those values, such as in the case of left-censored values less 
-than a particular value.  For example, a water-quality sample
+than a particular value. For example, a water-quality sample
 was collected and the laboratory analysis indicated that the 
-concentration was less than 0.01 micrograms per liter.  The 
+concentration was less than 0.01 micrograms per liter. The 
 USGS parameter code for simazine is 04035 (U.S. Geological Survey, 
-2013b).  When the data are retrieved through the National Water 
+2013b). When the data are retrieved through the National Water 
 Information System: Web Interface 
-(\url{http://waterdata.usgs.gov/nwis}; U.S. Geological Survey, 2013a), 
+(\url{https://waterdata.usgs.gov/nwis}; U.S. Geological Survey, 2013a), 
 the concentration values are in a column labeled P04035 and the 
 qualification information, or remark codes, are in a column labeled 
-R04035.  To use this function, the argument pnames would be the unique 
+R04035. To use this function, the argument pnames would be the unique 
 identifier for simazine values and qualifications, 04035, and the 
 qwcols argument would be c("R", "P") to indicate that the 
 qualification column starts with an R and the values column starts with 
 a P. \cr
-Other users may have data in different format that can be 
-changed to use with this function.  For example, a user may have
+Other users may have data in different formats that can be 
+modified to use with this function. For example, a user may have
 concentration values and qualification codes in one column, such
-as a column labeled simzaine with the values 0.05, 0.10, <0.01, 
-<0.01, and 0.90.  In this case, the less thans and any other 
-qualification codes should be placed in a separate column.  The
+as a column labeled simazine with the values 0.05, 0.10, <0.01, 
+<0.01, and 0.90. In this case, the less thans and any other 
+qualification codes should be placed in a separate column. The
 column names for the qualification codes and the concentration values
 should be the same with the exception of different beginning
-letters to indicate which column is which.  The columns could be
-named Rsimazine and Psimazine.  Then the argument pnames = "simazine" 
+letters to indicate which column is which. The columns could be
+named Rsimazine and Psimazine. Then the argument pnames = "simazine" 
 and the argument qwcols = c("R", "P"). \cr
 
 Users should exercise caution when their water-quality data have 
@@ -186,16 +186,16 @@ yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"),
 dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
 }
 \references{
-Ryberg, K.R. and York, B.C., 2020, seawaveQ—An R package providing a model 
+Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing a model 
 and utilities for analyzing trends in chemical concentrations in streams with 
 a seasonal wave (seawave) and adjustment for streamflow (Q) and other 
-ancillary variables: U.S. Geological Survey Open-File Report 2020–XXXX, XX 
+ancillary variables: U.S. Geological Survey Open-File Report 2020--XXXX, XX 
 p., with 4 appendixes.
 
 Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 Trends in pesticide concentrations in urban streams in the United 
 States, 1992--2008: U.S. Geological Survey Scientific Investigations 
-Report 2010-5139, 101 p., \url{http://pubs.usgs.gov/sir/2010/5139/}.
+Report 2010-5139, 101 p., \url{https://pubs.usgs.gov/sir/2010/5139/}.
 
 U.S. Geological Survey, 2018a, National Water Information System: 
 Web Interface, accessed July 7, 2018, at
@@ -208,7 +208,7 @@ at \url{https://nwis.waterdata.usgs.gov/usa/nwis/pmcodes}.
 Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008, Modeling 
 variability and  trends in pesticide concentrations in streams: 
 Journal of the American Water Resources Association, v. 44, no. 5, p. 
-1308--1324, \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
+1308--1324, \url{https://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
 }
 \seealso{
 The functions that \code{fitswavecav} calls internally: \cr

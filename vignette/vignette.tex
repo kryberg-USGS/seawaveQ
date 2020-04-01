@@ -261,7 +261,7 @@ The model fitting process finds the best pulse input function and model half-lif
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
+    xmat - 1, dist = "gaussian", control = list(maxiter = 100))
               Value Std. Error      z       p
 xmatintcpt  -2.4935     0.0491 -50.78 < 2e-16
 xmatwavest   0.5544     0.1117   4.96 7.0e-07
@@ -283,7 +283,7 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
+    xmat - 1, dist = "gaussian", control = list(maxiter = 100))
                Value Std. Error      z       p
 xmatintcpt  -2.31618    0.02550 -90.84 < 2e-16
 xmatwavest   0.27310    0.07609   3.59 0.00033
@@ -305,7 +305,7 @@ n= 115
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
+    xmat - 1, dist = "gaussian", control = list(maxiter = 100))
               Value Std. Error      z       p
 xmatintcpt  -2.2697     0.0853 -26.59 < 2e-16
 xmatwavest   2.1769     0.2594   8.39 < 2e-16
@@ -494,7 +494,7 @@ The following code fits a model with restricted cubic splines instead of a linea
 
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
+    xmat - 1, dist = "gaussian", control = list(maxiter = 100))
                Value Std. Error      z       p
 xmatintcpt   -2.2851     0.1392 -16.42 < 2e-16
 xmatwavest    0.5849     0.1137   5.14 2.7e-07

@@ -30,7 +30,7 @@ seasonal wave is better suited for modeling seasonal behavior of
 pesticide data than a mixture of sines and cosines. The pulse input 
 function, represented by jmod, has either one or two distinct 
 application seasons (when pesticides may be transported to the stream) 
-of lengths from 1 to 6 months.  Therefore, 56 (14x4) choices for the 
+of lengths from 1 to 6 months. Therefore, 56 (14x4) choices for the 
 wave function are available.
 The numeric vector is a discrete approximation of the continuous wave 
 function defined on the interval 0 to 1.
@@ -49,7 +49,7 @@ Vecchia, A.V., Martin, J.D. and Gilliom, R.J., 2008,
 Modeling variability and trends in pesticide concentrations in streams: 
 JAWRA Journal of the American Water Resources Association, v. 44, p. 
 1308--1324, 
-\url{http://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
+\url{https://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
 }
 \author{
 Aldo V. Vecchia

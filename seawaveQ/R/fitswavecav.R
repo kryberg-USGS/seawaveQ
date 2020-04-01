@@ -157,10 +157,10 @@
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 #' dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
 #' @references
-#' Ryberg, K.R. and York, B.C., 2020, seawaveQ—An R package providing a model 
+#' Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing a model 
 #' and utilities for analyzing trends in chemical concentrations in streams with 
 #' a seasonal wave (seawave) and adjustment for streamflow (Q) and other 
-#' ancillary variables: U.S. Geological Survey Open-File Report 2020–XXXX, XX 
+#' ancillary variables: U.S. Geological Survey Open-File Report 2020--XXXX, XX 
 #' p., with 4 appendixes.
 #' 
 #' Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 

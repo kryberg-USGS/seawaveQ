@@ -12,7 +12,7 @@ prepData(cdat, cavdat, yrstart, yrend, dcol, pnames, iwcav, qwcols)
 \item{cavdat}{is the continuous (daily) ancillary data.}
 
 \item{yrstart}{is the starting year of the analysis (treated as January
-1 of that year).  Zero means the start date will be determined by the 
+1 of that year). Zero means the start date will be determined by the 
 start date of cavdat, the continuous ancillary data.}
 
 \item{yrend}{is the ending year of the analysis (treated as December 31
@@ -34,15 +34,15 @@ column headers for remarks code (default is R), and beginning of
 column headers for concentration data (default is P for parameter).}
 }
 \value{
-a list.  The first element is the concentration data with
+a list. The first element is the concentration data with
 additional date information, missing values removed, and extra columns
-removed.  The second element is the continuous ancillary data with
+removed. The second element is the continuous ancillary data with
 additional date information, missing values removed, and extra columns
 removed.
 }
 \description{
 prepData is usually called from within \link{fitswavecav} but
-can be invoked directly.  It performs some date calculations, removes
+can be invoked directly. It performs some date calculations, removes
 rows with missing values for concentration or continous variables, 
 and returns the the concentration and continuous ancillary data to
 be used by \link{fitswavecav} and its other internal functions.
