@@ -4,8 +4,8 @@
 \title{Example logical vector.}
 \description{
   This is an example of data that is passed 
-  internally to subfunctions of \code{link\{fitswavecav}}.  This logical
-  vector indicates which water-quality values are censored.  It is provided
+  internally to subfunctions of \code{\link{fitswavecav}}. This logical
+  vector indicates which water-quality values are censored. It is provided
   here for use with examples of the internal functions.
 }
 \usage{examplecentmp}

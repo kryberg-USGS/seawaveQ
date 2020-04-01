@@ -25,7 +25,7 @@
    12 is the standard error for the trend term  \cr
    13 is the standard error for the 30-day flow anomaly term  \cr
    14 is the standard error for the 1-day flow anomaly term  \cr
-   15 is  cmaxt, the decimal season of maximum concentration \cr
+   15 is cmaxt, the decimal season of maximum concentration \cr
 }
 \seealso{
   \code{\link{fitswavecav}}
