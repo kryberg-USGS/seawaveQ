@@ -149,10 +149,17 @@ should be the same with the exception of different beginning
 letters to indicate which column is which.  The columns could be
 named Rsimazine and Psimazine.  Then the argument pnames = "simazine" 
 and the argument qwcols = c("R", "P"). \cr
+
 Users should exercise caution when their water-quality data have 
 multiple censoring limits and may want to recensor the data to a 
-single censoring level.  Censoring and recensoring issues are discussed
+single censoring level. Censoring and recensoring issues are discussed
 in the text and Appendix 1 of Ryberg and others (2010).
+
+None of the variations of SEAWAVE is a simple model. The model complexity 
+increases with flow anomalies and with the addition of restricted cubic 
+splines. As the number of parameters in the model increases or the degree
+of censoring increases, the sample size must also increase. See Ryberg 
+and others (2020) for more details on sample size.
 }
 \examples{
 data(swData)
@@ -179,6 +186,12 @@ yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"),
 dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
 }
 \references{
+Ryberg, K.R. and York, B.C., 2020, seawaveQ—An R package providing a model 
+and utilities for analyzing trends in chemical concentrations in streams with 
+a seasonal wave (seawave) and adjustment for streamflow (Q) and other 
+ancillary variables: U.S. Geological Survey Open-File Report 2020–XXXX, XX 
+p., with 4 appendixes.
+
 Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, 
 Trends in pesticide concentrations in urban streams in the United 
 States, 1992--2008: U.S. Geological Survey Scientific Investigations 

@@ -37,12 +37,6 @@
                                             Missouri River at Omaha, Nebr.} \cr}
   \if{latex}{\figure{06610000EPTC.pdf}{EPTC concentrations in the
                                        Missouri River at Omaha, Nebr.} \cr}
-  Boxplot of data using regression on order statistics (Helsel, 2005; Lee, 
-                                                        2010) to estimate censored values.
-  \if{html}{\figure{06610000BoxPlots.png}{Boxplots of chemical concentrations 
-                                          in the Missouri River at Omaha, Nebr.} \cr}
-  \if{latex}{\figure{06610000BoxPlots.pdf}{Boxplots of chemical Nebr 
-                                           in the Missouri River at Omaha, Neb.} \cr}
 }
 \details{
   Chemical concentration data are in the columns that start with a P and are 
@@ -91,23 +85,7 @@
   # summary of water-quality concentrations
   apply(qwMoRivOmaha[,grep("P[[:digit:]]",dimnames(qwMoRivOmaha)[[2]])], 
   2, summary)
-  
-  # simple boxplot of water-quality concentrations
-  rosBoxPlot(qwMoRivOmaha, qwcols=c("R", "P"))
-  
-  # same boxplot function with many additional plotting arguments
-  rosBoxPlot(qwMoRivOmaha, site="06610000 Missouri River at Omaha, Nebr.", 
-             log="y", yaxt="n", ylim=c(0.000001, 10), qwcols=c("R", "P"),
-             ylab=c("Concentration, micrograms per liter"), col="skyblue1", 
-             cex.axis=0.7, cex.sub=0.8, par(tcl=0.5, las=1, 
-                                            yaxs="i", 
-                                            mgp=c(3,0.5,0), 
-                                            mar=c(5,5,2,2),
-                                            cex.main=0.9))
-  axis(2, at=c(0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10), 
-       labels=c("0.000001", "0.00001", "0.0001", "0.001", "0.01", 
-                "0.1", "1", "10"), cex.axis=0.7)
-  
+
   # scatter plot of Simazine concentrations
   cenScatPlot(qwMoRivOmaha, pname="04035")
   

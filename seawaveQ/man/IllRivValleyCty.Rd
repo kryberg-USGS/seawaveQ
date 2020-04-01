@@ -21,12 +21,6 @@
   Illinois River at Valley City, Ill.} \cr}
   \if{latex}{\figure{05586100EPTC.pdf}{EPTC concentrations in the
   Illinois River at Valley City, Ill.} \cr}
-  Boxplot of data using regression on order statistics (Helsel, 2005; Lee, 
-  2010) to estimate censored values.
-  \if{html}{\figure{05586100BoxPlots.png}{Boxplots of chemical concentrations 
-  in the Illinois River at Valley City, Ill.} \cr}
-  \if{latex}{\figure{05586100BoxPlots.pdf}{Boxplots of chemical concentrations 
-  in the Illinois River at Valley City, Ill.} \cr}
 }
 \details{
   Chemical concentration data are in the columns that start with a P and are 
@@ -79,23 +73,6 @@ data(swData)
 # summary of water-quality concentrations
 apply(IllRivValleyCty[,grep("P[[:digit:]]", 
 dimnames(IllRivValleyCty)[[2]])], 2, summary)
-
-# simple boxplot of water-quality concentrations
-rosBoxPlot(IllRivValleyCty)
-
-# same boxplot function with many additional plotting arguments
-rosBoxPlot(IllRivValleyCty, 
-           site="05586100 Illinois River at Valley City, Ill.", log="y", 
-           yaxt="n", ylim=c(0.0000001, 1), qwcols=c("R", "P"), 
-           ylab=c("Concentration, micrograms per liter"), col="skyblue1", 
-           cex.axis=0.7, cex.sub=0.8, par(tcl=0.5, las=1, 
-                                                        yaxs="i", 
-                                                        mgp=c(3,0.5,0), 
-                                                        mar=c(5,5,2,2),
-                                                        cex.main=0.9))
-axis(2, at=c(0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1), 
-     labels=c("0.0000001", "0.000001", "0.00001", "0.0001", "0.001", "0.01", 
-              "0.1", "1"), cex.axis=0.7)
 
 # scatter plot of simazine concentrations
 cenScatPlot(IllRivValleyCty, pname="04035")

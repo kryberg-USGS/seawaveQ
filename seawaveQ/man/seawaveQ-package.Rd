@@ -24,7 +24,7 @@ the model.
 Package: \tab seawaveQ\cr
 Type: \tab Package\cr
 Version: \tab 2.0.0\cr
-Date: \tab 2018--09--13\cr
+Date: \tab 2020--03--31\cr
 License: \tab Unlimited | file LICENSE \cr
 LazyLoad: \tab yes\cr
 }

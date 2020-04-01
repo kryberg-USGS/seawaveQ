@@ -163,7 +163,8 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
       
         # requires survival package
         tmpouta <- survreg(Surv(time = clogtmp, time2 = indcen, 
-                                type = "left") ~ xmat - 1, dist = "gaussian")
+                                type = "left") ~ xmat - 1, dist = "gaussian",
+                           control = list(maxiter = 100))
         parx[j2, ] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
                         tmpouta$coef, summary(tmpouta)$table[1:nctmp, 2], 
                         summary(tmpouta)$table[grep("tndlin", 
@@ -216,7 +217,8 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
         
         # requires survival package
         tmpouta <- survreg(Surv(time=clogtmp, time2=indcen, 
-                                type="left") ~ xmat - 1, dist = "gaussian")
+                                type="left") ~ xmat - 1, dist = "gaussian",
+                            control = list(maxiter = 100))
         parx[j2,] <- c(mclass, j2, tmpouta$scale, tmpouta$loglik[2], 
                        tmpouta$coef, summary(tmpouta)$table[1:nctmp, 2], 
                        summary(tmpouta)$table["xmattndlin", 4])

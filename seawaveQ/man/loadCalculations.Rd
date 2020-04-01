@@ -87,8 +87,9 @@ transforming back to the original units) and then used to calculate daily
 loads. The bias correction is based on the quasi-maximum likelihood estimator 
 (Cohn and others, 1989) that was developed for natural logarithms, with an 
 adjustment for the base-10 logarithm of the concentration. To calculate 
-loads, the bias-corrected concentration estimates are multiplied by daily 
-streamflow and a constant, 0.892998605, which converts the load units 
+loads, the bias-corrected concentration estimates (assumed to be in 
+micrograms per liter) are multiplied by daily streamflow and a constant, 
+0.892998605, which converts the load units 
 (micrograms per liter * cubic feet per second) to kilograms per year. 
 Daily loads are summed to annual values. See page 70 and equation 26 of 
 Oelsner and others (2017) for further details regarding the load 

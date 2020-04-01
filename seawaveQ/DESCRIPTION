@@ -1,7 +1,7 @@
 Package: seawaveQ
 Version: 2.0.0
+Date: 2020-03-31
 Title: SEAWAVE-Q Model
-Date: 2018-09-13
 Authors@R: c(person("Karen R.", "Ryberg", role = c("aut", "cre"),
                     email = "kryberg@usgs.gov"),
              person("Aldo V.", "Vecchia", role = "aut"),
@@ -11,16 +11,16 @@ Author: Karen R. Ryberg [aut, cre],
   Aldo V. Vecchia [aut], 
   Benjamin York [ctb]
 Maintainer: Karen R. Ryberg <kryberg@usgs.gov>
-License: Unlimited
-LazyLoad: yes
-Description: A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables.
-Depends: R (>= 3.0.0), survival, rms, lubridate
-Imports: NADA, plyr, reshape2
+Depends: R (>= 3.0.0), survival, rms, lubridate, reshape2, plyr
 Suggests: waterData
-URL: http://dx.doi.org/10.3133/ofr20131255
-Copyright: This software is in the public domain because it contains materials
-    that originally came from the United States Geological Survey, an agency of
-    the United States Department of Interior. For more information, see the
-    official USGS copyright policy at
-    https://www.usgs.gov/visual-id/credit_usgs.html#copyright
+Description: A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables.
+License: Unlimited | file LICENSE
+URL: https://doi.org/10.3133/ofr20131255
+Copyright: This software is in the public domain because it contains
+        materials that originally came from the United States
+        Geological Survey, an agency of the United States Department of
+        Interior. For more information, see the official USGS copyright
+        policy at
+        https://www.usgs.gov/visual-id/credit_usgs.html#copyright
+NeedsCompilation: no
 RoxygenNote: 6.0.1

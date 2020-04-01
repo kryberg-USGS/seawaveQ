@@ -21,7 +21,6 @@
 \usepackage[utf8]{inputenc}
 
 \title{Vignette for seawaveQ---An R Package Providing a Model and Utilities for Analyzing Trends in Chemical Concentrations in Streams with a Seasonal Wave (seawave) and Adjustment for Streamflow (Q) and Other Ancillary Variables}
-\author{Karen R. Ryberg and Aldo V. Vecchia}
 \date{\today}                                % Activate to display a given date or no date
 
 \usepackage{Sweave}
@@ -31,19 +30,21 @@
 
 \section{Introduction}
 
-This R package, \textbf{seawaveQ}, is designed  for fitting a parametric regression model for assessing variability and trends in pesticide concentration in streams and was developed by Vecchia and others (2008), and subsequently refined and referred to as the ``seawave-Q'' model in several trend analyses (Ryberg and others, 2010; Sullivan and others, 2009; Vecchia and others, 2009).  In these publications, ``seawave-Q'' stands for seasonal wave (seawave) with adjustment for streamflow (Q).  The model was developed to ``handle a number of difficulties often found in pesticide data, such as strong seasonality in response to use patterns, high numbers of concentrations below laboratory reporting levels (RLs), complex relations between streamflow and concentration, and intermittent or changing sampling frequencies (both inter-annually and intra-annually)'' (Vecchia and others, 2008).  This R package provides a standardized methodology for fitting the seawaveQ model and makes the trend analysis method widely available for use by others. In addition, several enhancements to the seawaveQ model have been included as well as utility functions for working with chemical concentration data.  The enhancements and utilities include procedures for preparing and summarizing input data; flexibility to include other explanatory variables besides streamflow; graphical methods for assessing model fit; and plotting routines that may be used for pesticide and other chemical concentration data.  A flow chart showing how the various function in the package work together is shown in figure 1 of the U.S. Geological Survey Open-File Report documenting this package (Ryberg and Vecchia, 2013). 
+This R package, \textbf{seawaveQ}, is designed  for fitting a parametric regression model for assessing variability and trends in pesticide concentration in streams and was developed by Vecchia and others (2008), and subsequently refined and referred to as the ``SEAWAVE-Q'' model in several trend analyses (Ryberg and others, 2010; Sullivan and others, 2009; Vecchia and others, 2009).  In these publications, ``SEAWAVE-Q'' stands for seasonal wave (SEAWAVE) with adjustment for streamflow (Q).  The model was developed to ``handle a number of difficulties often found in pesticide data, such as strong seasonality in response to use patterns, high numbers of concentrations below laboratory reporting levels (RLs), complex relations between streamflow and concentration, and intermittent or changing sampling frequencies (both inter-annually and intra-annually)'' (Vecchia and others, 2008).  This R package provides a standardized methodology for fitting the model and makes the trend analysis method widely available for use by others. In addition, several enhancements to the model have been included as well as utility functions for working with chemical concentration data.  The enhancements and utilities include procedures for preparing and summarizing input data; flexibility to include other explanatory variables besides streamflow; graphical methods for assessing model fit; and plotting routines that may be used for pesticide and other chemical concentration data.  A flow chart showing how the various function in the package work together is shown in figure 1 of the U.S. Geological Survey Open-File Report documenting this package (Ryberg and York, 2018). 
 
-The statistical methodology for the seawaveQ model is described in Vecchia and others (2008) and in the U.S. Geological Survey Open-File Report documenting this package (Ryberg and Vecchia, 2013).   Users new to this model should read both of those documents before applying the model to their own data.  An important part of the model and the output shown below is the seasonal wave. The seasonal wave is a periodic (period of 1 year) solution to a differential equation (Vecchia and others, 2008) that has a pulse input function, a seasonal shift that determines the time at which the seasonal wave reaches its maximum, and a model half-life (see appendix 3.  Visualizations of the Seasonal Wave; Ryberg and Vecchia, 2013).
+The statistical methodology for the model is described in Vecchia and others (2008) and in the U.S. Geological Survey Open-File Report documenting this package (Ryberg and York, 2018).   Users new to this model should read both of those documents before applying the model to their own data.  An important part of the model and the output shown below is the seasonal wave. The seasonal wave is a periodic (period of 1 year) solution to a differential equation (Vecchia and others, 2008) that has a pulse input function, a seasonal shift that determines the time at which the seasonal wave reaches its maximum, and a model half-life (see appendix 3.  Visualizations of the Seasonal Wave; Ryberg and York, 2018).
 
 \section{Input Data}
 
-The seawaveQ model needs two types of input data.  The first is the the water-quality sample data including dates, the concentration data, and qualification codes, indicating which values are censored (less than a laboratory reporting level).  The second type of data is the continuous ancillary data used in the model, such as streamflow anomalies (Ryberg and Vecchia, 2012).  These ancillary data also are used to produce a continuous estimate of pesticide concentration.  Examples of the necessary format of these two datasets are provided and documented in the package.  The following code shows how to access the example data.
+The model needs two types of input data.  The first is the the water-quality sample data including dates, the concentration data, and qualification codes, indicating which values are censored (less than a laboratory reporting level).  The second type of data is the continuous ancillary data used in the model, such as streamflow anomalies (Ryberg and Vecchia, 2012).  These ancillary data also are used to produce a continuous estimate of pesticide concentration.  Examples of the necessary format of these two datasets are provided and documented in the package.  The following code shows how to access the example data.
 \vspace{5 mm}
 
 \begin{Schunk}
 \begin{Sinput}
-> options(width=65)
-> # load waterData package, assuming it has already been installed on the system
+> options(width = 65)
+> # load necessary packages, assuming they have already been installed on the system
+> library(waterData)
+> library(survival)
 > library(seawaveQ)
 > # load example data that comes with the package
 > data(swData)
@@ -80,7 +81,7 @@ The seawaveQ model needs two types of input data.  The first is the the water-qu
 \end{Sinput}
 \end{Schunk}
 
-Optionally, functions have been provided to plot concentration data.  These functions produce scatter plots and box plots that indicate or take into account the censored, less than, values.  The functions are \textit{cenScatPlot} and \textit{rosBoxPlot} and examples of their use follow.  The box plots are generated using the function \textit{ros}, regression on order statistics, in the R package \textbf{NADA} (Lee, 2012).  It is an implementation of a regression on order statistics designed for multiply-censored analytical-chemistry data  (Helsel, 2005). 
+Optionally, a function has been provided to plot concentration data.  This function produces a scatter plots athat indicates the censored, less than, values.  The functions is \textit{cenScatPlot} and an example of its use follows.  Previous versions of the software included an option to generate box plots properly representing regression on order statistics using an implementation of a regression on order statistics designed for multiply-censored analytical-chemistry data (Helsel, 2005). This relied on the R package \textbf{NADA} (Lee, 2017); however, long-term maintenance of this package has been an issue (oral commun., R Core Team, 2020) and the functionality was removed. Users may investigate the avaiability of \textbf{NADA} and use it separately to produce box plots
 \vspace{5 mm}
 
 \begin{figure}[H]
@@ -89,7 +90,7 @@ Optionally, functions have been provided to plot concentration data.  These func
 \begin{Schunk}
 \begin{Sinput}
 > # scatter plot showing quantified, estimated, and censored  values
-> cenScatPlot(qwMoRivOmaha, pname="04035")
+> cenScatPlot(qwMoRivOmaha, pname = "04035")
 \end{Sinput}
 \end{Schunk}
 \includegraphics{vignette-002}
@@ -104,52 +105,20 @@ Optionally, functions have been provided to plot concentration data.  These func
 > # these options provide a plot closer to the plotting standards
 > # of the U.S. Geological Survey, however, these plots may not 
 > # meet all U.S. Geological Survey publication requirements
-> par(las=1, tcl=0.5)
-> cenScatPlot(qwMoRivOmaha, pname="04035", 
-+                        site="06610000 Missouri River at Omaha, Nebr.",
-+                        ylabel="Simazine concentration, in micrograms per liter",
-+                        legcex=0.7, qwcols=c("R", "P"), ylim=c(0,0.1), yaxs="i", 
-+                        cex.lab=0.9, cex.axis=0.9, xlim=c(as.Date("1996-01-01"), 
-+                        as.Date("2004-01-01")), xaxs="i", xaxt="n")
-> axdates <- c("1996-01-01", "1998-01-01", "2000-01-01", 
-+                        "2002-01-01", "2004-01-01")
-> axis(1, as.Date(axdates), 
-+                        labels=c("1996", "1998", "2000", "2002", "2004"), cex.axis=0.9)
+> par(las = 1, tcl = 0.5)
+> cenScatPlot(qwMoRivOmaha, pname = "04035",
++             site = "06610000 Missouri River at Omaha, Nebraska",
++             ylabel = "Simazine concentration, in micrograms per liter",
++             legcex = 0.7, qwcols = c("R", "P"), ylim = c(0,0.1), yaxs = "i", 
++             cex.lab = 0.9, cex.axis = 0.9, xaxs = "i", xaxt = "n",
++             xlim = c(as.Date("1996-01-01"), as.Date("2004-01-01")))
+> axdates <- c("1996-01-01", "1998-01-01", "2000-01-01", "2002-01-01", 
++              "2004-01-01")
+> axis(1, as.Date(axdates), labels = c("1996", "1998", "2000", "2002", "2004"), 
++      cex.axis = 0.9)
 \end{Sinput}
 \end{Schunk}
 \includegraphics{vignette-003}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%\setkeys{Gin}{width=1.45\textwidth}
-\begin{Schunk}
-\begin{Sinput}
-> # simple box plots of water-quality concentrations
-> rosBoxPlot(qwMoRivOmaha, qwcols=c("R", "P"))
-\end{Sinput}
-\end{Schunk}
-\includegraphics{vignette-004}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-%\setkeys{Gin}{width=1.45\textwidth}
-\begin{Schunk}
-\begin{Sinput}
-> # same boxplot function with many additional plotting arguments
-> rosBoxPlot(qwMoRivOmaha, site="06610000 Missouri River at Omaha, Nebr.",
-+                      log="y", yaxt="n", ylim=c(0.000001, 10), qwcols=c("R", "P"), 
-+                      ylab=c("Concentration, micrograms per liter"), col="skyblue1",
-+                      cex.axis=0.7, cex.sub=0.8, 
-+                      par(tcl=0.5, las=1, yaxs="i", mgp=c(3,0.5,0), mar=c(5,5,2,2), 
-+                      cex.main=0.9))
-> axis(2, at=c(0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10),
-+ labels=c("0.000001", "0.00001", "0.0001", "0.001", "0.01",
-+ "0.1", "1", "10"), cex.axis=0.7)
-\end{Sinput}
-\end{Schunk}
-\includegraphics{vignette-005}
 \end{figure}
 
 The second data set needed is the one containing the continuous ancillary data for building the model that describes pesticide concentrations.  
@@ -193,8 +162,8 @@ In order to build a model using one or more of these ancillary variables as expl
 \begin{Schunk}
 \begin{Sinput}
 > data(swData)
-> MoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha,
-+ qwcols=c("staid", "dates", "R", "P"))
+> MoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha,
++ qwcols = c("staid", "dates", "R", "P"))
 > # view combined data set
 > head(MoRivOmaha)
 \end{Sinput}
@@ -230,9 +199,9 @@ In order to build a model using one or more of these ancillary variables as expl
 \end{Soutput}
 \end{Schunk}
 
-\section{Fitting the seawaveQ Model}
+\section{Fitting the SEAWAVE-Q Model}
 
-One can now fit the seawaveQ model using the data explored and combined in the previous code examples.  The following code fits three different seawaveQ models (with differing continuous ancillary variables) for two pesticides in the data set.  The pesticides are 04035, simazine, and 04041, cyanazine.  See the help documentation for further information about the function arguments shown and additional arguments.
+One can now fit the model using the data explored and combined in the previous code examples. The following code fits three different  models (with differing continuous ancillary variables) for two pesticides in the data set.  The pesticides are 04035, simazine; 04037, prometon; and 04041, cyanazine.  See the help documentation for further information about the function arguments shown and additional arguments.
 \vspace{5 mm}
 
 \begin{Schunk}
@@ -240,30 +209,14 @@ One can now fit the seawaveQ model using the data explored and combined in the p
 > data(swData)
 > # associate continuous water-quality data with each sample
 > # combineData does this for you
-> modMoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
+> modMoRivOmaha <- combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
 > # then fit model(s)
-> myfit1 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-+ tanm="myfit1", pnames=c("04035", "04041"), yrstart=1995,
-+ yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1"),
-+ dcol="dates", qwcols=c("R","P"))
-\end{Sinput}
-\begin{Soutput}
-
-\end{Soutput}
-\begin{Sinput}
-> myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-+ tanm="myfit2", pnames=c("04035", "04041"), yrstart=1995,
-+ yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30", "seda1"),
-+ dcol="dates", qwcols=c("R","P"))
-\end{Sinput}
-\begin{Soutput}
-
-\end{Soutput}
-\begin{Sinput}
-> myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-+ tanm="myfit3", pnames=c("04035", "04041"), yrstart=1995,
-+ yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1",
-+ "seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
+> myfitLinearTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
++                                 tanm = "myfitLinearTrend", 
++                                 pnames = c("04035", "04037", "04041"), 
++                                 yrstart = 1995, yrend = 2003, tndbeg = 1995, 
++                                 tndend = 2003, iwcav = c("flowa30", "flowa1"), 
++                                 dcol = "dates", qwcols = c("R", "P"), mclass = 1)
 \end{Sinput}
 \begin{Soutput}
 
@@ -271,70 +224,37 @@ One can now fit the seawaveQ model using the data explored and combined in the p
 \end{Schunk}
 
 \section{Model Output}
-The model fitting process finds the best pulse input function and model half-life for the concentration data and uses survival regression to fit a regression model.  Three types of output are provided: (1) a list, the first element being a data frame with information about the model and its parameters, the second element being the survival regression summary, the third element the observed concentration (censored and uncensored), the fourth element the concentrations predicted by the model, and the fifth element the summary statistics for the predicted concentrations; (2) text files showing a summary of the survival regression results, like the second element of the list, but with  additional measures of model quality and information about the R session; and (3) a pdf file of plots showing the model, trend, and diagnostic plots.  The data frame results for the three models for simazine and cyanazine are shown below.
+The model fitting process finds the best pulse input function and model half-life for the concentration data and uses survival regression to fit a regression model.  Three types of output are provided: 1) a list, the first element being a data frame with information about the model and its parameters, the second element being the survival regression summary, the third element the observed concentration (censored and uncensored), the fourth element the concentrations predicted by the model, the fifth element the summary statistics for the predicted concentrations; and the sixth element provides trend results expressed as trends in percent or trends in concentration units;  2) text files showing a summary of the survival regression results, like the second element of the list, but with  additional measures of model quality and information about the R session; and 3) a pdf file of plots showing the model, trend, and diagnostic plots.  The data frame results for the three models for simazine and cyanazine are shown below.
 \vspace{5 mm}
 
 \begin{Schunk}
 \begin{Sinput}
 > # get the first element of the list for each model/constituent combination
 > # the data frame with information about each model/constituent combination
-> myfit1[[1]]
+> myfitLinearTrend[[1]]
 \end{Sinput}
 \begin{Soutput}
   pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
 1 04035      1    3     1 0.48087 0.27199 -32.79163    -2.49349
-2 04041      1    4     3 0.48087 0.42405 -43.05521    -2.26965
+2 04037      1    8     4 0.42896 0.19970  -9.96412    -2.31618
+3 04041      1    4     3 0.48087 0.42405 -43.05521    -2.26965
   cxmatwavest cxmattndlin cxmatflowa30 cxmatflowa1 sexmatintcpt
 1     0.55437    -0.02793      0.05386     2.10427      0.04910
-2     2.17692    -0.24887     -0.02829     2.98901      0.08534
+2     0.27310    -0.00733      0.09402     0.34218      0.02550
+3     2.17692    -0.24887     -0.02829     2.98901      0.08534
   sexmatwavest sexmattndlin sexmatflowa30 sexmatflowa1
 1      0.11172      0.02112       0.30492      0.46888
-2      0.25938      0.03683       0.51375      0.78007
+2      0.07609      0.01202       0.16905      0.26856
+3      0.25938      0.03683       0.51375      0.78007
   pvalxmattndlin
 1        0.18598
-2        0.00000
-\end{Soutput}
-\begin{Sinput}
-> myfit2[[1]]
-\end{Sinput}
-\begin{Soutput}
-  pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
-1 04035      1    5     3 0.48087 0.24677 -24.32398    -2.68378
-2 04041      1    3     2 0.48087 0.40826 -39.64286    -2.12752
-  cxmatwavest cxmattndlin cxmatseda30 cxmatseda1 sexmatintcpt
-1     0.79650    -0.02405     0.25361    0.59703      0.06852
-2     1.58343    -0.22011     1.13733    0.63650      0.07514
-  sexmatwavest sexmattndlin sexmatseda30 sexmatseda1
-1      0.18671      0.01585      0.17293     0.10253
-2      0.18937      0.02931      0.28745     0.18127
-  pvalxmattndlin
-1        0.12907
-2        0.00000
-\end{Soutput}
-\begin{Sinput}
-> myfit3[[1]]
-\end{Sinput}
-\begin{Soutput}
-  pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
-1 04035      1    5     3 0.48087 0.24621 -23.83644    -2.67838
-2 04041      1    3     2 0.48087 0.38981 -37.63645    -2.07403
-  cxmatwavest cxmattndlin cxmatflowa30 cxmatflowa1 cxmatseda30
-1     0.76533    -0.01817      0.17914    -0.36126     0.22732
-2     1.71880    -0.24112     -0.61646     1.58972     1.03880
-  cxmatseda1 sexmatintcpt sexmatwavest sexmattndlin
-1    0.66650      0.06724      0.18443      0.01918
-2    0.29012      0.07836      0.19990      0.03359
-  sexmatflowa30 sexmatflowa1 sexmatseda30 sexmatseda1
-1       0.30546      0.64210      0.20464     0.15225
-2       0.49387      1.11121      0.30870     0.26845
-  pvalxmattndlin
-1        0.34346
-2        0.00000
+2        0.54224
+3        0.00000
 \end{Soutput}
 \begin{Sinput}
 > # get the second element of the list for each model/constituent combination
 > # the survival regression summary for each model/constituent combination
-> myfit1[[2]]
+> myfitLinearTrend[[2]]
 \end{Sinput}
 \begin{Soutput}
 [[1]]
@@ -364,6 +284,28 @@ n= 115
 Call:
 survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
     xmat - 1, dist = "gaussian")
+               Value Std. Error      z       p
+xmatintcpt  -2.31618    0.02550 -90.84 < 2e-16
+xmatwavest   0.27310    0.07609   3.59 0.00033
+xmattndlin  -0.00733    0.01202  -0.61 0.54224
+xmatflowa30  0.09402    0.16905   0.56 0.57811
+xmatflowa1   0.34218    0.26856   1.27 0.20261
+Log(scale)  -1.61096    0.08315 -19.37 < 2e-16
+
+Scale= 0.2 
+
+Gaussian distribution
+Loglik(model)= -10   Loglik(intercept only)= -20.2
+	Chisq= 20.54 on 4 degrees of freedom, p= 0.00039 
+Number of Newton-Raphson Iterations: 4 
+n= 115 
+
+
+[[3]]
+
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xmat - 1, dist = "gaussian")
               Value Std. Error      z       p
 xmatintcpt  -2.2697     0.0853 -26.59 < 2e-16
 xmatwavest   2.1769     0.2594   8.39 < 2e-16
@@ -381,223 +323,72 @@ Number of Newton-Raphson Iterations: 6
 n= 115 
 \end{Soutput}
 \begin{Sinput}
-> myfit2[[2]]
-\end{Sinput}
-\begin{Soutput}
-[[1]]
-
-Call:
-survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
-             Value Std. Error      z       p
-xmatintcpt -2.6838     0.0685 -39.17 < 2e-16
-xmatwavest  0.7965     0.1867   4.27 2.0e-05
-xmattndlin -0.0241     0.0158  -1.52    0.13
-xmatseda30  0.2536     0.1729   1.47    0.14
-xmatseda1   0.5970     0.1025   5.82 5.8e-09
-Log(scale) -1.3993     0.1184 -11.82 < 2e-16
-
-Scale= 0.247 
-
-Gaussian distribution
-Loglik(model)= -24.3   Loglik(intercept only)= -60.9
-	Chisq= 73.09 on 4 degrees of freedom, p= 5e-15 
-Number of Newton-Raphson Iterations: 6 
-n= 115 
-
-
-[[2]]
-
-Call:
-survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
-             Value Std. Error      z       p
-xmatintcpt -2.1275     0.0751 -28.31 < 2e-16
-xmatwavest  1.5834     0.1894   8.36 < 2e-16
-xmattndlin -0.2201     0.0293  -7.51 6.0e-14
-xmatseda30  1.1373     0.2874   3.96 7.6e-05
-xmatseda1   0.6365     0.1813   3.51 0.00045
-Log(scale) -0.8959     0.1027  -8.73 < 2e-16
-
-Scale= 0.408 
-
-Gaussian distribution
-Loglik(model)= -39.6   Loglik(intercept only)= -103.7
-	Chisq= 128.16 on 4 degrees of freedom, p= 9.6e-27 
-Number of Newton-Raphson Iterations: 6 
-n= 115 
-\end{Soutput}
-\begin{Sinput}
-> myfit3[[2]]
-\end{Sinput}
-\begin{Soutput}
-[[1]]
-
-Call:
-survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
-              Value Std. Error      z       p
-xmatintcpt  -2.6784     0.0672 -39.83 < 2e-16
-xmatwavest   0.7653     0.1844   4.15 3.3e-05
-xmattndlin  -0.0182     0.0192  -0.95    0.34
-xmatflowa30  0.1791     0.3055   0.59    0.56
-xmatflowa1  -0.3613     0.6421  -0.56    0.57
-xmatseda30   0.2273     0.2046   1.11    0.27
-xmatseda1    0.6665     0.1522   4.38 1.2e-05
-Log(scale)  -1.4016     0.1188 -11.80 < 2e-16
-
-Scale= 0.246 
-
-Gaussian distribution
-Loglik(model)= -23.8   Loglik(intercept only)= -60.9
-	Chisq= 74.07 on 6 degrees of freedom, p= 6e-14 
-Number of Newton-Raphson Iterations: 6 
-n= 115 
-
-
-[[2]]
-
-Call:
-survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
-    xmat - 1, dist = "gaussian")
-              Value Std. Error      z       p
-xmatintcpt  -2.0740     0.0784 -26.47 < 2e-16
-xmatwavest   1.7188     0.1999   8.60 < 2e-16
-xmattndlin  -0.2411     0.0336  -7.18   7e-13
-xmatflowa30 -0.6165     0.4939  -1.25 0.21195
-xmatflowa1   1.5897     1.1112   1.43 0.15254
-xmatseda30   1.0388     0.3087   3.37 0.00077
-xmatseda1    0.2901     0.2684   1.08 0.27982
-Log(scale)  -0.9421     0.1033  -9.12 < 2e-16
-
-Scale= 0.39 
-
-Gaussian distribution
-Loglik(model)= -37.6   Loglik(intercept only)= -103.7
-	Chisq= 132.17 on 6 degrees of freedom, p= 4.5e-26 
-Number of Newton-Raphson Iterations: 6 
-n= 115 
-\end{Soutput}
-\begin{Sinput}
 > # get the first few lines of the third element of the list
-> head(myfit1[[3]])
+> head(myfitLinearTrend[[3]])
 \end{Sinput}
 \begin{Soutput}
-   dectime R04035 P04035 R04041 P04041
-1 1996.034      <  0.004      <  0.008
-2 1996.117      <  0.004      <  0.008
-3 1996.201         0.005      <  0.008
-4 1996.242      <  0.004         0.009
-5 1996.273         0.007         0.014
-6 1996.311      <  0.004         0.012
-\end{Soutput}
-\begin{Sinput}
-> head(myfit2[[3]])
-\end{Sinput}
-\begin{Soutput}
-   dectime R04035 P04035 R04041 P04041
-1 1996.034      <  0.004      <  0.008
-2 1996.117      <  0.004      <  0.008
-3 1996.201         0.005      <  0.008
-4 1996.242      <  0.004         0.009
-5 1996.273         0.007         0.014
-6 1996.311      <  0.004         0.012
-\end{Soutput}
-\begin{Sinput}
-> head(myfit3[[3]])
-\end{Sinput}
-\begin{Soutput}
-   dectime R04035 P04035 R04041 P04041
-1 1996.034      <  0.004      <  0.008
-2 1996.117      <  0.004      <  0.008
-3 1996.201         0.005      <  0.008
-4 1996.242      <  0.004         0.009
-5 1996.273         0.007         0.014
-6 1996.311      <  0.004         0.012
+   dectime R04035 P04035 R04037 P04037 R04041 P04041
+1 1996.034      <  0.004         0.024      <  0.008
+2 1996.117      <  0.004         0.005      <  0.008
+3 1996.201         0.005         0.004      <  0.008
+4 1996.242      <  0.004         0.005         0.009
+5 1996.273         0.007         0.006         0.014
+6 1996.311      <  0.004      <  0.004         0.012
 \end{Soutput}
 \begin{Sinput}
 > # get the first few lines of the fourth element of the list
-> head(myfit1[[4]])
+> head(myfitLinearTrend[[4]])
 \end{Sinput}
 \begin{Soutput}
-   dectime      P04035      P04041
-1 1995.831 0.002184579 0.007085318
-2 1995.833 0.002223730 0.007255036
-3 1995.835 0.002256099 0.007295828
-4 1995.837 0.002301522 0.007390105
-5 1995.840 0.002361534 0.007548559
-6 1995.843 0.002297257 0.007149901
-\end{Soutput}
-\begin{Sinput}
-> head(myfit2[[4]])
-\end{Sinput}
-\begin{Soutput}
-   dectime      P04035     P04041
-1 1995.831 0.001539907 0.01452533
-2 1995.833 0.001542766 0.01483602
-3 1995.835 0.001543323 0.01511136
-4 1995.837 0.001542208 0.01535307
-5 1995.840 0.001513703 0.01517149
-6 1995.843 0.001430205 0.01425638
-\end{Soutput}
-\begin{Sinput}
-> head(myfit3[[4]])
-\end{Sinput}
-\begin{Soutput}
-   dectime      P04035     P04041
-1 1995.831 0.001708573 0.01084807
-2 1995.833 0.001705451 0.01121241
-3 1995.835 0.001701741 0.01149961
-4 1995.837 0.001694584 0.01181777
-5 1995.840 0.001653297 0.01198216
-6 1995.843 0.001560628 0.01134960
+   dectime      P04035      P04037      P04041
+1 1995.831 0.002184579 0.004008740 0.007085318
+2 1995.833 0.002223730 0.004021064 0.007255036
+3 1995.835 0.002256099 0.004022765 0.007295828
+4 1995.837 0.002301522 0.004028182 0.007390105
+5 1995.840 0.002361534 0.004037500 0.007548559
+6 1995.843 0.002297257 0.004011441 0.007149901
 \end{Soutput}
 \begin{Sinput}
 > # get the summary of predicted concentrations
-> myfit1[[5]]
+> myfitLinearTrend[[5]]
 \end{Sinput}
 \begin{Soutput}
-  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
-1   myfit1 04035      0.00271 0.00117 0.00150 0.00203 0.00350
-2   myfit1 04041      0.01576 0.00013 0.00043 0.00218 0.00831
-  predQ90
-1 0.00535
-2 0.04093
+          analysis pname predMeanConc predQ10 predQ25 predQ50
+1 myfitLinearTrend 04035      0.00271 0.00117 0.00150 0.00203
+2 myfitLinearTrend 04037      0.00441 0.00353 0.00378 0.00415
+3 myfitLinearTrend 04041      0.01576 0.00013 0.00043 0.00218
+  predQ75 predQ90
+1 0.00350 0.00535
+2 0.00481 0.00581
+3 0.00831 0.04093
 \end{Soutput}
 \begin{Sinput}
-> myfit2[[5]]
+> # get summary of trend results
+> myfitLinearTrend[[6]]
 \end{Sinput}
 \begin{Soutput}
-  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
-1   myfit2 04035      0.00257 0.00085 0.00113 0.00180 0.00339
-2   myfit2 04041      0.01618 0.00018 0.00057 0.00237 0.00942
-  predQ90
-1 0.00528
-2 0.03975
+  pname mclass alpha baseConc ctndPpor cuciPpor clciPpor
+1 04035      1   0.1   0.0042 -40.2194  13.3638 -68.4757
+2 04037      1   0.1   0.0052 -12.6305  25.7561 -39.2997
+3 04041      1   0.1   0.0531 -98.9790 -96.8834 -99.6655
+  ctndOrigPORPercentBase cuciOrigPORPercentBase
+1                -0.0017                 0.0006
+2                -0.0007                 0.0013
+3                -0.0526                -0.0515
+  clciOrigPORPercentBase ctndlklhd
+1                -0.0028    0.9070
+2                -0.0020    0.7289
+3                -0.0530    1.0000
 \end{Soutput}
-\begin{Sinput}
-> myfit3[[5]]
-\end{Sinput}
-\begin{Soutput}
-  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
-1   myfit3 04035      0.00259 0.00093 0.00119 0.00179 0.00341
-2   myfit3 04041      0.01678 0.00021 0.00060 0.00251 0.00895
-  predQ90
-1 0.00529
-2 0.03893
-\end{Soutput}
-\begin{Sinput}
-> 
-\end{Sinput}
 \end{Schunk}
 \vspace{5 mm}
-The first element of the list, the data frame, contains information about each model including the pesticide analyzed; the model class (an option in \textbf{seawaveQ} that is not currently implemented but that will provide additional model options in the future); the choice of model or pulse input function, an integer 1 through 14; the model half-life in months, an integer, 1 to 4 months; the decimal season of maximum concentration; the scale factor from the survreg.object; the log-likelihood for the model; the coefficient for the model intercept; the coefficient for the seasonal wave; the coefficient for the trend component of the model; 0 or more values representing coefficients for the continuous ancillary variables; the standard error for the intercept; the standard error for the seasonal wave; the standard error for the trend; and 0 or more columns representing standard errors for the continuous ancillary variables.
+The first element of the list, the data frame, contains information about each model including the pesticide analyzed; the model class (a class 1 model incorporates a linear trend, a class 2 model incorporates restricted cubic splines); the choice of model or pulse input function, an integer 1 through 14; the model half-life in months, an integer, 1 to 4 months; the decimal season of maximum concentration; the scale factor from the survreg.object; the log-likelihood for the model; the coefficient for the model intercept; the coefficient for the seasonal wave; the coefficient for the trend component of the model; 0 or more values representing coefficients for the continuous ancillary variables; the standard error for the intercept; the standard error for the seasonal wave; the standard error for the trend; and 0 or more columns representing standard errors for the continuous ancillary variables.
 
-The second element of the list is provided so that users could extract the attributes of the survival regression summary programmatically (rather than viewing them in the text file) and create  their own summaries or plots of the results.  The third, fourth, and fifth elements of the list are provided for user-generated plots and further user analysis.
+The second element of the list is provided so that users could extract the attributes of the survival regression summary programmatically (rather than viewing them in the text file) and create  their own summaries or plots of the results.  The third, fourth, fifth, and sixth elements of the list are provided for user-generated plots and further user analysis (see R help for more details).
 
 \begin{Schunk}
 \begin{Sinput}
-> attributes(myfit1[[2]][[1]])
+> attributes(myfitLinearTrend[[2]][[1]])
 \end{Sinput}
 \begin{Soutput}
 $names
@@ -610,13 +401,13 @@ $class
 [1] "summary.survreg"
 \end{Soutput}
 \begin{Sinput}
-> myfit1[[2]][[1]]$n
+> myfitLinearTrend[[2]][[1]]$n
 \end{Sinput}
 \begin{Soutput}
 [1] 115
 \end{Soutput}
 \begin{Sinput}
-> myfit1[[2]][[1]]$table
+> myfitLinearTrend[[2]][[1]]$table
 \end{Sinput}
 \begin{Soutput}
                   Value Std. Error           z            p
@@ -627,23 +418,20 @@ xmatflowa30  0.05385545 0.30491533   0.1766243 8.598035e-01
 xmatflowa1   2.10426938 0.46888353   4.4878296 7.195245e-06
 Log(scale)  -1.30197275 0.12051232 -10.8036489 3.307909e-27
 \end{Soutput}
-\begin{Sinput}
-> 
-\end{Sinput}
 \end{Schunk}
 \vspace{5 mm}
 
-The text file for the first of the function calls above is inserted here as an example.  Users may run the model fitting code themselves and view the resulting text files for all three models.  The results for all three are too long to include in this vignette.
+The text file for the first of the pesticides modeled above is inserted here as an example.  Users may run the model fitting code themselves and view the resulting text files for all three pesticide models.  The results for all three are too long to include in this vignette.
 
 \vspace{5 mm}
 
-\verbatiminput{myfit1_survregCall.txt}%
+\verbatiminput{myfitLinearTrend_survregCall.txt}%
 
 \vspace{5 mm}
 
-The plots written to a pdf file for the first pesticide, 04035, simazine, in the first model, myfit1, are included below.  As with the text results, the plots for all three models and all pesticides are too numerous to include here.  Users are encouraged to run the code themselves and examine all of the plots.
+The plots written to a pdf file for the first pesticide, 04035, simazine are included below.  The plots for all  all pesticides are too numerous to include here.  Users are encouraged to run the code themselves and examine all of the plots.
 
-\includepdf[pages={-}]{myfit104035.pdf}
+\includepdf[pages={-}]{myfitLinearTrend04035.pdf}
 
 \vspace{5 mm}
 
@@ -653,21 +441,225 @@ The plotting position used for representing censored values in the model plots (
 \end{verbatim}
 where \textit{scl} is the scale parameter from the survival regression model, \textit{pnorm} is the R function for computing cumulative normal probabilities, \textit{runif} is the R function for generating a random variable from the uniform distribution, and \textit{qnorm} is the R function for computing quantiles of the normal distribution.  Under the assumption that the model residuals are uncorrelated, normally distributed random variables with mean zero and standard deviation \textit{scl}, the randomized residuals generated in this manner are an unbiased sample of the true (but unknown) residuals for the censored data.  This is an application of the probability integral transform (Mood and others, 1974) to generate random variables from continuous distributions.  The plotting position using a censored concentration is $fitted(logC) + resran$.  Note that each time a new model fit is performed, a new set of randomized residuals is generated and thus the plotting positions for censored values can change.
 
+\section{Restricted Cubic Splines Option}
+The original SEAWAVE-Q model assumes a linear trend over a given trend period. Linearity is a common, useful assumption in trend analysis, but becomes problematic as trend periods become longer because of the potential for abrupt, or gradual, non-linear changes. Examples include cancellation of some or all of the uses of a particular pesticide, phase-outs of a pesticide, or changes in usage. As additional data are collected, longer trend periods may be calculated and a strict linear trend may be inappropriate for many site-pesticide combinations. Restricted cubic splines (transformations of the time variable) were incorporated into the SEAWAVE-Q model to allow flexibility over time. The range of values of the time variable is split up, with “knots” defining the end of one segment and the start of the next. Separate curves are then fit to each segment (Harrell, Jr., 2010; Harrell, Jr., 2016). Overall, the splines are defined so that the resulting fitted curve is smooth and continuous, passing through each knot. Other studies have shown that 3 to 5 knots typically are sufficient for most models (Korn and Graubard, 1999). For small sample sizes (< 30, a sample size insufficient for a pesticide trend model), 3 knots can be used; 4 knots are sufficient for most models and represent a compromise between overfitting and model flexibility (Harrell, 2010; Croxford, 2016). If the sample size is large (>100, as is often the case for pesticide trend modeling) or the relation changes quickly over the trend period, 5 to 7 knots could be used, although 5 are usually sufficient (Stone, 1986; Croxford, 2016).
+
+\section{Fitting the SEAWAVE-Q Model with Restricted Cubic Splines}
+
+The following code fits a model with restricted cubic splines instead of a linear trend for one pesticide in the dataset.  The pesticide is 04035, simazine.  See the help documentation for further information about the function arguments shown and additional arguments.
+\vspace{5 mm}
+
+\begin{Schunk}
+\begin{Sinput}
+> data(swData)
+> # associate continuous water-quality data with each sample
+> # combineData does this for you
+> modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
+> # then fit model
+> myfitRCS <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
++                         tanm = "myfitRCS", pnames = c("04035"), yrstart = 1995, 
++                         yrend = 2003, tndbeg = 1995, tndend = 2003, 
++                         iwcav = c("flowa30", "flowa1"), dcol = "dates", 
++                         qwcols = c("R", "P"), mclass = 2, numk = 4)
+\end{Sinput}
+\end{Schunk}
+
+\section{Model Output}
+
+\begin{Schunk}
+\begin{Sinput}
+> # get the first element of the list for each model/constituent combination
+> # the data frame with information about each model/constituent combination
+> myfitRCS[[1]]
+\end{Sinput}
+\begin{Soutput}
+  pname mclass jmod hlife   cmaxt     scl    loglik cxmatintcpt
+1 04035      2    3     1 0.48087 0.26702 -30.34875    -2.28508
+  cxmatwavest cxmattndlin cxmattndlin' cxmattndlin''
+1     0.58486     0.05451     -0.42262        1.2513
+  cxmatflowa30 cxmatflowa1 sexmatintcpt sexmatwavest
+1     -0.08385     2.07417      0.13916      0.11368
+  sexmattndlin sexmattndlin' sexmattndlin'' sexmatflowa30
+1      0.07055       0.23925         0.6444        0.3118
+  sexmatflowa1 pvalxmattndlin pvalxmattndlin' pvalxmattndlin''
+1      0.47422        0.43966         0.07732          0.05216
+\end{Soutput}
+\begin{Sinput}
+> # get the second element of the list for each model/constituent combination
+> # the survival regression summary for each model/constituent combination
+> myfitRCS[[2]]
+\end{Sinput}
+\begin{Soutput}
+[[1]]
+
+Call:
+survreg(formula = Surv(time = clogtmp, time2 = indcen, type = "left") ~ 
+    xmat - 1, dist = "gaussian")
+               Value Std. Error      z       p
+xmatintcpt   -2.2851     0.1392 -16.42 < 2e-16
+xmatwavest    0.5849     0.1137   5.14 2.7e-07
+xmattndlin    0.0545     0.0705   0.77   0.440
+xmattndlin'  -0.4226     0.2392  -1.77   0.077
+xmattndlin''  1.2513     0.6444   1.94   0.052
+xmatflowa30  -0.0839     0.3118  -0.27   0.788
+xmatflowa1    2.0742     0.4742   4.37 1.2e-05
+Log(scale)   -1.3204     0.1201 -10.99 < 2e-16
+
+Scale= 0.267 
+
+Gaussian distribution
+Loglik(model)= -30.3   Loglik(intercept only)= -60.9
+	Chisq= 61.04 on 6 degrees of freedom, p= 2.8e-11 
+Number of Newton-Raphson Iterations: 6 
+n= 115 
+\end{Soutput}
+\begin{Sinput}
+> # get the first few lines of the third element of the list
+> head(myfitRCS[[3]])
+\end{Sinput}
+\begin{Soutput}
+   dectime R04035 P04035
+1 1996.034      <  0.004
+2 1996.117      <  0.004
+3 1996.201         0.005
+4 1996.242      <  0.004
+5 1996.273         0.007
+6 1996.311      <  0.004
+\end{Soutput}
+\begin{Sinput}
+> # get the first few lines of the fourth element of the list
+> head(myfitRCS[[4]])
+\end{Sinput}
+\begin{Soutput}
+    dectime      P04035
+30 1995.831 0.001729834
+31 1995.833 0.001760735
+32 1995.835 0.001785889
+33 1995.837 0.001821616
+34 1995.840 0.001868708
+35 1995.843 0.001819211
+\end{Soutput}
+\begin{Sinput}
+> # get the summary of predicted concentrations
+> myfitRCS[[5]]
+\end{Sinput}
+\begin{Soutput}
+  analysis pname predMeanConc predQ10 predQ25 predQ50 predQ75
+1 myfitRCS 04035      0.00269 0.00108 0.00134 0.00205 0.00332
+  predQ90
+1 0.00542
+\end{Soutput}
+\begin{Sinput}
+> # get summary of trend results
+> myfitRCS[[6]]
+\end{Sinput}
+\begin{Soutput}
+  pname mclass baseConc endConc rcsctndPpor
+1 04035      2   0.0035  0.0033     -4.2617
+  rcsctndOrigPORPercentBase pvalrcstnd ctndlklhd
+1                    -1e-04         NA        NA
+\end{Soutput}
+\end{Schunk}
+
+
+\begin{Schunk}
+\begin{Sinput}
+> attributes(myfitRCS[[2]][[1]])
+\end{Sinput}
+\begin{Soutput}
+$names
+ [1] "call"         "df"           "loglik"       "iter"        
+ [5] "idf"          "scale"        "coefficients" "var"         
+ [9] "table"        "correlation"  "parms"        "n"           
+[13] "chi"          "robust"      
+
+$class
+[1] "summary.survreg"
+\end{Soutput}
+\begin{Sinput}
+> myfitRCS[[2]][[1]]$n
+\end{Sinput}
+\begin{Soutput}
+[1] 115
+\end{Soutput}
+\begin{Sinput}
+> myfitRCS[[2]][[1]]$table
+\end{Sinput}
+\begin{Soutput}
+                   Value Std. Error           z            p
+xmatintcpt   -2.28508179 0.13916276 -16.4202108 1.370896e-60
+xmatwavest    0.58485595 0.11367880   5.1448112 2.677900e-07
+xmattndlin    0.05451475 0.07054532   0.7727622 4.396631e-01
+xmattndlin'  -0.42261789 0.23924903  -1.7664352 7.732287e-02
+xmattndlin''  1.25130280 0.64439682   1.9418203 5.215886e-02
+xmatflowa30  -0.08385015 0.31179820  -0.2689244 7.879878e-01
+xmatflowa1    2.07416526 0.47421631   4.3738801 1.220575e-05
+Log(scale)   -1.32043054 0.12012033 -10.9925647 4.149640e-28
+\end{Soutput}
+\end{Schunk}
+\vspace{5 mm}
+
+The text output file is inserted here as an example.
+
+\vspace{5 mm}
+
+\verbatiminput{myfitRCS_survregCall.txt}%
+
+\vspace{5 mm}
+
+The plots written to a pdf file are included below.
+
+\includepdf[pages={-}]{myfitRCS04035.pdf}
+
+\section{Bootstrapping for Significance with Restricted Cubic Splines}
+In order to determine if the trends in pesticide concentration calculated using restricted cubic splines are substantially different from a pattern produced by chance alone, we added functionality to perform a bootstrap analysis. Bootstrapping creates a distribution by resampling the dataset. Normal bootstrapping eliminates all trends and produces trend-free data, while block bootstrapping preservers any autocorrelation detected in the sample if the sample is serially dependent (Onoz and Bayazit, 2012). To ensure that block bootstrapping preserves autocorrelation, blocks are often overlapped and are wrapped around from the end to the start of the series (Cantry, 2002). The bootstrap analysis in seawaveQ uses a variation of block bootstrapping and an attained significance level similar to the method used in Hirsch and Ryberg (2012). However, Hirsch and Ryberg used a random length block with block length geometrically distributed with a mean length of 20 years to replicate hydrologic conditions that might have climatic persistence of variable length. In our case, we did not want to randomize the seasonal patterns in concentration trends, because we would then be testing the significance of the seasonal wave in the model rather than the trend. Therefore, our block units are entire years. The significance calculation is based on an attained level of significance method described in Hirsch and Ryberg (2012). For each bootstrap replicate, the resampled time series of pesticide concentrations is regressed against the variables in the SEAWAVE-Q model. For iteration \textit{j}, \textit{mj} is the estimate of the trend. The \textit{mj}s form a distribution of possible trend values across the bootstrap resampled dataset. The test statistic is \textit{M}, is the estimated trend with the observations from the original data (data in their original order). The null hypothesis is that the expected value of M is zero (no trend). Using 1,000 iterations of the bootstrap, we compute the attained, two-sided significance level. The p-value is the fraction of the iterations in which |\textit{mj}| is greater than or equal to |\textit{M}|. If few of the trends from the randomized data (the \textit{mj}s) are larger than the original trend value, the trend is statistically significant, depending on the analyst’s choice of significance level. The seawaveQ results report the attained \textit{p}-value so that one may choose to compare it to any significance level.
+
+The bootstrap process is too time consuming to include in an R vingette. However, the function call would be something like the following:
+
+\begin{Schunk}
+\begin{Sinput}
+> # myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
+> #                             tanm = "myfitRCSTrend", 
+> #                             pnames = c("04035", "04037", "04041"), 
+> #                             yrstart = 1995, yrend = 2003, tndbeg = 1995, 
+> #                             tndend = 2003, iwcav = c("flowa30", "flowa1"), 
+> #                             dcol = "dates", qwcols = c("R", "P"), mclass = 2, 
+> #                             numk = 4, bootRCS = TRUE, nboot = 1000)
+\end{Sinput}
+\end{Schunk}
+
+
 \section{References Cited}
+Canty, Angelo.J., 2002, Resampling methods in R—The boot package: R News, v. 2, no.3, p. 2--7.
+
+Croxford, R., 2016, Restricted cubic spline regression—A brief introduction: SAS Institute Inc., Paper 5621. 
+
+Harrell, F. E., Jr., 2010, Regression Modeling strategies—With Applications to Linear Models, Logistic Regression, and Survival Analysis: New York, Springer-Verlag, 568 p.
+
+Harrell, F. E., Jr., 2016, rms: Regression Modeling Strategies; R package version 5.0-1: accessed August 14, 2018, at \url{https://CRAN.R-project.org/package=rms}.
+
 Helsel, D.R., 2005, Nondetects and data analysis: New York, John Wiley and Sons.
 
-Lee, Lopaka, 2012, Nondetects and data analysis for environmental data: R package version 1.5-4,
+Hirsch, R.M., and Ryberg, K.R., 2012, Has the magnitude of floods across the USA changed with CO2 levels?: Hydrological Sciences Journal, v. 57, no. 1, 1-9, doi: 10.1080/02626667.2011.621895.
+
+Korn, E.L., and Graubard, B.I., 1999, Appendix C—Restricted cubic regression splines in Analysis of Health Surveys: New York, John Wiley and Sons, p. 345–346.
+
+Lee, Lopaka, 2017, NADA---Nondetects and data analysis for environmental data: R package version 1.6-1,
 \url{http://CRAN.R-project.org/package=NADA}.
 
 Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
 
 Oblinger Childress, C.J., Foreman,W.T., Connor, B.F., and Maloney, T.J., 1999, New reporting procedures based on long-term method detection levels and some considerations for interpretations of water-quality data provided by the U.S. Geological Survey: U.S. Geological Survey Open-File Report 99--193, 19 p. (Also available at \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.)
 
+Onoz, B. and Bayazit, M., 2012, Block bootstrap for Mann–Kendall trend test of serially depend data: Hydrological Processes v. 26, p. 3552-3560, doi: 10.1002/hyp.8438
+
 Ryberg, K.R. and Vecchia, A.V., 2012, waterData---An R package for retrieval, analysis, and anomaly calculation of daily hydrologic time series data, version 1.0: U.S. Geological Survey Open-File Report 2012--1168; 8 p., accessed March 1, 2013, at \url{http://pubs.usgs.gov/of/2012/1168/}.
 
-Ryberg, K.R. and Vecchia, A.V., 2013, seawaveQ---An R package providing a model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables: U.S. Geological Survey Open-File Report 2013--1255, 13 p., with 3 appendixes, \url{http://dx.doi.org/10.3133/ofr20131255}. 
+Ryberg, K.R. and York, B.C., 2018, seawaveQ---An R package providing a model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables: U.S. Geological Survey Open-File Report 2018--XXXX, XX p. 
 
 Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, Trends in pesticide concentrations in urban streams in the United States, 1992-2008: U.S. Geological Survey Scientific Investigations Report 2010--5139; 101 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2010/5139/}.
+
+Stone, C. J., 1986, Comment—Generalized additive models: Statistical Science, v. 1, no. 3, p. 312–314.
 
 Sullivan, D.J., Vecchia, A.V., Lorenz, D.L., Gilliom, R.J., and Martin, J.D., 2009, Trends in pesticide concentrations in corn-belt streams, 1996--2006: U.S. Geological Survey Scientific Investigations Report 2009--5132; 75 p.,  accessed May 1, 2012, at \url{http://pubs.usgs.gov/sir/2009/5132/}.
 

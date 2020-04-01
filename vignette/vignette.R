@@ -2,10 +2,12 @@
 ### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: vignette.Rnw:42-52
+### code chunk number 1: vignette.Rnw:41-53
 ###################################################
-options(width=65)
-# load waterData package, assuming it has already been installed on the system
+options(width = 65)
+# load necessary packages, assuming they have already been installed on the system
+library(waterData)
+library(survival)
 library(seawaveQ)
 # load example data that comes with the package
 data(swData)
@@ -17,56 +19,34 @@ head(qwMoRivOmaha)
 
 
 ###################################################
-### code chunk number 2: vignette.Rnw:61-63
+### code chunk number 2: vignette.Rnw:62-64
 ###################################################
 # scatter plot showing quantified, estimated, and censored  values
-cenScatPlot(qwMoRivOmaha, pname="04035")
+cenScatPlot(qwMoRivOmaha, pname = "04035")
 
 
 ###################################################
-### code chunk number 3: vignette.Rnw:70-85
+### code chunk number 3: vignette.Rnw:71-86
 ###################################################
 # scatter plot with many additional plotting arguments
 # these options provide a plot closer to the plotting standards
 # of the U.S. Geological Survey, however, these plots may not 
 # meet all U.S. Geological Survey publication requirements
-par(las=1, tcl=0.5)
-cenScatPlot(qwMoRivOmaha, pname="04035", 
-                       site="06610000 Missouri River at Omaha, Nebr.",
-                       ylabel="Simazine concentration, in micrograms per liter",
-                       legcex=0.7, qwcols=c("R", "P"), ylim=c(0,0.1), yaxs="i", 
-                       cex.lab=0.9, cex.axis=0.9, xlim=c(as.Date("1996-01-01"), 
-                       as.Date("2004-01-01")), xaxs="i", xaxt="n")
-axdates <- c("1996-01-01", "1998-01-01", "2000-01-01", 
-                       "2002-01-01", "2004-01-01")
-axis(1, as.Date(axdates), 
-                       labels=c("1996", "1998", "2000", "2002", "2004"), cex.axis=0.9)
+par(las = 1, tcl = 0.5)
+cenScatPlot(qwMoRivOmaha, pname = "04035",
+            site = "06610000 Missouri River at Omaha, Nebraska",
+            ylabel = "Simazine concentration, in micrograms per liter",
+            legcex = 0.7, qwcols = c("R", "P"), ylim = c(0,0.1), yaxs = "i", 
+            cex.lab = 0.9, cex.axis = 0.9, xaxs = "i", xaxt = "n",
+            xlim = c(as.Date("1996-01-01"), as.Date("2004-01-01")))
+axdates <- c("1996-01-01", "1998-01-01", "2000-01-01", "2002-01-01", 
+             "2004-01-01")
+axis(1, as.Date(axdates), labels = c("1996", "1998", "2000", "2002", "2004"), 
+     cex.axis = 0.9)
 
 
 ###################################################
-### code chunk number 4: vignette.Rnw:92-94
-###################################################
-# simple box plots of water-quality concentrations
-rosBoxPlot(qwMoRivOmaha, qwcols=c("R", "P"))
-
-
-###################################################
-### code chunk number 5: vignette.Rnw:101-111
-###################################################
-# same boxplot function with many additional plotting arguments
-rosBoxPlot(qwMoRivOmaha, site="06610000 Missouri River at Omaha, Nebr.",
-                     log="y", yaxt="n", ylim=c(0.000001, 10), qwcols=c("R", "P"), 
-                     ylab=c("Concentration, micrograms per liter"), col="skyblue1",
-                     cex.axis=0.7, cex.sub=0.8, 
-                     par(tcl=0.5, las=1, yaxs="i", mgp=c(3,0.5,0), mar=c(5,5,2,2), 
-                     cex.main=0.9))
-axis(2, at=c(0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10),
-labels=c("0.000001", "0.00001", "0.0001", "0.001", "0.01",
-"0.1", "1", "10"), cex.axis=0.7)
-
-
-###################################################
-### code chunk number 6: vignette.Rnw:118-124
+### code chunk number 4: vignette.Rnw:93-99
 ###################################################
 data(swData)
 # show last few rows of water-quality data for Missouri River at Omaha, Nebr.
@@ -77,78 +57,125 @@ tail(cqwMoRivOmaha)
 
 
 ###################################################
-### code chunk number 7: vignette.Rnw:133-138
+### code chunk number 5: vignette.Rnw:108-113
 ###################################################
 data(swData)
-MoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha,
-qwcols=c("staid", "dates", "R", "P"))
+MoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha,
+qwcols = c("staid", "dates", "R", "P"))
 # view combined data set
 head(MoRivOmaha)
 
 
 ###################################################
-### code chunk number 8: vignette.Rnw:146-165
+### code chunk number 6: vignette.Rnw:121-134
 ###################################################
 data(swData)
 
 # associate continuous water-quality data with each sample
 # combineData does this for you
-modMoRivOmaha<-combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
+modMoRivOmaha <- combineData(qwdat=qwMoRivOmaha, cqwdat=cqwMoRivOmaha)
 
 # then fit model(s)
-myfit1 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit1", pnames=c("04035", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1"),
-dcol="dates", qwcols=c("R","P"))
-myfit2 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit2", pnames=c("04035", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("seda30", "seda1"),
-dcol="dates", qwcols=c("R","P"))
-myfit3 <- fitswavecav(cdat=modMoRivOmaha, cavdat=cqwMoRivOmaha,
-tanm="myfit3", pnames=c("04035", "04041"), yrstart=1995,
-yrend=2003, tndbeg=1995, tndend=2003, iwcav=c("flowa30", "flowa1",
-"seda30", "seda1"), dcol="dates", qwcols=c("R","P"))
+myfitLinearTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+                                tanm = "myfitLinearTrend", 
+                                pnames = c("04035", "04037", "04041"), 
+                                yrstart = 1995, yrend = 2003, tndbeg = 1995, 
+                                tndend = 2003, iwcav = c("flowa30", "flowa1"), 
+                                dcol = "dates", qwcols = c("R", "P"), mclass = 1)
 
 
 ###################################################
-### code chunk number 9: vignette.Rnw:172-199
+### code chunk number 7: vignette.Rnw:141-160
 ###################################################
 # get the first element of the list for each model/constituent combination
 # the data frame with information about each model/constituent combination
-myfit1[[1]]
-myfit2[[1]]
-myfit3[[1]]
+myfitLinearTrend[[1]]
 
 # get the second element of the list for each model/constituent combination
 # the survival regression summary for each model/constituent combination
-myfit1[[2]]
-myfit2[[2]]
-myfit3[[2]]
+myfitLinearTrend[[2]]
 
 # get the first few lines of the third element of the list
-head(myfit1[[3]])
-head(myfit2[[3]])
-head(myfit3[[3]])
+head(myfitLinearTrend[[3]])
 
 # get the first few lines of the fourth element of the list
-head(myfit1[[4]])
-head(myfit2[[4]])
-head(myfit3[[4]])
+head(myfitLinearTrend[[4]])
 
 # get the summary of predicted concentrations
-myfit1[[5]]
-myfit2[[5]]
-myfit3[[5]]
+myfitLinearTrend[[5]]
 
+# get summary of trend results
+myfitLinearTrend[[6]]
 
 
 ###################################################
-### code chunk number 10: vignette.Rnw:206-211
+### code chunk number 8: vignette.Rnw:167-171
 ###################################################
 
-attributes(myfit1[[2]][[1]])
-myfit1[[2]][[1]]$n
-myfit1[[2]][[1]]$table
+attributes(myfitLinearTrend[[2]][[1]])
+myfitLinearTrend[[2]][[1]]$n
+myfitLinearTrend[[2]][[1]]$table
 
+
+###################################################
+### code chunk number 9: vignette.Rnw:203-215
+###################################################
+data(swData)
+
+# associate continuous water-quality data with each sample
+# combineData does this for you
+modMoRivOmaha <- combineData(qwdat = qwMoRivOmaha, cqwdat = cqwMoRivOmaha)
+
+# then fit model
+myfitRCS <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
+                        tanm = "myfitRCS", pnames = c("04035"), yrstart = 1995, 
+                        yrend = 2003, tndbeg = 1995, tndend = 2003, 
+                        iwcav = c("flowa30", "flowa1"), dcol = "dates", 
+                        qwcols = c("R", "P"), mclass = 2, numk = 4)
+
+
+###################################################
+### code chunk number 10: vignette.Rnw:220-239
+###################################################
+# get the first element of the list for each model/constituent combination
+# the data frame with information about each model/constituent combination
+myfitRCS[[1]]
+
+# get the second element of the list for each model/constituent combination
+# the survival regression summary for each model/constituent combination
+myfitRCS[[2]]
+
+# get the first few lines of the third element of the list
+head(myfitRCS[[3]])
+
+# get the first few lines of the fourth element of the list
+head(myfitRCS[[4]])
+
+# get the summary of predicted concentrations
+myfitRCS[[5]]
+
+# get summary of trend results
+myfitRCS[[6]]
+
+
+###################################################
+### code chunk number 11: vignette.Rnw:243-247
+###################################################
+
+attributes(myfitRCS[[2]][[1]])
+myfitRCS[[2]][[1]]$n
+myfitRCS[[2]][[1]]$table
+
+
+###################################################
+### code chunk number 12: vignette.Rnw:268-275
+###################################################
+# myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
+#                             tanm = "myfitRCSTrend", 
+#                             pnames = c("04035", "04037", "04041"), 
+#                             yrstart = 1995, yrend = 2003, tndbeg = 1995, 
+#                             tndend = 2003, iwcav = c("flowa30", "flowa1"), 
+#                             dcol = "dates", qwcols = c("R", "P"), mclass = 2, 
+#                             numk = 4, bootRCS = TRUE, nboot = 1000)
 
 
