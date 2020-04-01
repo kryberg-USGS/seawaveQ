@@ -1,7 +1,7 @@
 #' Internal function that fits the seawaveQ model.
 #' 
 #' fitMod is called from within \link{fitswavecav} but
-#' can be invoked directly.  It fits the seawaveQ model and returns the 
+#' can be invoked directly. It fits the seawaveQ model and returns the 
 #' results.
 #' @param cdatsub is the concentration data
 #' @param cavdat is the continuous (daily) ancillary data
@@ -21,7 +21,7 @@
 #' @param qwcols is a character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
-#' @param mclass indicates the class of model one wants to use.
+#' @param mclass indicates the class of model to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time tredn. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
@@ -37,10 +37,10 @@
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @return a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
 #' a text file showing the best model survival regression call and 
-#' results, and a list.  The first element of the list contains 
+#' results, and a list. The first element of the list contains 
 #' information about the data and the model(s) selected (see 
 #' \code{\link{examplestpars}}). The second element of the list contains 
-#' the summary of the survival regression call.  The third element of the 
+#' the summary of the survival regression call. The third element of the 
 #' list is itself a list containing the observed concentrations (censored 
 #' and uncensored) and the predicted concentrations used by 
 #' \code{\link{seawaveQPlots}} or \code{\link{seawaveQPlots2}} to generate the 
@@ -56,7 +56,7 @@
 #' practical guide: Cary, North Carolina, SAS Publishing, 304 p.
 #' 
 #' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
-#' Applications to Linear Models, Logisitc Regression, and Survival
+#' Applications to Linear Models, Logistic Regression, and Survival
 #' Analysis: New York, Springer-Verlag, 568 p.
 #' 
 #' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
@@ -241,7 +241,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   aicout[[1]] <- aictmp[[pckone]]
   bicout[[1]] <- bictmp[[pckone]]
   
-  # generalized r-squared statistic based on  the likelihood-ratio test
+  # generalized r-squared statistic based on the likelihood-ratio test
   # see Allison (1995, pp. 247-249)
   # Allison, Paul D. 1995. Survival Analysis Using the SAS System: 
   # A Practical Guide. Cary, NC: SAS Institute Inc.
