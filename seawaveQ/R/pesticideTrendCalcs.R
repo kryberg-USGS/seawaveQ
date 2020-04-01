@@ -16,15 +16,15 @@
 #' @param tndend is the end of the trend (treated as December 31
 #' of that year). Zero means the end date will be the end of the 
 #' concentration data, cdat.
-#' @param ctnd is the concentration trend, the coefficient on the time variable.
-#' @param pval is the p-value for the linear trend component.
+#' @param ctnd is the concentration trend, the coefficient on the time variable
+#' @param pval is the p-value for the linear trend component
 #' @param alpha is the significance level or alpha value for statistical
 #' significance and confidence intervals
-#' @param setnd is the standard error for the linear trend component.
-#' @param scl is the scal factor from the \code{survreg.object}.
+#' @param setnd is the standard error for the linear trend component
+#' @param scl is the scale factor from the \code{survreg.object}
 #' @param baseConc is the base concentration, the median concentration 
-#' (midpoint of the trend line) for the first year of the trend analysis. 
-#' @param mclass indicates the class on model one wants to use.
+#' (midpoint of the trend line) for the first year of the trend analysis 
+#' @param mclass indicates the class of model to use
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
