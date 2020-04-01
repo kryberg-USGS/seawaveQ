@@ -12,5 +12,5 @@ Although this software program has been used by the USGS, no warranty, expressed
 This software is provided "AS IS."
 
  [
-   ![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)
- ](http://creativecommons.org/publicdomain/zero/1.0/)
+   ![CC0](https://i.creativecommons.org/p/zero/1.0/88x31.png)
+ ](https://creativecommons.org/publicdomain/zero/1.0/)
