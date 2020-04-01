@@ -5,7 +5,7 @@
 #' with water-quality concentration values to indicate which samples are 
 #' unqualified, which are estimated, and which are censored.
 #' A blank remark field or an "_" indicates that the concentration 
-#' value is not qualified; an "E" indicates the values has been 
+#' value is not qualified; an "E" indicates the value has been 
 #' estimated; and a less than symbol, "<", indicates the value has been 
 #' censored as less than a minimum reporting level.  See Oblinger 
 #' Childress (1999) for information on the minimum reporting level and 
@@ -19,13 +19,13 @@
 #' @param data is the dataset with columns that begin with P followed 
 #' by alphanumeric characters indicating concentration data and columns 
 #' that begin with R followed by alphanumeric characters that match those 
-#' of the concentration data indicating qualification codes.  See example 
+#' of the concentration data indicating qualification codes. See example 
 #' datasets for more information about the data format, see 
 #' \code{\link{IllRivValleyCty}} and \code{\link{qwMoRivOmaha}}.
 #' @param datescol is the column label for the dates column.
-#' @param pname is the the column heading (paramenter name) for the 
+#' @param pname is the column heading (parameter name) for the 
 #' particular water-quality constituent to be plotted (omit 
-#' the the starting character, for example for sulfate data indicated by 
+#' the  starting character, for example for sulfate data indicated by 
 #' P00945, enter "00945").  
 #' @param qwcols is a character vector with the beginning of the
 #' column headers for remarks code (default is R), and beginning of 
@@ -48,7 +48,7 @@
 #' detection levels and some considerations for interpretations of 
 #' water-quality data provided by the U.S. Geological Survey: U.S. 
 #' Geological Survey Open-File Report 99--193, 19 p.,
-#' \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.
+#' \url{https://water.usgs.gov/owq/OFR_99-193/index.html}.
 #' @export
 #' @examples
 #' data(swData)
