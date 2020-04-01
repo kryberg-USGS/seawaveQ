@@ -137,7 +137,7 @@ axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008","2012"),
   1999, New reporting procedures based on long-term method detection levels
   and some considerations for interpretations of water-quality data provided
   by the U.S. Geological Survey Open-File Report 99--193, 19 p. (Also 
-  available at \url{http://water.usgs.gov/owq/OFR_99-193/index.html}.)
+  available at \url{https://water.usgs.gov/owq/OFR_99-193/index.html}.)
 }
 \keyword{datasets}
 
