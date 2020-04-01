@@ -1,22 +1,22 @@
 #' Internal function that generates plots of data and model results.
 #' 
 #' seawaveQPlots is usually called from within \code{\link{fitMod}} but
-#' can be invoked directly.  It generates plots of data and model results, 
+#' can be invoked directly. It generates plots of data and model results, 
 #' as well as diagnostic plots, and returns the observed and predicted 
 #' concentrations so that users may plot the concentrations using 
 #' their own functions.
 #' @note The plotting position used for representing censored values in 
 #' the plots produced by \code{\link{seawaveQPlots}} is an important 
-#' consideration for interpreting model fit.  Plotting values obtained by 
+#' consideration for interpreting model fit. Plotting values obtained by 
 #' using the censoring limit, or something smaller such as one-half of the 
 #' censoring limit, produce plots that are difficult to interpret if there 
-#' are a large number of censored values.  Therefore, to make the plots 
+#' are a large number of censored values. Therefore, to make the plots 
 #' more representative of diagnostic plots used for standard 
 #' (non-censored) regression, a method for substituting randomized 
-#' residuals in place of censored residuals was used.   If a 
+#' residuals in place of censored residuals was used. If a 
 #' log-transformed concentration is censored at a particular limit, 
 #' \code{logC < L}, then the residual for that concentration is censored 
-#' as well, \code{logC - fitted(logC) < L - fitted(logC) = rescen}.  In 
+#' as well, \code{logC - fitted(logC) < L - fitted(logC) = rescen}. In 
 #' that case, a randomized residual was generated from a conditional 
 #' normal distribution \cr \cr
 #' \code{resran  <-  scl * qnorm(runif(1) * pnorm(rescen / scl))}, \cr \cr
@@ -29,10 +29,10 @@
 #' normally distributed random variables with mean zero and standard 
 #' deviation \code{scl}, the randomized residuals generated in this manner are an 
 #' unbiased sample of the true (but unknown) residuals for the censored 
-#' data.  This is an application of the probability integral transform 
+#' data. This is an application of the probability integral transform 
 #' (Mood and others, 1974) to generate random variables from continuous 
 #' distributions. The plotting position used a censored concentration is 
-#' \code{fitted(logC) + resran}.  Note that each time a new model fit is 
+#' \code{fitted(logC) + resran}. Note that each time a new model fit is 
 #' performed, a new set of randomized residuals is generated and thus the 
 #' plotting positions for censored values can change.
 
@@ -78,7 +78,7 @@
 #' @export
 #' @references
 #' Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 
-#' theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
+#' theory of statistics (3rd ed.): New York, McGraw-Hill, Inc., 564 p.
 #' @examples
 #' data(swData)
 #' myPlots <- seawaveQPlots(stpars=examplestpars, cmaxt=0.4808743, 
