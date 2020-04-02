@@ -33,7 +33,7 @@
                                           Missouri River at Omaha, Nebr.} \cr}
   \if{latex}{\figure{06610000Metribuzin.pdf}{Metribuzin concentrations in the
                                              Missouri River at Omaha, Nebr.} \cr}
-  \if{html}{\figure{06610000Trifluralin.pdf}{Trifluralin concentrations in the
+  \if{latex}{\figure{06610000Trifluralin.pdf}{Trifluralin concentrations in the
                                             Missouri River at Omaha, Nebr.} \cr}
   \if{latex}{\figure{06610000EPTC.pdf}{EPTC concentrations in the
                                        Missouri River at Omaha, Nebr.} \cr}

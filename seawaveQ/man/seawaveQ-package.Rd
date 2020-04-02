@@ -24,7 +24,7 @@ the model.
 Package: \tab seawaveQ\cr
 Type: \tab Package\cr
 Version: \tab 2.0.0\cr
-Date: \tab 2020--03--31\cr
+Date: \tab 2020--04--02\cr
 License: \tab Unlimited | file LICENSE \cr
 LazyLoad: \tab yes\cr
 }
@@ -47,6 +47,12 @@ in streams with a seasonal wave (seawave) and adjustment for
 streamflow (Q) and other ancillary variables: U.S. Geological Survey 
 Open-File Report 2013--1255, 13 p., with 3 appendixes, 
 \url{https://dx.doi.org/10.3133/ofr20131255}.
+
+#' Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing 
+a model and utilities for analyzing trends in chemical concentrations 
+in streams with a seasonal wave (seawave) and adjustment for 
+streamflow (Q) and other ancillary variables, Version 2.0.0: U.S. Geological Survey 
+Open-File Report 2020--XXXX, XX p., with 4 appendixes.
 
 Ryberg, K.R., Vecchia, A.V., Gilliom, R.J., and Martin, J.D., 2014, 
 Pesticide trends in major rivers of the United States, 1992--2010: 

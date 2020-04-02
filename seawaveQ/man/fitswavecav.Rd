@@ -4,9 +4,10 @@
 \alias{fitswavecav}
 \title{Fit seasonal wave and continuous ancillary data for trend 
 analysis}
-\format{The data frame returned has one row for each chemical analyzed 
-and the number of columns depend on the number of continuous ancillary
-variables used. The general format is as follows: \cr
+\format{The data frame returned as the first element of the output list has 
+one row for each chemical analyzed and the number of columns depends on the 
+number of continuous ancillary variables used. The general format is as 
+follows: \cr
 \tabular{lll}{
  pname \tab character \tab parameter analyzed\cr
  mclass \tab numeric \tab A value of 1 or 2\cr
@@ -29,6 +30,26 @@ variables used. The general format is as follows: \cr
  se[alphanumeric] \tab numeric \tab  0 or more standard errors for the 
  continuous ancillary variables\cr
  pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
+}
+The data frame returned as the sixth element of the output list has 
+one row for each chemical analyzed. The general format for linear models is
+described in \code{\link{pesticideTrendCalcs}}. The form at for restricted
+cubic spline models is as described as follows: \cr
+\tabular{lll}{
+ pname \tab character \tab parameter analyzed\cr
+ mclass \tab numeric \tab A value of 1 or 2\cr
+ baseConc \tab numeric \tab the concentration at the beginning of the trend
+ period \cr
+ endCon \tab numeric \tab the concentration at the end of the trend
+ period \cr
+ rcsctndPpor \tab numeric \tab the concentration trend in percent over the 
+ trend period \cr
+ rcsctndOrigPORPercentBase \tab numeric \tab the concentration trend in 
+ original units over the period of record (calculation based on percent per 
+ year and base concentration) \cr
+ pvalrcstnd \tab numeric \tab p-value, attained significance level, based on 
+ bootstrapping \cr
+ ctndlklhd \tab numeric \tab trend likelihood \cr
 }}
 \usage{
 fitswavecav(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, yrend = 0,
@@ -104,10 +125,13 @@ of the list is the summary of the survival regression call. The third
 element is the observed concentration data (censored and uncensored). 
 The fourth element is the concentration data predicted by the model.  
 The fifth element provides summary statistics for the predicted 
-concentrations. The sixth element is a data.frame that provides a summary of 
+concentrations. The sixth element is a data frame that provides a summary of 
 the trends with the columns pname (parameter name), mclass (a value of 1, 
-indicating a linear trend model), and the columns described in 
-\code{\link{pesticideTrendCalcs}}
+indicating a linear trend model, a value of 2 for models using restricted
+cubic splines), and the columns describing the trends. For linear models  
+see \code{\link{pesticideTrendCalcs}}. For models with restricted cubic
+splines, see the format section. See Ryberg and York (2020) for additional
+details.
 }
 \description{
 Function to prepare data and fit the seawaveQ model.
