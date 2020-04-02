@@ -230,7 +230,7 @@ Water Information System: Web Interface, accessed July 18, 2018,
 at \url{https://nwis.waterdata.usgs.gov/usa/nwis/pmcodes}.
 
 Vecchia, A.V., Martin, J.D., and Gilliiom, R.J., 2008, Modeling 
-variability and  trends in pesticide concentrations in streams: 
+variability and trends in pesticide concentrations in streams: 
 Journal of the American Water Resources Association, v. 44, no. 5, p. 
 1308--1324, \url{https://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
 }
