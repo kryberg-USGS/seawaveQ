@@ -704,7 +704,6 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
                                    cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
                                    yrend, tyr, tyrpr, pnames, mclass = 2, 
                                    numk = numk)
-        # myRes <- list(stpars, aovout, plotDat, tndrcspr)
         myRes <- list(stpars, aovout, plotDat)
         myRes
       }
