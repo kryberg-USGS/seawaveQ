@@ -8,9 +8,9 @@ fitMod(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, pnames, qwcols,
   mclass = 1, numk = 4)
 }
 \arguments{
-\item{cdatsub}{is the concentration data}
+\item{cdatsub}{is the concentration data.}
 
-\item{cavdat}{is the continuous (daily) ancillary data}
+\item{cavdat}{is the continuous (daily) ancillary data.}
 
 \item{yrstart}{is the starting year of the analysis (treated as January
 1 of that year).}
@@ -28,7 +28,7 @@ period.}
 analysis run.  It is used to label output files.}
 
 \item{pnames}{is the parameter (water-quality constituents) to 
-analyze (if using USGS parameters, omit the the starting 'P', such as 
+analyze (if using USGS parameters, omit the starting 'P', such as 
 "00945" for sulfate).}
 
 \item{qwcols}{is a character vector with the beginning of the
@@ -37,16 +37,16 @@ column headers for concentration data (default is P for parameter).}
 
 \item{mclass}{indicates the class of model to use.
 A class 1 model is the the traditional SEAWAVE-Q model that has a
-linear time tredn. A class 2 model is a newer option for longer
+linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
 time variable to provide a more flexible model. The default is 1.
-(Harrell, Jr., 2010 and 2018).}
+(Harrell, 2010, 2018).}
 
 \item{numk}{is the number of knots in the restricted cubic spline model
 (mclass = 2). The default is 4, and the recommended number is 3--7.}
 }
 \value{
-a pdf file containing plots (see \code{\link{seawaveQPlots}}), 
+A PDF file containing plots (see \code{\link{seawaveQPlots}}), 
 a text file showing the best model survival regression call and 
 results, and a list. The first element of the list contains 
 information about the data and the model(s) selected (see 
@@ -70,13 +70,13 @@ pnames = c("04041"), qwcols = c("R", "P"))
 }
 \references{
 Allison, P.D., 1995, Survival analysis using the SAS system---A 
-practical guide: Cary, North Carolina, SAS Publishing, 304 p.
+practical guide: Cary, N.C., SAS Institute, Inc., 304 p.
 
-Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
-Applications to Linear Models, Logistic Regression, and Survival
-Analysis: New York, Springer-Verlag, 568 p.
+Harrell, F.E., Jr., 2010, Regression modeling strategies---With
+applications to linear models, logistic regression, and survival
+analysis: New York, Springer-Verlag, 568 p.
 
-Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+Harrell, F.E., Jr., 2018, rms---Regression modeling strategies: 
 R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 }
 \author{

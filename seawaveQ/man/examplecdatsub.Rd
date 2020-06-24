@@ -15,14 +15,14 @@
   \code{\link{qwMoRivOmaha}} and the 30-day and 1-day streamflow and sediment anomalies 
   are a subset of \code{\link{cqwMoRivOmaha}}.
   \tabular{lll}{
-   yrc \tab numeric \tab Year \cr
-   moc \tab numeric \tab Month \cr
-   dac \tab numeric \tab Day \cr
-   jdayc \tab numeric \tab Julian day from first day of start year in \code{\link{fitswavecav}} \cr
-   flowa30 \tab numeric \tab 30-day streamflow anomaly \cr
-   flowa1 \tab numeric \tab 1-day streamflow anomaly \cr
-   seda30 \tab numeric \tab 30-day sediment anomaly \cr
-   seda1 \tab numeric \tab 1-day sediment anomaly \cr
+  yrc \tab numeric \tab Year \cr
+  moc \tab numeric \tab Month \cr
+  dac \tab numeric \tab Day \cr
+  jdayc \tab numeric \tab Julian day from first day of start year in \code{\link{fitswavecav}} \cr
+  flowa30 \tab numeric \tab 30-day streamflow anomaly \cr
+  flowa1 \tab numeric \tab 1-day streamflow anomaly \cr
+  seda30 \tab numeric \tab 30-day sediment anomaly \cr
+  seda1 \tab numeric \tab 1-day sediment anomaly \cr
   }
 }
 \seealso{

@@ -5,7 +5,7 @@
 \description{
   This is an example of data that is passed 
   internally to \code{\link{seawaveQPlots}}.  This numeric
-  vector contains trend coefficients for a continous water-quality prediction
+  vector contains trend coefficients for a continuous water-quality prediction
   based on the continuous ancillary variables.  
   It is provided here for use with examples of the internal functions.
 }

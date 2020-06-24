@@ -17,14 +17,14 @@
   streamflow and sediment, and streamflow and sediment anomalies.
         There are  eight variables.
         \tabular{lll}{
-          staid \tab character \tab USGS Station identification number \cr
-          dates \tab date \tab date water-quality sample collected \cr
-          dflow \tab numeric \tab daily mean streamflow, cubic feet per second \cr
-          flowa30 \tab numeric \tab 30-day streamflow anomaly \cr
-          flowa1 \tab numeric \tab 1-day streamflow anomaly \cr
-          dsed \tab numeric \tab daily mean sediment concentration, milligrams per liter \cr
-          seda30 \tab numeric \tab 30-day sediment anomaly \cr
-          seda1 \tab numeric \tab 1-day sediment anomaly
+        staid \tab character \tab USGS Station identification number \cr
+        dates \tab date \tab date water-quality sample collected \cr
+        dflow \tab numeric \tab daily mean streamflow, cubic feet per second \cr
+        flowa30 \tab numeric \tab 30-day streamflow anomaly \cr
+        flowa1 \tab numeric \tab 1-day streamflow anomaly \cr
+        dsed \tab numeric \tab daily mean sediment concentration, milligrams per liter \cr
+        seda30 \tab numeric \tab 30-day sediment anomaly \cr
+        seda1 \tab numeric \tab 1-day sediment anomaly
         }
 }
 \examples{
@@ -41,10 +41,10 @@
   analysis studies. 
 }
 \references{
-  Ryberg, K.R. and Vecchia, A.V., 2012, waterData---An R package for 
+  Ryberg, K.R., and Vecchia, A.V., 2012, waterData---An R package for 
   retrieval, analysis, and anomaly calculation of daily hydrologic time 
   series data, version 1.0.0: U.S. Geological Survey Open-File Report 
-  2012--1168, 8 p. (Also available at 
-  \url{http://pubs.usgs.gov/of/2012/1168/}.)
+  2012--1168, 8 p. [(]Also available at 
+  \url{http://pubs.usgs.gov/of/2012/1168/}.]
 }
   \keyword{datasets}

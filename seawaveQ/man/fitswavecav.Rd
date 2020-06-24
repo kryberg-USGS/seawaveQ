@@ -10,7 +10,7 @@ number of continuous ancillary variables used. The general format is as
 follows: \cr
 \tabular{lll}{
  pname \tab character \tab parameter analyzed\cr
- mclass \tab numeric \tab A value of 1 or 2\cr
+ mclass \tab numeric \tab a value of 1 or 2\cr
  jmod \tab numeric \tab the choice of pulse input function, an 
  integer 1--14 \cr
  hlife \tab numeric \tab the model half-life in months, an integer, 1 to 
@@ -29,14 +29,14 @@ follows: \cr
  setnd[alphanumeric] \tab numeric \tab standard error for the trend component(s) \cr
  se[alphanumeric] \tab numeric \tab  0 or more standard errors for the 
  continuous ancillary variables\cr
- pvaltnd[alphanumeric] \tab numeric \tab the p-value for the trend component(s) \cr
+ pvaltnd[alphanumeric] \tab numeric \tab the \emph{p}-value for the trend component(s) \cr
 }
 The data frame returned as the sixth element of the output list has 
 one row for each chemical analyzed. The general format for linear models is
-described in \code{\link{pesticideTrendCalcs}}. The form at for restricted
+described in \code{\link{pesticideTrendCalcs}}. The format for restricted
 cubic spline models is as described as follows: \cr
 \tabular{lll}{
- pname \tab character \tab parameter analyzed\cr
+  pname \tab character \tab parameter analyzed\cr
  mclass \tab numeric \tab A value of 1 or 2\cr
  baseConc \tab numeric \tab the concentration at the beginning of the trend
  period \cr
@@ -47,7 +47,7 @@ cubic spline models is as described as follows: \cr
  rcsctndOrigPORPercentBase \tab numeric \tab the concentration trend in 
  original units over the period of record (calculation based on percent per 
  year and base concentration) \cr
- pvalrcstnd \tab numeric \tab p-value, attained significance level, based on 
+ pvalrcstnd \tab numeric \tab \emph{p}-value, attained significance level, based on 
  bootstrapping \cr
  ctndlklhd \tab numeric \tab trend likelihood \cr
 }}
@@ -66,7 +66,7 @@ fitswavecav(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, yrend = 0,
 analysis run.  It is used to label output files.}
 
 \item{pnames}{are the parameters (water-quality constituents) to 
-analyze (omit the the starting character, for example for sulfate data 
+analyze (omit the starting character, for example for sulfate data 
 indicated by P00945, enter "00945").}
 
 \item{yrstart}{is the starting year of the analysis (treated as January
@@ -97,7 +97,7 @@ column headers for remarks code (default is R), and beginning of
 column headers for concentration data (default is P for parameter).}
 
 \item{mclass}{indicates the class of model to use.
-A class 1 model is the the traditional SEAWAVE-Q model that has a
+A class 1 model is the traditional SEAWAVE-Q model that has a
 linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
 time variable to provide a more flexible model.}
@@ -106,7 +106,7 @@ time variable to provide a more flexible model.}
 The default is 4, and the recommended number is 3--7.}
 
 \item{alpha}{is the significance level or alpha values for statistical
-significance and confidence intervals}
+significance and confidence intervals.}
 
 \item{bootRCS}{is a logical value indicating whether or not to perform
 block bootstrapping for an attained significance level for the trend
