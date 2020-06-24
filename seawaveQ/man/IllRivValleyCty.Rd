@@ -71,39 +71,36 @@ There are  20 variables.
 data(swData)
 
 # summary of water-quality concentrations
-apply(IllRivValleyCty[,grep("P[[:digit:]]", 
+apply(IllRivValleyCty[, grep("P[[:digit:]]", 
 dimnames(IllRivValleyCty)[[2]])], 2, summary)
 
 # scatter plot of simazine concentrations
-cenScatPlot(IllRivValleyCty, pname="04035")
+cenScatPlot(IllRivValleyCty, pname = "04035")
 
-# scatter plot with many additional plotting arguments
-par(las=1, tcl=0.5)
-cenScatPlot(IllRivValleyCty, pname="04035", 
-            site="05586100 Illinois River at Valley City, Ill.",
-            ylabel="Simazine concentration, in micrograms per liter", 
-            legcex=0.7, 
-            ylim=c(0,0.4), yaxs="i", cex.lab=0.9, cex.axis=0.9,
-            xlim=c(as.Date("1996-01-01"), as.Date("2012-01-01")), 
-            xaxs="i", xaxt="n")
-axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
+# Simazine scatter plot with many additional plotting arguments
+
+par(las = 1, tcl = 0.5)
+cenScatPlot(IllRivValleyCty, pname = "04035", 
+            site = "05586100 Illinois River at Valley City, Ill.",
+            ylabel = "Simazine concentration, in micrograms per liter", 
+            legcex = 0.7, 
+            ylim = c(0, 0.4), yaxs = "i", 
+            xlim = c(as.Date("1996-01-01"), as.Date("2012-01-01")), 
+            xaxs = "i", xaxt = "n")
+axdates <- c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
            "2012-01-01")
-axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008",
-                                   "2012"), cex.axis=0.9)
+axis(1, as.Date(axdates), labels = c("1996", "2000", "2004", "2008", "2012"))
 
 # Prometon scatter plot
-cenScatPlot(IllRivValleyCty, pname="04037", 
-            site="05586100 Illinois River at Valley City, Ill.",
-            ylabel="Prometon concentration, in micrograms per liter", 
-            legcex=0.7, 
-            ylim=c(0,0.06), yaxs="i", cex.lab=0.9, cex.axis=0.9,
-            xlim=c(as.Date("1996-01-01"), 
-                   as.Date("2012-01-01")), xaxs="i", 
-            xaxt="n")
-axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", 
-           "2012-01-01")
-axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008",
-                                               "2012"), cex.axis=0.9)
+cenScatPlot(IllRivValleyCty, pname = "04037", 
+            site = "05586100 Illinois River at Valley City, Ill.",
+            ylabel = "Prometon concentration, in micrograms per liter", 
+            legcex = 0.7, 
+            ylim = c(0, 0.06), yaxs = "i", 
+            xlim=c(as.Date("1996-01-01"), as.Date("2012-01-01")), xaxs = "i", 
+            xaxt = "n")
+axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", "2012-01-01")
+axis(1, as.Date(axdates), labels = c("1996", "2000", "2004", "2008","2012"))
 
 # Metribuzin scatter plot
 cenScatPlot(IllRivValleyCty, pname="82630", 
@@ -119,16 +116,15 @@ axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01",
 axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008",
                                                "2012"), cex.axis=0.9)
 # EPTC scatter plot
-cenScatPlot(IllRivValleyCty, pname="82668", 
-            site="05586100 Illinois River at Valley City, Ill.",
-            ylabel="EPTC concentration, in micrograms per liter", 
-            legcex=0.7, ylim=c(0,0.08), yaxs="i", cex.lab=0.9, 
-            cex.axis=0.9, xlim=c(as.Date("1996-01-01"), 
-                   as.Date("2012-01-01")), xaxs="i", xaxt="n")
-axdates<-c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", 
+cenScatPlot(IllRivValleyCty, pname = "82668", 
+            site = "05586100 Illinois River at Valley City, Ill.",
+            ylabel = "EPTC concentration, in micrograms per liter", 
+            legcex = 0.7, ylim = c(0, 0.08), yaxs = "i", 
+            xlim=c(as.Date("1996-01-01"), as.Date("2012-01-01")), 
+            xaxs = "i", xaxt = "n")
+axdates <- c("1996-01-01", "2000-01-01", "2004-01-01", "2008-01-01", 
            "2012-01-01")
-axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008","2012"), 
-     cex.axis=0.9)
+axis(1, as.Date(axdates), labels = c("1996", "2000", "2004", "2008","2012"))
 }
 \source{Data provided by Patrick Phillips, U.S. Geological Survey,
         New York Water Science Center.}
@@ -136,8 +132,8 @@ axis(1, as.Date(axdates), labels=c("1996", "2000", "2004", "2008","2012"),
   Oblinger Childress, C.J., Foreman, W.T., Connor, B.F., and Maloney, T.J.,
   1999, New reporting procedures based on long-term method detection levels
   and some considerations for interpretations of water-quality data provided
-  by the U.S. Geological Survey Open-File Report 99--193, 19 p. (Also 
-  available at \url{https://water.usgs.gov/owq/OFR_99-193/index.html}.)
+  by the U.S. Geological Survey Open-File Report 99--193, 19 p. [Also 
+  available at \url{https://water.usgs.gov/owq/OFR_99-193/index.html}.]
 }
 \keyword{datasets}
 

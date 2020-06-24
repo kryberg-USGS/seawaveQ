@@ -16,7 +16,7 @@ time in years.}
 \item{hlife}{is the model half-life in months, 1 to 4 months}
 }
 \value{
-a numeric vector of size 361 with discrete values of the 
+A numeric vector of size 361 with discrete values of the 
 seasonal wave for decimal season \code{seq(0,1,1/360)}.
 }
 \description{
@@ -45,11 +45,10 @@ swave[floor(360 * dseas)]
 plot(seq(0, 1, 1/360), swave, typ = "l")
 }
 \references{
-Vecchia, A.V., Martin, J.D. and Gilliom, R.J., 2008, 
+Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, 
 Modeling variability and trends in pesticide concentrations in streams: 
 JAWRA Journal of the American Water Resources Association, v. 44, p. 
-1308--1324, 
-\url{https://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
+1308--1324, \url{https://doi.org/10.1111/j.1752-1688.2008.00225.x}.
 }
 \author{
 Aldo V. Vecchia

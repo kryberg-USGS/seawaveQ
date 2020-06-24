@@ -45,10 +45,10 @@
 #' using the continuous data set cavdat.
 #' @param tndlin is the decimal time centered on the midpoint of the trend
 #' for the sample data, cdatasub.
-#' @param tndlinpr is is the decimal time centered on the midpoint of the 
+#' @param tndlinpr is the decimal time centered on the midpoint of the 
 #' trend for the continuous data, cavdat.
-#' @param cdatsub is the concentration data
-#' @param cavdat is the continuous (daily) ancillary data
+#' @param cdatsub is the concentration data.
+#' @param cavdat is the continuous (daily) ancillary data.
 #' @param cavmat is a matrix containing the continuous ancillary 
 #' variables.
 #' @param clog is a vector of the base-10 logarithms of the concentration 
@@ -59,19 +59,19 @@
 #' 1 of that year).  
 #' @param yrend is the ending year of the analysis (treated as December 31
 #' of that year).  
-#' @param tyr is a vector of decimal dates for the concentration data
+#' @param tyr is a vector of decimal dates for the concentration data.
 #' @param tyrpr is a vector of decimal dates for the continuous ancillary
-#' varaibles.
+#' variables.
 #' @param pnames is the parameter (water-quality constituents) to 
-#' analyze (if using USGS parameters, omit the the starting 'P', such as 
+#' analyze (if using USGS parameters, omit the starting 'P', such as 
 #' "00945" for sulfate).  
-#' @param tanm is an a character identifier that names the trend 
+#' @param tanm is a character identifier that names the trend 
 #' analysis run.  It is used to label output files.
 #' @param mclass has not been implemented yet, but will provide
 #' additional model options.
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
-#' @return a pdf file containing plots of the data and modeled 
+#' @return A PDF file containing plots of the data and modeled 
 #' concentrations and regression diagnostic plots and a list containing
 #' the observed concentrations (censored and uncensored) and the predicted
 #' concentrations used for the plot.

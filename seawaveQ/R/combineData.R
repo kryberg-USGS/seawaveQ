@@ -22,14 +22,14 @@
 #' for more information about the data format \link{cqwMoRivOmaha}. These 
 #' are daily values with no missing values allowed between the first and 
 #' the last date in the dataset.
-#' @return a dataframe
-#' @format a dataframe with the number of rows equal to the number of rows
-#' in the dataframe indicated by qwdat. The number of columns depend 
+#' @return A data frame
+#' @format A data frame with the number of rows equal to the number of rows
+#' in the data frame indicated by qwdat. The number of columns depend 
 #' on the two input data frames. Minimally there will be a station 
 #' identification column, a dates column, a column of qualification codes,
 #' and a column of water-quality data.
 #' @note The columns indicated by qwcols[1:2] are used to
-#' combined the datasets. The first column is the station identifier and 
+#' combine the datasets. The first column is the station identifier and 
 #' the second column is the date column. These two column headings must 
 #' be the same in the two datasets being combined and the dates in the 
 #' datasets being combined must be of class Date and use the same 

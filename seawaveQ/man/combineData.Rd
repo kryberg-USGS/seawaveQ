@@ -4,8 +4,8 @@
 \alias{combineData}
 \title{Combine water-quality sample data and continuous ancillary 
 variables}
-\format{a dataframe with the number of rows equal to the number of rows
-in the dataframe indicated by qwdat. The number of columns depend 
+\format{A data frame with the number of rows equal to the number of rows
+in the data frame indicated by qwdat. The number of columns depend 
 on the two input data frames. Minimally there will be a station 
 identification column, a dates column, a column of qualification codes,
 and a column of water-quality data.}
@@ -35,7 +35,7 @@ of column headers for remarks code (default is R), and beginning of
 column headers for concentration data (default is P for parameter).}
 }
 \value{
-a dataframe
+A data frame
 }
 \description{
 Function to combine water-quality sample data and continuous (daily) 
@@ -43,7 +43,7 @@ ancillary variables and drop unnecessary columns.
 }
 \note{
 The columns indicated by qwcols[1:2] are used to
-combined the datasets. The first column is the station identifier and 
+combine the datasets. The first column is the station identifier and 
 the second column is the date column. These two column headings must 
 be the same in the two datasets being combined and the dates in the 
 datasets being combined must be of class Date and use the same 

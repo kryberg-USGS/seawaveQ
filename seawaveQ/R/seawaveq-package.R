@@ -12,9 +12,8 @@
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
 #' Version: \tab 2.0.0\cr
-#' Date: \tab 2020--04--02\cr
+#' Date: \tab 2020--06--24\cr
 #' License: \tab Unlimited | file LICENSE \cr
-#' LazyLoad: \tab yes\cr
 #' }
 #'
 #' @name seawaveQ-package
@@ -47,7 +46,7 @@
 #' Open-File Report 2013--1255, 13 p., with 3 appendixes, 
 #' \url{https://dx.doi.org/10.3133/ofr20131255}.
 #' 
-#' #' Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing 
+#' Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing 
 #' a model and utilities for analyzing trends in chemical concentrations 
 #' in streams with a seasonal wave (seawave) and adjustment for 
 #' streamflow (Q) and other ancillary variables, Version 2.0.0: U.S. Geological Survey 
@@ -66,12 +65,12 @@
 #' Sullivan, D.J., Vecchia, A.V., Lorenz, D.L., Gilliom, R.J., Martin, 
 #' J.D., 2009, Trends in pesticide concentrations in corn-belt streams, 
 #' 1996--2006: U.S. Geological Survey Scientific Investigations Report 
-#' 2009--5132, 75 p. \url{https://pubs.usgs.gov/sir/2009/5132/}.
+#' 2009--5132, 75 p., \url{https://pubs.usgs.gov/sir/2009/5132/}.
 #' 
 #' Vecchia, A.V., Gilliom, R.J., Sullivan, D.J., Lorenz, D.L., and 
 #' Martin, J.D., 2009, Trends in concentrations and use of agricultural 
 #' herbicides for Corn Belt rivers, 1996--2006: Environmental Science 
-#' and Technology, v. 43, p. 9,096--9,102.
+#' and Technology, v. 43, no. 24, p. 9096--9102.
 #'
 #' Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, Modeling 
 #' variability and  trends in pesticide concentrations in streams: 

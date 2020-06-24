@@ -2,8 +2,8 @@
 #' 
 #' prepData is usually called from within \link{fitswavecav} but
 #' can be invoked directly. It performs some date calculations, removes
-#' rows with missing values for concentration or continous variables, 
-#' and returns the the concentration and continuous ancillary data to
+#' rows with missing values for concentration or continuous variables, 
+#' and returns the  concentration and continuous ancillary data to
 #' be used by \link{fitswavecav} and its other internal functions.
 #' @param cdat is the concentration data.
 #' @param cavdat is the continuous (daily) ancillary data.
@@ -16,7 +16,7 @@
 #' @param dcol is the column name for the dates, should be the same for 
 #' both cdat and cavdat.
 #' @param pnames are the parameters (water-quality constituents) to 
-#' analyze (if using USGS parameters, omit the the starting 'P', such as 
+#' analyze (if using USGS parameters, omit the starting 'P', such as 
 #' "00945" for sulfate).  
 #' @param iwcav is a character variable indicating which continuous
 #' ancillary variables to include, if none use iwcav=c("none").
@@ -24,7 +24,7 @@
 #' column headers for remarks code (default is R), and beginning of 
 #' column headers for concentration data (default is P for parameter).
 #' @keywords manip
-#' @return a list. The first element is the concentration data with
+#' @return A list. The first element is the concentration data with
 #' additional date information, missing values removed, and extra columns
 #' removed. The second element is the continuous ancillary data with
 #' additional date information, missing values removed, and extra columns

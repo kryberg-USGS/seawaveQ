@@ -43,7 +43,7 @@ legend text and symbols should be magnified relative to the default,
 \item{...}{arguments to be passed to \link{plot} method.}
 }
 \value{
-a scatter plot
+A scatter plot
 }
 \description{
 Function to generate a scatter plot that indicates censored and 
@@ -57,8 +57,8 @@ A blank remark field or an "_" indicates that the concentration
 value is not qualified; an "E" indicates the value has been 
 estimated; and a less than symbol, "<", indicates the value has been 
 censored as less than a minimum reporting level.  See Oblinger 
-Childress (1999) for information on the minimum reporting level and 
-the definition of "E" for U.S. Geological Survey data.  Other users may 
+Childress and others (1999) for information on the minimum reporting level 
+and the definition of "E" for U.S. Geological Survey data.  Other users may 
 have a different definition of the minimum reporting level, but 
 censored values need to be qualified with a "<".  Using the "E" code is 
 optional.

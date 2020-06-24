@@ -5,7 +5,7 @@
 #' as well as diagnostic plots, and returns the observed and predicted 
 #' concentrations so that users may plot the concentrations using 
 #' their own functions. This is the version for models that use
-#' restricted cubic splines
+#' restricted cubic splines.
 #' @note The plotting position used for representing censored values in 
 #' the plots produced by \code{\link{seawaveQPlots2}} is an important 
 #' consideration for interpreting model fit. Plotting values obtained by 
@@ -46,12 +46,12 @@
 #' using the continuous data set cavdat.
 #' @param tndrcs is the decimal time centered on the midpoint of the trend
 #' for the sample data, cdatasub, then converted to a linear tail-restricted 
-#' cubic spline with a particular number of knots (Harrell, Jr., 2010 and 2018).
-#' @param tndrcspr is is the decimal time centered on the midpoint of the 
+#' cubic spline with a particular number of knots (Harrell, 2010, 2018).
+#' @param tndrcspr is the decimal time centered on the midpoint of the 
 #' trend for the continuous data, cavdat, then converted to a linear 
 #' tail-restricted cubic spline using the knots from tndrcs.
-#' @param cdatsub is the concentration data
-#' @param cavdat is the continuous (daily) ancillary data
+#' @param cdatsub is the concentration data.
+#' @param cavdat is the continuous (daily) ancillary data.
 #' @param cavmat is a matrix containing the continuous ancillary 
 #' variables.
 #' @param clog is a vector of the base-10 logarithms of the concentration 
@@ -62,16 +62,16 @@
 #' 1 of that year).  
 #' @param yrend is the ending year of the analysis (treated as December 31
 #' of that year).  
-#' @param tyr is a vector of decimal dates for the concentration data
+#' @param tyr is a vector of decimal dates for the concentration data.
 #' @param tyrpr is a vector of decimal dates for the continuous ancillary
-#' varaibles.
+#' variables.
 #' @param pnames is the parameter (water-quality constituents) to 
-#' analyze (if using USGS parameters, omit the the starting 'P', such as 
+#' analyze (if using USGS parameters, omit the starting 'P', such as 
 #' "00945" for sulfate).  
 #' @param tanm is a character identifier that names the trend 
 #' analysis run. It is used to label output files.
 #' @param mclass indicates the class of model to use.
-#' A class 1 model is the the traditional SEAWAVE-Q model that has a
+#' A class 1 model is the traditional SEAWAVE-Q model that has a
 #' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 
 #' time variable to provide a more flexible model. 
@@ -79,21 +79,22 @@
 #' The default is 4, and the recommended number is 3--7.
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
-#' @return a pdf file containing plots of the data and modeled 
+#' @return A PDF file containing plots of the data and modeled 
 #' concentrations and regression diagnostic plots and a list containing
 #' the observed concentrations (censored and uncensored) and the predicted
 #' concentrations used for the plot.
 #' @export
 #' @references
-#' Harrell, Jr., F.E., 2010, Regression Modeling Strategies---With
-#' Applications to Linear Models, Logistic Regression, and Survival
-#' Analysis: New York, Springer-Verlag, 568 p.
+#' Harrell, F.E., Jr., 2010, Regression modeling strategies---With
+#' applications to linear models, logistic regression, and survival
+#' analysis: New York, Springer-Verlag, 568 p.
 #' 
-#' Harrell, Jr., F.E., 2018, rms---Regression modeling strategies: 
+#' Harrell, F.E., Jr., 2018, rms---Regression modeling strategies: 
 #' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
-#' Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 
 #' 
+#' Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the  
 #' theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
+#' 
 seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
                            cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
                            yrend, tyr, tyrpr, pnames, tanm, mclass = 2, numk) {

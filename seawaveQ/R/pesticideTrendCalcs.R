@@ -5,26 +5,26 @@
 #' @title Summarize linear trends
 #' @note Based on trend calculations used to display and summarize pesticide
 #' trends here \url{https://nawqatrends.wim.usgs.gov/swtrends/}.
-#' A likelihood value that is the functional equivalent of the two-sided p-value 
-#' associated with the significance level of the trend was determined as 
-#' follows:
-#' Likelihood = (1 - (p-value / 2)), where p-value is the p-value for the 
-#' trend coefficient (Oelsner and others, 2017).
+#' A likelihood value that is the functional equivalent of the two-sided 
+#' \textit{p}-value associated with the significance level of the trend was 
+#' determined as follows:
+#' Likelihood = (1 - (\textit{p}-value / 2)), where \textit{p}-value is the 
+#' \textit{p}-value for the trend coefficient (Oelsner and others, 2017).
 #' @param tndbeg is the beginning (in whole or decimal years) of the 
 #' trend period. Zero means the begin date will be the beginning of the
 #' concentration data, cdat.
 #' @param tndend is the end of the trend (treated as December 31
 #' of that year). Zero means the end date will be the end of the 
 #' concentration data, cdat.
-#' @param ctnd is the concentration trend, the coefficient on the time variable
-#' @param pval is the p-value for the linear trend component
+#' @param ctnd is the concentration trend, the coefficient on the time variable.
+#' @param pval is the \textit{p}-value for the linear trend component.
 #' @param alpha is the significance level or alpha value for statistical
-#' significance and confidence intervals
-#' @param setnd is the standard error for the linear trend component
-#' @param scl is the scale factor from the \code{survreg.object}
+#' significance and confidence intervals.
+#' @param setnd is the standard error for the linear trend component.
+#' @param scl is the scale factor from the \code{survreg.object}.
 #' @param baseConc is the base concentration, the median concentration 
-#' (midpoint of the trend line) for the first year of the trend analysis 
-#' @param mclass indicates the class of model to use
+#' (midpoint of the trend line) for the first year of the trend analysis .
+#' @param mclass indicates the class of model to use.
 #' A class 1 model is the the traditional SEAWAVE-Q model that has a
 #' linear time trend. A class 2 model is a newer option for longer
 #' trend periods that uses a set of restricted cubic splines on the 

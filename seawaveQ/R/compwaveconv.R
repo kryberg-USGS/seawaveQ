@@ -7,7 +7,7 @@
 #' @param jmod is the choice of model or pulse input function, an integer 
 #' 1 through 14.
 #' @param hlife is the model half-life in months, 1 to 4 months
-#' @return a numeric vector of size 361 with discrete values of the 
+#' @return A numeric vector of size 361 with discrete values of the 
 #' seasonal wave for decimal season \code{seq(0,1,1/360)}.
 #' @note The seasonal wave is a dimensionless, periodic function of time 
 #' with an annual cycle, similar to a mixture of sine and cosine functions 
@@ -23,11 +23,10 @@
 #' @keywords datagen
 #' @author Aldo V. Vecchia
 #' @export
-#' @references Vecchia, A.V., Martin, J.D. and Gilliom, R.J., 2008, 
+#' @references Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, 
 #' Modeling variability and trends in pesticide concentrations in streams: 
 #' JAWRA Journal of the American Water Resources Association, v. 44, p. 
-#' 1308--1324, 
-#' \url{https://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2008.00225.x/abstract}.
+#' 1308--1324, \url{https://doi.org/10.1111/j.1752-1688.2008.00225.x}.
 #' @examples
 #' # evaluate seasonal wave for specified decimal seasons
 #' # these example decimal dates represent days at points 0.25, 0.5, and 
