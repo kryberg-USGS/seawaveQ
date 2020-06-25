@@ -6,15 +6,15 @@
 \format{The first data frame returned has one row for each pesticide-year at
 a particular site and four columns. The general format is as follows: \cr
 \tabular{lll}{
- pstaid \tab character \tab The station identification number \cr
- pcode \tab character \tab The parameter code for which a load was calculated\cr
- year or wyear \tab numeric \tab The year or water year for which a load was calculated \cr
+ pstaid \tab character \tab the station identification number \cr
+ pcode \tab character \tab the parameter code for which a load was calculated\cr
+ year or wyear \tab numeric \tab the year or water year for which a load was calculated \cr
  load \tab numeric \tab the load in kilograms per year \cr
 }
 The second data frame returned has one row for each pesticide at
 a particular site and 11 columns. The general format is as follows: \cr
 \tabular{lll}{
- pcode \tab character \tab The parameter code for which load trends were calculated\cr
+ pcode \tab character \tab the parameter code for which a load trend was calculated\cr
  mclass \tab numeric \tab a value of 1 or 2\cr
  mclass \tab numeric \tab a value of 1 or 2\cr
  alpha \tab numeric \tab a significance level \cr
@@ -40,8 +40,8 @@ loadCalculations(dailyDat, pestPredict, modRes, concTrends, yrtype = 1,
   alpha = 0.1)
 }
 \arguments{
-\item{dailyDat}{is the daily streamflow data in the form of a data.frame
-with three columns representing a station ID, date, and streamflow}
+\item{dailyDat}{is the daily streamflow data in the form of a data frame
+with three columns representing a station ID, date, and streamflow.}
 
 \item{pestPredict}{is the continuous (daily) estimation of pesticide
 concentrations for one or more pesticides at a single site. This should be
@@ -63,10 +63,10 @@ is the way the original model was developed. A yrtype of 2 represents a
 water year.}
 
 \item{alpha}{is the significance level or alpha value for statistical
-significance and confidence intervals}
+significance and confidence intervals.}
 }
 \value{
-two data frames, the first contains the annual loads, the second
+Two data frames, the first contains the annual loads, the second
 contains the trend summary.
 }
 \description{

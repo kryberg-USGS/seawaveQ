@@ -40,21 +40,21 @@ concentration data, cdat.}
 of that year). Zero means the end date will be the end of the 
 concentration data, cdat.}
 
-\item{ctnd}{is the concentration trend, the coefficient on the time variable}
+\item{ctnd}{is the concentration trend, the coefficient on the time variable.}
 
-\item{pval}{is the p-value for the linear trend component}
+\item{pval}{is the p-value for the linear trend component.}
 
 \item{alpha}{is the significance level or alpha value for statistical
-significance and confidence intervals}
+significance and confidence intervals.}
 
-\item{setnd}{is the standard error for the linear trend component}
+\item{setnd}{is the standard error for the linear trend component.}
 
-\item{scl}{is the scale factor from the \code{survreg.object}}
+\item{scl}{is the scale factor from the \code{survreg.object}.}
 
 \item{baseConc}{is the base concentration, the median concentration 
-(midpoint of the trend line) for the first year of the trend analysis}
+(midpoint of the trend line) for the first year of the trend analysis .}
 
-\item{mclass}{indicates the class of model to use
+\item{mclass}{indicates the class of model to use.
 A class 1 model is the the traditional SEAWAVE-Q model that has a
 linear time trend. A class 2 model is a newer option for longer
 trend periods that uses a set of restricted cubic splines on the 
@@ -73,11 +73,11 @@ pesticideTrendCalcs is called from within \link{fitswavecav}
 \note{
 Based on trend calculations used to display and summarize pesticide
 trends here \url{https://nawqatrends.wim.usgs.gov/swtrends/}.
-A likelihood value that is the functional equivalent of the two-sided p-value 
-associated with the significance level of the trend was determined as 
-follows:
-Likelihood = (1 - (p-value / 2)), where p-value is the p-value for the 
-trend coefficient (Oelsner and others, 2017).
+A likelihood value that is the functional equivalent of the two-sided 
+p-value associated with the significance level of the trend was 
+determined as follows:
+Likelihood = (1 - (p-value / 2)), where p-value is the 
+p-value for the trend coefficient (Oelsner and others, 2017).
 }
 \references{
 Oelsner, G.P., Sprague, L.A., Murphy, J.C., Zuellig, R.E., Johnson, H.M., 

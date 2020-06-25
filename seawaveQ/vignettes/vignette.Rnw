@@ -193,7 +193,7 @@ The plotting position used for representing censored values in the model plots (
 where \textit{scl} is the scale parameter from the survival regression model, \textit{pnorm} is the R function for computing cumulative normal probabilities, \textit{runif} is the R function for generating a random variable from the uniform distribution, and \textit{qnorm} is the R function for computing quantiles of the normal distribution. Under the assumption that the model residuals are uncorrelated, normally distributed random variables with mean zero and standard deviation \textit{scl}, the randomized residuals generated in this manner are an unbiased sample of the true (but unknown) residuals for the censored data. This is an application of the probability integral transform (Mood and others, 1974) to generate random variables from continuous distributions. The plotting position using a censored concentration is $fitted(logC) + resran$. Note that each time a new model fit is performed, a new set of randomized residuals is generated and thus the plotting positions for censored values can change.
 
 \section{Restricted Cubic Splines Option}
-The original SEAWAVE-Q model assumes a linear trend over a given trend period. Linearity is a common, useful assumption in trend analysis, but becomes problematic as trend periods become longer because of the potential for abrupt, or gradual, non-linear changes. Examples include cancellation of some or all of the uses of a particular pesticide, phase-outs of a pesticide, or changes in usage. As additional data are collected, longer trend periods may be calculated and a strict linear trend may be inappropriate for many site-pesticide combinations. Restricted cubic splines (transformations of the time variable) were incorporated into the SEAWAVE-Q model to allow flexibility over time. The range of values of the time variable is split up, with “knots” defining the end of one segment and the start of the next. Separate curves are then fit to each segment (Harrell, Jr., 2010; Harrell, Jr., 2016). Overall, the splines are defined so that the resulting fitted curve is smooth and continuous, passing through each knot. Other studies have shown that 3 to 5 knots typically are sufficient for most models (Korn and Graubard, 1999). For small sample sizes (< 30, a sample size insufficient for a pesticide trend model), 3 knots can be used; 4 knots are sufficient for most models and represent a compromise between overfitting and model flexibility (Harrell, 2010; Croxford, 2016). If the sample size is large (>100, as is often the case for pesticide trend modeling) or the relation changes quickly over the trend period, 5 to 7 knots could be used, although 5 are usually sufficient (Stone, 1986; Croxford, 2016).
+The original SEAWAVE-Q model assumes a linear trend over a given trend period. Linearity is a common, useful assumption in trend analysis, but becomes problematic as trend periods become longer because of the potential for abrupt, or gradual, non-linear changes. Examples include cancellation of some or all of the uses of a particular pesticide, phase-outs of a pesticide, or changes in usage. As additional data are collected, longer trend periods may be calculated and a strict linear trend may be inappropriate for many site-pesticide combinations. Restricted cubic splines (transformations of the time variable) were incorporated into the SEAWAVE-Q model to allow flexibility over time. The range of values of the time variable is split up, with “knots” defining the end of one segment and the start of the next. Separate curves are then fit to each segment (Harrell, 2010, 2016). Overall, the splines are defined so that the resulting fitted curve is smooth and continuous, passing through each knot. Other studies have shown that 3 to 5 knots typically are sufficient for most models (Korn and Graubard, 1999). For small sample sizes (< 30, a sample size insufficient for a pesticide trend model), 3 knots can be used; 4 knots are sufficient for most models and represent a compromise between overfitting and model flexibility (Harrell, 2010; Croxford, 2016). If the sample size is large (>100, as is often the case for pesticide trend modeling) or the relation changes quickly over the trend period, 5 to 7 knots could be used, although 5 are usually sufficient (Stone, 1986; Croxford, 2016).
 
 \section{Fitting the SEAWAVE-Q Model with Restricted Cubic Splines}
 
@@ -281,18 +281,17 @@ Canty, A.J., 2002, Resampling methods in R—The boot package: R News, v. 2, no.
 
 Croxford, R., 2016, Restricted cubic spline regression—A brief introduction: SAS Institute Inc., Paper 5621. 
 
-Harrell, F.E., Jr., 2010, Regression Modeling strategies---With applications to linear models, logistic regression, and survival analysis: New York, Springer-Verlag, 568 p.
+Harrell, F.E., Jr., 2010, Regression modeling strategies---With applications to linear models, logistic regression, and survival analysis: New York, Springer-Verlag, 568 p.
 
 Harrell, F.E., Jr., 2016, rms: Regression modeling strategies; R package version 5.0-1: accessed August 14, 2018, at \url{https://CRAN.R-project.org/package=rms}.
 
-Helsel, D.R., 2005, Nondetects and data analysis: New York, John Wiley and Sons.
+Helsel, D.R., 2005, Nondetects and data analysis: New York, John Wiley and Sons, 250 p.
 
-Hirsch, R.M., and Ryberg, K.R., 2012, Has the magnitude of floods across the USA changed with CO2 levels?: Hydrological Sciences Journal, v. 57, no. 1, 1--9, \url{https://doi.org/10.1080/02626667.2011.621895}.
+Hirsch, R.M., and Ryberg, K.R., 2012, Has the magnitude of floods across the USA changed with CO2 levels?: Hydrological Sciences Journal, v. 57, no. 1, p. 1--9, \url{https://doi.org/10.1080/02626667.2011.621895}.
 
 Korn, E.L., and Graubard, B.I., 1999, Appendix C---Restricted cubic regression splines \textit{in} Korn, E.L, and Graubard, B.I., Analysis of health surveys: New York, John Wiley and Sons, p. 345--346, \url{https://doi.org/10.1002/9781118032619}.
 
-Lee, Lopaka, 2017, NADA---Nondetects and data analysis for environmental data: R package version 1.6-1,
-\url{https://CRAN.R-project.org/package=NADA}.
+Lee, Lopaka, 2017, NADA---Nondetects and data analysis for environmental data: R package version 1.6-1, \url{https://CRAN.R-project.org/package=NADA}.
 
 Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the theory of statistics (3d ed.): New York, McGraw-Hill, Inc., 564 p.
 
@@ -312,6 +311,6 @@ Sullivan, D.J., Vecchia, A.V., Lorenz, D.L., Gilliom, R.J., and Martin, J.D., 20
 
 Vecchia, A.V., Gilliom, R.J., Sullivan, D.J., Lorenz, D.L., and Martin, J.D., 2009, Trends in concentrations and use of agricultural herbicides for Corn Belt rivers, 1996--2006:  Environmental Science and Technology, v. 43; p. 9096--9102, accessed May 1, 2012, at \url{http://water.usgs.gov/nawqa/pubs/es902122j.pdf}.
 
-Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, Modeling variability and trends in pesticide concentrations in streams: Journal of the American Water Resources Association, v. 44, no. 5; pp. 1308--1324, accessed May 1, 2012, at \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
+Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2008, Modeling variability and trends in pesticide concentrations in streams: Journal of the American Water Resources Association, v. 44, no. 5, p. 1308--1324, accessed May 1, 2012, at \url{http://dx.doi.org/10.1111/j.1752-1688.2008.00225.x}.
 
 \end{document}  

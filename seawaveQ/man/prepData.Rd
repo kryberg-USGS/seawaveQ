@@ -23,7 +23,7 @@ date of cavdat, the continuous ancillary data.}
 both cdat and cavdat.}
 
 \item{pnames}{are the parameters (water-quality constituents) to 
-analyze (if using USGS parameters, omit the the starting 'P', such as 
+analyze (if using USGS parameters, omit the starting 'P', such as 
 "00945" for sulfate).}
 
 \item{iwcav}{is a character variable indicating which continuous
@@ -34,7 +34,7 @@ column headers for remarks code (default is R), and beginning of
 column headers for concentration data (default is P for parameter).}
 }
 \value{
-a list. The first element is the concentration data with
+A list. The first element is the concentration data with
 additional date information, missing values removed, and extra columns
 removed. The second element is the continuous ancillary data with
 additional date information, missing values removed, and extra columns
@@ -43,8 +43,8 @@ removed.
 \description{
 prepData is usually called from within \link{fitswavecav} but
 can be invoked directly. It performs some date calculations, removes
-rows with missing values for concentration or continous variables, 
-and returns the the concentration and continuous ancillary data to
+rows with missing values for concentration or continuous variables, 
+and returns the  concentration and continuous ancillary data to
 be used by \link{fitswavecav} and its other internal functions.
 }
 \examples{

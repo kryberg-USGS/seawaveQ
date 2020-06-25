@@ -22,12 +22,12 @@ using the continuous data set cavdat.}
 \item{tndlin}{is the decimal time centered on the midpoint of the trend
 for the sample data, cdatasub.}
 
-\item{tndlinpr}{is is the decimal time centered on the midpoint of the 
+\item{tndlinpr}{is the decimal time centered on the midpoint of the 
 trend for the continuous data, cavdat.}
 
-\item{cdatsub}{is the concentration data}
+\item{cdatsub}{is the concentration data.}
 
-\item{cavdat}{is the continuous (daily) ancillary data}
+\item{cavdat}{is the continuous (daily) ancillary data.}
 
 \item{cavmat}{is a matrix containing the continuous ancillary 
 variables.}
@@ -44,23 +44,23 @@ are censored.}
 \item{yrend}{is the ending year of the analysis (treated as December 31
 of that year).}
 
-\item{tyr}{is a vector of decimal dates for the concentration data}
+\item{tyr}{is a vector of decimal dates for the concentration data.}
 
 \item{tyrpr}{is a vector of decimal dates for the continuous ancillary
-varaibles.}
+variables.}
 
 \item{pnames}{is the parameter (water-quality constituents) to 
-analyze (if using USGS parameters, omit the the starting 'P', such as 
+analyze (if using USGS parameters, omit the starting 'P', such as 
 "00945" for sulfate).}
 
-\item{tanm}{is an a character identifier that names the trend 
+\item{tanm}{is a character identifier that names the trend 
 analysis run.  It is used to label output files.}
 
 \item{mclass}{has not been implemented yet, but will provide
 additional model options.}
 }
 \value{
-a pdf file containing plots of the data and modeled 
+A PDF file containing plots of the data and modeled 
 concentrations and regression diagnostic plots and a list containing
 the observed concentrations (censored and uncensored) and the predicted
 concentrations used for the plot.
