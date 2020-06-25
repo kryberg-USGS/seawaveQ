@@ -1,5 +1,0 @@
-\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
-\contentsline {section}{\numberline {2}Input Data}{2}{section.2}
-\contentsline {section}{\numberline {3}Fitting the seawaveQ Model}{8}{section.3}
-\contentsline {section}{\numberline {4}Model Output}{9}{section.4}
-\contentsline {section}{\numberline {5}References Cited}{24}{section.5}
