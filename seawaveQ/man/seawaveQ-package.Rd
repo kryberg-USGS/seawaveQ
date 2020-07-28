@@ -50,8 +50,9 @@ Open-File Report 2013--1255, 13 p., with 3 appendixes,
 Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing 
 a model and utilities for analyzing trends in chemical concentrations 
 in streams with a seasonal wave (seawave) and adjustment for 
-streamflow (Q) and other ancillary variables, Version 2.0.0: U.S. Geological Survey 
-Open-File Report 2020--XXXX, XX p., with 4 appendixes.
+streamflow (Q) and other ancillary variables, Version 2.0.0: U.S. Geological 
+Survey Open-File Report 2020--1082, 25 p., with 4 appendixes, 
+\url{https://doi.org/10.3133/ofr20201082}.
 
 Ryberg, K.R., Vecchia, A.V., Gilliom, R.J., and Martin, J.D., 2014, 
 Pesticide trends in major rivers of the United States, 1992--2010: 
