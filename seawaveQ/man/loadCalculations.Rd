@@ -3,7 +3,8 @@
 \name{loadCalculations}
 \alias{loadCalculations}
 \title{Calculate annual loads and summarize trends}
-\format{The first data frame returned has one row for each pesticide-year at
+\format{
+The first data frame returned has one row for each pesticide-year at
 a particular site and four columns. The general format is as follows: \cr
 \tabular{lll}{
  pstaid \tab character \tab the station identification number \cr
@@ -34,10 +35,17 @@ a particular site and 11 columns. The general format is as follows: \cr
   \tab \tab for the trend in original units over the period of record\cr
   \tab \tab (calculation based on percent per year and base load)\cr
  ltndlklhd \tab numeric \tab is the load trend likelihood \cr
-}}
+}
+}
 \usage{
-loadCalculations(dailyDat, pestPredict, modRes, concTrends, yrtype = 1,
-  alpha = 0.1)
+loadCalculations(
+  dailyDat,
+  pestPredict,
+  modRes,
+  concTrends,
+  yrtype = 1,
+  alpha = 0.1
+)
 }
 \arguments{
 \item{dailyDat}{is the daily streamflow data in the form of a data frame

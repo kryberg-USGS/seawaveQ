@@ -131,7 +131,8 @@ myfitLinearTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
                                 pnames = c("04035", "04037", "04041"), 
                                 yrstart = 1995, yrend = 2003, tndbeg = 1995, 
                                 tndend = 2003, iwcav = c("flowa30", "flowa1"), 
-                                dcol = "dates", qwcols = c("R", "P"), mclass = 1)
+                                dcol = "dates", qwcols = c("R", "P"), mclass = 1,
+                                plotfile = FALSE)
 @
 
 \section{Model Output}
@@ -170,20 +171,17 @@ attributes(myfitLinearTrend[[2]][[1]])
 myfitLinearTrend[[2]][[1]]$n
 myfitLinearTrend[[2]][[1]]$table
 @
+% \vspace{5 mm}
+% 
+% The text file for the first of the pesticides modeled above is inserted here as an example. Users may run the model fitting code themselves and view the resulting text files for all three pesticide models. The results for all three are too long to include in this vignette.
+% 
+% \vspace{5 mm}
+
+% \verbatiminput{myfitLinearTrend_survregCall.txt}%
+
 \vspace{5 mm}
 
-The text file for the first of the pesticides modeled above is inserted here as an example. Users may run the model fitting code themselves and view the resulting text files for all three pesticide models. The results for all three are too long to include in this vignette.
-
-\vspace{5 mm}
-
-\verbatiminput{myfitLinearTrend_survregCall.txt}%
-
-\vspace{5 mm}
-
-The plots written to a pdf file for the first pesticide, 04035, simazine are included below. The plots for all  pesticides are too numerous to include here. Users are encouraged to run the code themselves and examine all of the plots.
-
-\includepdf[pages={-}]{myfitLinearTrend04035.pdf}
-
+The plots are written to a pdf file if the argument plotfiles in the fitswavecav funcntion is set to TRUE. The user must explicitly set the argument to TRUE to give the user permission to write the files.
 \vspace{5 mm}
 
 The plotting position used for representing censored values in the model plots (produced by the internal function \textit{seawaveQPlots} that is further described in the package help documentation) is an important consideration for interpreting model fit. Plotting values obtained by using the censoring limit, or something smaller such as one-half of the censoring limit, produce plots that are difficult to interpret if there are a large number of censored values. Therefore, to make the plots more representative of diagnostic plots used for standard (non-censored) regression, a method for substituting randomized residuals in place of censored residuals was used. If a log-transformed concentration is censored at a particular limit, $logC < L$, then the residual for that concentration is censored as well, $logC - fitted(logC) < L - fitted(logC) = rescen)$. In that case, a randomized residual was generated from a conditional normal distribution, as shown in the following R code:
@@ -212,7 +210,8 @@ myfitRCS <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha,
                         tanm = "myfitRCS", pnames = c("04035"), yrstart = 1995, 
                         yrend = 2003, tndbeg = 1995, tndend = 2003, 
                         iwcav = c("flowa30", "flowa1"), dcol = "dates", 
-                        qwcols = c("R", "P"), mclass = 2, numk = 4)
+                        qwcols = c("R", "P"), mclass = 2, numk = 4, 
+                        plotfile = FALSE)
 @
 
 \section{Model Output}
@@ -241,24 +240,19 @@ myfitRCS[[6]]
 
 
 <<results=verbatim,echo=TRUE>>=
-
 attributes(myfitRCS[[2]][[1]])
 myfitRCS[[2]][[1]]$n
 myfitRCS[[2]][[1]]$table
 @
 \vspace{5 mm}
 
-The text output file is inserted here as an example.
-
-\vspace{5 mm}
-
-\verbatiminput{myfitRCS_survregCall.txt}%
-
-\vspace{5 mm}
-
-The plots written to a pdf file are included below.
-
-\includepdf[pages={-}]{myfitRCS04035.pdf}
+% The text output file is inserted here as an example.
+% 
+% \vspace{5 mm}
+% 
+% % \verbatiminput{myfitRCS_survregCall.txt}%
+% 
+% \vspace{5 mm}
 
 \section{Bootstrapping for Significance with Restricted Cubic Splines}
 The trend component of a model using restricted cubic splines is more complex than with previous implementations of the model. Because the model now as curvilinear components, the trend can be expressed a change in concentration from the beginning of the curvilinear trend line to the end of the curvilinear trend line (see Ryberg and York, 2020, for more details). In some cases, where the addition of restricted cubic splines has little change to the model, this trend may be the same as that of the linear model; however, sometimes the trend can be dramatically different because restricted cubic splines can respond to abrupt or gradual changes in use or regulation that cannot be modeled linearly. In addition, the determination of statistical significance is different for the model with restricted cubic splines. In order to determine if the trends in pesticide concentration calculated using restricted cubic splines are substantially different from a pattern produced by chance alone, we added functionality to perform a bootstrap analysis. Bootstrapping creates a distribution by resampling the dataset. Normal bootstrapping eliminates all trends and produces trend-free data, while block bootstrapping preservers any autocorrelation detected in the sample if the sample is serially dependent (\"On\"oz and Bayazit, 2012). To ensure that block bootstrapping preserves autocorrelation, blocks are often overlapped and are wrapped around from the end to the start of the series (Canty, 2002). The bootstrap analysis in seawaveQ uses a variation of block bootstrapping and an attained significance level similar to the method used in Hirsch and Ryberg (2012). However, Hirsch and Ryberg used a random length block with block length geometrically distributed with a mean length of 20 years to replicate hydrologic conditions that might have climatic persistence of variable length. In our case, we did not want to randomize the seasonal patterns in concentration trends, because we would then be testing the significance of the seasonal wave in the model rather than the trend. Therefore, our block units are entire years. The significance calculation is based on an attained level of significance method described in Hirsch and Ryberg (2012). For each bootstrap replicate, the resampled time series of pesticide concentrations is regressed against the variables in the SEAWAVE-Q model. For iteration \textit{j}, \textit{mj} is the estimate of the trend. The \textit{mj}s form a distribution of possible trend values across the bootstrap resampled dataset. The test statistic is \textit{M}, is the estimated trend with the observations from the original data (data in their original order). The null hypothesis is that the expected value of M is zero (no trend). Using 1,000 iterations of the bootstrap, we compute the attained, two-sided significance level. The p-value is the fraction of the iterations in which |\textit{mj}| is greater than or equal to |\textit{M}|. If few of the trends from the randomized data (the \textit{mj}s) are larger than the original trend value, the trend is statistically significant, depending on the analyst’s choice of significance level. The seawaveQ results report the attained \textit{p}-value so that one may choose to compare it to any significance level.
@@ -272,7 +266,7 @@ The bootstrap process is too time consuming to include in an R vignette. However
 #                             yrstart = 1995, yrend = 2003, tndbeg = 1995, 
 #                             tndend = 2003, iwcav = c("flowa30", "flowa1"), 
 #                             dcol = "dates", qwcols = c("R", "P"), mclass = 2, 
-#                             numk = 4, bootRCS = TRUE, nboot = 1000)
+#                             numk = 4, bootRCS = TRUE, nboot = 1000, plotfile=FALSE)
 @
 
 

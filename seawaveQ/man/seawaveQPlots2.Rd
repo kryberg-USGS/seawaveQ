@@ -4,9 +4,28 @@
 \alias{seawaveQPlots2}
 \title{Internal function that generates plots of data and model results.}
 \usage{
-seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, cdatsub, cavdat,
-  cavmat, clog, centmp, yrstart, yrend, tyr, tyrpr, pnames, tanm, mclass = 2,
-  numk)
+seawaveQPlots2(
+  stpars,
+  cmaxt,
+  tseas,
+  tseaspr,
+  tndrcs,
+  tndrcspr,
+  cdatsub,
+  cavdat,
+  cavmat,
+  clog,
+  centmp,
+  yrstart,
+  yrend,
+  tyr,
+  tyrpr,
+  pnames,
+  tanm,
+  mclass = 2,
+  numk,
+  plotfile = FALSE
+)
 }
 \arguments{
 \item{stpars}{is a matrix of information about the best seawaveQ model
@@ -67,10 +86,13 @@ time variable to provide a more flexible model.}
 
 \item{numk}{is the number of knots in the restricted cubic spline model.
 The default is 4, and the recommended number is 3--7.}
+
+\item{plotfile}{is by default FALSE. True will write pdf files of plots to 
+the user's file system.}
 }
 \value{
-A PDF file containing plots of the data and modeled 
-concentrations and regression diagnostic plots and a list containing
+A PDF file (if plotfile is TRUE) containing plots of the data and 
+modeled concentrations and regression diagnostic plots and a list containing
 the observed concentrations (censored and uncensored) and the predicted
 concentrations used for the plot.
 }

@@ -4,11 +4,13 @@
 \alias{combineData}
 \title{Combine water-quality sample data and continuous ancillary 
 variables}
-\format{A data frame with the number of rows equal to the number of rows
+\format{
+A data frame with the number of rows equal to the number of rows
 in the data frame indicated by qwdat. The number of columns depend 
 on the two input data frames. Minimally there will be a station 
 identification column, a dates column, a column of qualification codes,
-and a column of water-quality data.}
+and a column of water-quality data.
+}
 \usage{
 combineData(qwdat, cqwdat, qwcols = c("staid", "dates", "R", "P"))
 }

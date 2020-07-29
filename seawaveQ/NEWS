@@ -1,3 +1,7 @@
+Version 2.0.1
+*************
+Minor fixes to comply with CRAN policies.
+
 Version 2.0.0
 *************
 Added pesticide load calculation.

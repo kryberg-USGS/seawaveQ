@@ -104,6 +104,7 @@
 #' 
 loadCalculations <- function(dailyDat, pestPredict, modRes, concTrends, 
                              yrtype = 1, alpha = 0.10) {
+  pcode <- NULL
   # compute a decimal day that matches the one in predictions
   DecimalTime <- function(date) {
     yr <- year(date)
