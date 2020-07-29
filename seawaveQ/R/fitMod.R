@@ -29,16 +29,21 @@
 #' (Harrell, 2010, 2018). 
 #' @param numk is the number of knots in the restricted cubic spline model
 #' (mclass = 2). The default is 4, and the recommended number is 3--7.
+#' @param plotfile is by default FALSE. True will write pdf files of plots to 
+#' the user's file system.
+#' @param textfile is by default FALSE. True will write text output files
+#' to the user's file system. These files are useful for detailed model 
+#' comparisons, documenting session information, and for model archives.
 #' @keywords models
 #' @keywords regression
 #' @keywords survival
 #' @keywords ts
 #' @keywords multivariate
 #' @author Aldo V. Vecchia and Karen R. Ryberg
-#' @return A PDF file containing plots (see \code{\link{seawaveQPlots}}), 
-#' a text file showing the best model survival regression call and 
-#' results, and a list. The first element of the list contains 
-#' information about the data and the model(s) selected (see 
+#' @return A PDF file (if plotfile is TRUE) containing plots (see 
+#' \code{\link{seawaveQPlots}}), a text file showing the best model survival 
+#' regression call and results, and a list. The first element of the list 
+#' contains information about the data and the model(s) selected (see 
 #' \code{\link{examplestpars}}). The second element of the list contains 
 #' the summary of the survival regression call. The third element of the 
 #' list is itself a list containing the observed concentrations (censored 
@@ -50,7 +55,8 @@
 #' data(swData)
 #' myRes <- fitMod(cdatsub = examplecdatsub, cavdat = examplecavdat, 
 #' yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3", 
-#' pnames = c("04041"), qwcols = c("R", "P"))
+#' pnames = c("04041"), qwcols = c("R", "P"), plotfile = FALSE,
+#' textfile = FALSE)
 #' @references
 #' Allison, P.D., 1995, Survival analysis using the SAS system---A 
 #' practical guide: Cary, N.C., SAS Institute, Inc., 304 p.
@@ -62,7 +68,8 @@
 #' Harrell, F.E., Jr., 2018, rms---Regression modeling strategies: 
 #' R package version 5.1-2, \url{https://CRAN.R-project.org/package=rms}.
 fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, 
-                   pnames, qwcols, mclass = 1, numk = 4) {
+                   pnames, qwcols, mclass = 1, numk = 4, plotfile = FALSE,
+                   textfile = FALSE) {
   yr <- cdatsub[[1]]
   mo <- cdatsub[[2]]
   da <- cdatsub[[3]]
@@ -248,43 +255,48 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
   lrt <- -2 * aovout[[1]]$loglik[1] - (-2 * aovout[[1]]$loglik[2])
   r2 <- round(1 - exp(-lrt / aovout[[1]]$n), digits = 2)
   
-  regCallFile <- paste(tanm, "_survregCall.txt", sep = "")
-  resmsg <- paste("Final model survreg results saved to ", regCallFile, ".", 
-               sep = "")
-  message(resmsg)
-  si <- sessionInfo()
-  sink(regCallFile, append = TRUE, type = "output")
-  cat("\n\n", format(Sys.time(), "%A %d %b %Y %X %p %Z"), sep = "")
-  cat("\n", si$R.version$version.string, 
-      "\n", si$otherPkgs[[grep("seawaveQ", si$otherPkgs)]]$Package,
-      " version ", si$otherPkgs[[grep("seawaveQ", si$otherPkgs)]]$Version,
-      "\n", si$platform, 
-      "\n\nFinal model survreg results for ", pnames, sep = "")
-  print(aovout[[1]])
-  cat("Generalized r-squared is: ", r2, "\n", sep = " ")
-  cat("AIC (Akaike's An Information Criterion) is: ", round(aicout[[1]], digits = 2), 
-      "\n", sep = " ")
-  cat("BIC (Bayesian Information Criterion) is: ", round(bicout[[1]], digits = 2), 
-      "\n", sep = " ")
-  jmod <- floor((stpars[1, 2] - 1) / 4) + 1
-  hlife <- stpars[1, 2] - (jmod - 1) * 4
-  cat("Model class is ", mclass, "\nPulse input function is ", jmod,
-      "\nHalf life is ", hlife, 
-      "\nSeasonal value of the maximum concentration is ", 
-      round(cmaxt, digits = 2), ".", "\n", sep = "")
-  sink()
+  if (textfile == TRUE) {
+    regCallFile <- paste(tanm, "_survregCall.txt", sep = "")
+    resmsg <- paste("Final model survreg results saved to ", regCallFile, ".", 
+                    sep = "")
+    message(resmsg)
+    si <- sessionInfo()
+    sink(regCallFile, append = TRUE, type = "output")
+    cat("\n\n", format(Sys.time(), "%A %d %b %Y %X %p %Z"), sep = "")
+    cat("\n", si$R.version$version.string, 
+        "\n", si$otherPkgs[[grep("seawaveQ", si$otherPkgs)]]$Package,
+        " version ", si$otherPkgs[[grep("seawaveQ", si$otherPkgs)]]$Version,
+        "\n", si$platform, 
+        "\n\nFinal model survreg results for ", pnames, sep = "")
+    print(aovout[[1]])
+    cat("Generalized r-squared is: ", r2, "\n", sep = " ")
+    cat("AIC (Akaike's An Information Criterion) is: ", round(aicout[[1]], 
+                                                              digits = 2), 
+        "\n", sep = " ")
+    cat("BIC (Bayesian Information Criterion) is: ", round(bicout[[1]], 
+                                                           digits = 2), 
+        "\n", sep = " ")
+    jmod <- floor((stpars[1, 2] - 1) / 4) + 1
+    hlife <- stpars[1, 2] - (jmod - 1) * 4
+    cat("Model class is ", mclass, "\nPulse input function is ", jmod,
+        "\nHalf life is ", hlife, 
+        "\nSeasonal value of the maximum concentration is ", 
+        round(cmaxt, digits = 2), ".", "\n", sep = "")
+    sink()
+  }
   if (mclass == 2) {
+    
     plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
                               cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
                               yrend, tyr, tyrpr, pnames, tanm, mclass = 2, 
-                              numk = numk)
+                              numk = numk, plotfile)
     # myRes <- list(stpars, aovout, plotDat, tndrcspr)
     myRes <- list(stpars, aovout, plotDat)
     myRes
   } else {
     plotDat <- seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
                               tndlinpr, cdatsub, cavdat, cavmat, clog, centmp,
-                              yrstart, yrend, tyr, tyrpr, pnames, tanm)
+                              yrstart, yrend, tyr, tyrpr, pnames, tanm, plotfile)
     myRes <- list(stpars, aovout, plotDat)
   }
   myRes

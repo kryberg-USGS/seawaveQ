@@ -69,6 +69,8 @@
 #' analysis run.  It is used to label output files.
 #' @param mclass has not been implemented yet, but will provide
 #' additional model options.
+#' @param plotfile is by default FALSE. True will write pdf files of plots to 
+#' the user's file system.
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
 #' @return A PDF file containing plots of the data and modeled 
@@ -86,18 +88,22 @@
 #' tndlinpr=exampletndlinpr, cdatsub=examplecdatsub, cavdat=examplecavdat, 
 #' cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
 #' yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
-#' pnames=c("04041"), tanm="examplePlots04041")
+#' pnames=c("04041"), tanm="examplePlots04041", plotfile = FALSE)
 seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr, 
                            tndlin, tndlinpr, cdatsub, cavdat, 
                            cavmat, clog, centmp, yrstart, yrend, tyr, 
-                           tyrpr, pnames, tanm, mclass=1) {
+                           tyrpr, pnames, tanm, mclass=1, plotfile = FALSE) {
   # produce plots for selected model
-  # set up output file for graphs 
-  # output graphs to a pdf
-  graphfile<-paste(tanm, pnames, ".pdf", sep="")
-  gmes <- paste("Plots saved to ", graphfile, ".", sep="")
-  message(gmes)
-  pdf(graphfile, height=11.0, width=8.5)
+  
+  if (plotfile == TRUE) {
+    # set up output file for graphs 
+    # output graphs to a pdf
+    graphfile<-paste(tanm, pnames, ".pdf", sep="")
+    gmes <- paste("Plots saved to ", graphfile, ".", sep="")
+    message(gmes)
+    pdf(graphfile, height=11.0, width=8.5)
+  }
+  
   par(mfrow=c(2, 1), omi=c(0.5, 0.5, 0.5, 0.2), mai=c(0.5, 1, 0.5, 0.2))
   
   pckone <- stpars[1, 2]
@@ -373,7 +379,9 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
             line = 1.5, cex = 0.8)
     }
   }
-  dev.off()
+  if (plotfile == TRUE) {
+    dev.off()
+  }
   dectime=NULL
   if (sum(centmp) > 0 ) {
     censDat <- data.frame(cbind(dectime = tyr[centmp], rmk = "<", 

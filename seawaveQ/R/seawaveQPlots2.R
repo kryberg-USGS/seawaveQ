@@ -77,10 +77,12 @@
 #' time variable to provide a more flexible model. 
 #' @param numk is the number of knots in the restricted cubic spline model.
 #' The default is 4, and the recommended number is 3--7.
+#' @param plotfile is by default FALSE. True will write pdf files of plots to 
+#' the user's file system.
 #' @keywords dplot hplot
 #' @author Aldo V. Vecchia and Karen R. Ryberg
-#' @return A PDF file containing plots of the data and modeled 
-#' concentrations and regression diagnostic plots and a list containing
+#' @return A PDF file (if plotfile is TRUE) containing plots of the data and 
+#' modeled concentrations and regression diagnostic plots and a list containing
 #' the observed concentrations (censored and uncensored) and the predicted
 #' concentrations used for the plot.
 #' @export
@@ -97,14 +99,19 @@
 #' 
 seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
                            cdatsub, cavdat, cavmat, clog, centmp, yrstart, 
-                           yrend, tyr, tyrpr, pnames, tanm, mclass = 2, numk) {
+                           yrend, tyr, tyrpr, pnames, tanm, mclass = 2, numk,
+                           plotfile = FALSE) {
   # produce plots for selected model
-  # set up output file for graphs 
-  # output graphs to a pdf
-  graphfile <- paste(tanm, pnames, ".pdf", sep = "")
-  gmes <- paste("Plots saved to ", graphfile, ".", sep = "")
-  message(gmes)
-  pdf(graphfile, height = 11, width = 8.5)
+
+  if (plotfile == TRUE) {
+    # set up output file for graphs 
+    # output graphs to a pdf
+    graphfile <- paste(tanm, pnames, ".pdf", sep = "")
+    gmes <- paste("Plots saved to ", graphfile, ".", sep = "")
+    message(gmes)
+    pdf(graphfile, height = 11, width = 8.5)
+  }
+  
   par(mfrow = c(2, 1), omi = c(0.5, 0.5, 0.5, 0.2), mai = c(0.5, 
                                                             1, 0.5, 0.2))
   pckone <- stpars[1, 2]
@@ -414,7 +421,9 @@ seawaveQPlots2 <- function(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr,
             side = 1, line = 1.5, cex = 0.8)
     }
   }
-  dev.off()
+  if (plotfile == TRUE) {
+    dev.off()
+  }
   dectime = NULL
   if (sum(centmp) > 0) {
     censDat <- data.frame(cbind(dectime = tyr[centmp], rmk = "<", 

@@ -4,7 +4,8 @@
 \alias{fitswavecav}
 \title{Fit seasonal wave and continuous ancillary data for trend 
 analysis}
-\format{The data frame returned as the first element of the output list has 
+\format{
+The data frame returned as the first element of the output list has 
 one row for each chemical analyzed and the number of columns depends on the 
 number of continuous ancillary variables used. The general format is as 
 follows: \cr
@@ -50,12 +51,29 @@ cubic spline models is as described as follows: \cr
  pvalrcstnd \tab numeric \tab \emph{p}-value, attained significance level, based on 
  bootstrapping \cr
  ctndlklhd \tab numeric \tab trend likelihood \cr
-}}
+}
+}
 \usage{
-fitswavecav(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0, yrend = 0,
-  tndbeg = 0, tndend = 0, iwcav = c("none"), dcol = "dates",
-  qwcols = c("R", "P"), mclass = 1, numk = 4, alpha = 0.1,
-  bootRCS = FALSE, nboot = 1000)
+fitswavecav(
+  cdat,
+  cavdat,
+  tanm = "trend1",
+  pnames,
+  yrstart = 0,
+  yrend = 0,
+  tndbeg = 0,
+  tndend = 0,
+  iwcav = c("none"),
+  dcol = "dates",
+  qwcols = c("R", "P"),
+  mclass = 1,
+  numk = 4,
+  alpha = 0.1,
+  bootRCS = FALSE,
+  nboot = 1000,
+  plotfile = FALSE,
+  textfile = FALSE
+)
 }
 \arguments{
 \item{cdat}{is the concentration data}
@@ -115,6 +133,13 @@ trend model.}
 
 \item{nboot}{is the number of bootstrap replicates. A large number, 10,000,
 is recommended, but this takes a long time.}
+
+\item{plotfile}{is by default FALSE. True will write pdf files of plots to 
+the user's file system.}
+
+\item{textfile}{is by default FALSE. True will write text output files
+to the user's file system. These files are useful for detailed model 
+comparisons, documenting session information, and for model archives.}
 }
 \value{
 A PDF file containing plots of the data and modeled 
@@ -208,7 +233,8 @@ myfitLinearTrend[[6]]
 myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
 tanm = "myfitRCSTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
-dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
+dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE,
+plotfile = FALSE, textfile = FALSE)
 }
 \references{
 Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing a model 

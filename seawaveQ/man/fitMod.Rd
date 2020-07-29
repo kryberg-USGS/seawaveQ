@@ -4,8 +4,21 @@
 \alias{fitMod}
 \title{Internal function that fits the seawaveQ model.}
 \usage{
-fitMod(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm, pnames, qwcols,
-  mclass = 1, numk = 4)
+fitMod(
+  cdatsub,
+  cavdat,
+  yrstart,
+  yrend,
+  tndbeg,
+  tndend,
+  tanm,
+  pnames,
+  qwcols,
+  mclass = 1,
+  numk = 4,
+  plotfile = FALSE,
+  textfile = FALSE
+)
 }
 \arguments{
 \item{cdatsub}{is the concentration data.}
@@ -44,12 +57,19 @@ time variable to provide a more flexible model. The default is 1.
 
 \item{numk}{is the number of knots in the restricted cubic spline model
 (mclass = 2). The default is 4, and the recommended number is 3--7.}
+
+\item{plotfile}{is by default FALSE. True will write pdf files of plots to 
+the user's file system.}
+
+\item{textfile}{is by default FALSE. True will write text output files
+to the user's file system. These files are useful for detailed model 
+comparisons, documenting session information, and for model archives.}
 }
 \value{
-A PDF file containing plots (see \code{\link{seawaveQPlots}}), 
-a text file showing the best model survival regression call and 
-results, and a list. The first element of the list contains 
-information about the data and the model(s) selected (see 
+A PDF file (if plotfile is TRUE) containing plots (see 
+\code{\link{seawaveQPlots}}), a text file showing the best model survival 
+regression call and results, and a list. The first element of the list 
+contains information about the data and the model(s) selected (see 
 \code{\link{examplestpars}}). The second element of the list contains 
 the summary of the survival regression call. The third element of the 
 list is itself a list containing the observed concentrations (censored 
@@ -66,7 +86,8 @@ results.
 data(swData)
 myRes <- fitMod(cdatsub = examplecdatsub, cavdat = examplecavdat, 
 yrstart = 1995, yrend = 2003, tndbeg = 1995, tndend = 2003, tanm = "myfit3", 
-pnames = c("04041"), qwcols = c("R", "P"))
+pnames = c("04041"), qwcols = c("R", "P"), plotfile = FALSE,
+textfile = FALSE)
 }
 \references{
 Allison, P.D., 1995, Survival analysis using the SAS system---A 

@@ -4,9 +4,18 @@
 \alias{cenScatPlot}
 \title{Scatter plot of water-quality data}
 \usage{
-cenScatPlot(data, datescol = "dates", pname, qwcols = c("R", "P"),
-  site = "", xlabel = "", ylabel = "Concentration", legpos = "topright",
-  legcex = 1, ...)
+cenScatPlot(
+  data,
+  datescol = "dates",
+  pname,
+  qwcols = c("R", "P"),
+  site = "",
+  xlabel = "",
+  ylabel = "Concentration",
+  legpos = "topright",
+  legcex = 1,
+  ...
+)
 }
 \arguments{
 \item{data}{is the dataset with columns that begin with P followed 

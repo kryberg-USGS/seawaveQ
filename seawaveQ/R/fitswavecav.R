@@ -91,6 +91,11 @@
 #' trend model.
 #' @param nboot is the number of bootstrap replicates. A large number, 10,000,
 #' is recommended, but this takes a long time. 
+#' @param plotfile is by default FALSE. True will write pdf files of plots to 
+#' the user's file system.
+#' @param textfile is by default FALSE. True will write text output files
+#' to the user's file system. These files are useful for detailed model 
+#' comparisons, documenting session information, and for model archives.
 #' @keywords models regression ts survival multivariate
 #' @return A PDF file containing plots of the data and modeled 
 #' concentration, a text file containing a summary of the survival 
@@ -180,7 +185,8 @@
 #' myfitRCSTrend <- fitswavecav(cdat = modMoRivOmaha, cavdat = cqwMoRivOmaha, 
 #' tanm = "myfitRCSTrend", pnames = c("04035", "04037", "04041"), yrstart = 1995, 
 #' yrend = 2003, tndbeg = 1995, tndend = 2003, iwcav = c("flowa30", "flowa1"), 
-#' dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE)
+#' dcol = "dates", qwcols = c("R", "P"), mclass = 2, numk = 4, bootRCS = FALSE,
+#' plotfile = FALSE, textfile = FALSE)
 #' @references
 #' Ryberg, K.R. and York, B.C., 2020, seawaveQ---An R package providing a model 
 #' and utilities for analyzing trends in chemical concentrations in streams with 
@@ -209,7 +215,7 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
                         yrend = 0, tndbeg = 0, tndend = 0, iwcav = c("none"), 
                         dcol = "dates", qwcols = c("R", "P"), mclass = 1, 
                         numk = 4, alpha = 0.10, bootRCS = FALSE, 
-                        nboot = 1000) {
+                        nboot = 1000, plotfile = FALSE, textfile = FALSE) {
   # perform data checks and check arguments
   dtmes <- c("yrstart, yrend, tndbeg, tndend should all be numeric, \n 
              greater than or equal to 0.")
@@ -319,14 +325,14 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
         message(fitmsg)
         myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                        qwcols, mclass = 2, numk = numk)
+                        qwcols, mclass = 2, numk = numk, plotfile, textfile)
       } else {
         fitmsg <- paste("Fitting model for ", pnames[iipar], 
                         ", using a linear trend model.", sep = "")
         message(fitmsg)
         myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                        qwcols, mclass = 1)
+                        qwcols, mclass = 1, plotfile, textfile)
       }
       stpars <- myRes[[1]]
       aovout <- myRes[[2]]

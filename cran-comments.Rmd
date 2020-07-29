@@ -1,0 +1,14 @@
+## Test environments
+
+* macOS High Sierra 10.13.6 R version 4.0.2 (2020-06-22)
+*
+* win-builder (devel and release)
+
+## R CMD check results
+
+There was 1 NOTE:
+
+* Found the following (possibly) invalid URLs:
+  URL: https://doi.org/10.3133/ofr20201082
+
+Will be resolved shortly when USGS report is made public

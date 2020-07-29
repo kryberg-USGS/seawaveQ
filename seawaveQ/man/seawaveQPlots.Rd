@@ -4,8 +4,27 @@
 \alias{seawaveQPlots}
 \title{Internal function that generates plots of data and model results.}
 \usage{
-seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin, tndlinpr, cdatsub, cavdat,
-  cavmat, clog, centmp, yrstart, yrend, tyr, tyrpr, pnames, tanm, mclass = 1)
+seawaveQPlots(
+  stpars,
+  cmaxt,
+  tseas,
+  tseaspr,
+  tndlin,
+  tndlinpr,
+  cdatsub,
+  cavdat,
+  cavmat,
+  clog,
+  centmp,
+  yrstart,
+  yrend,
+  tyr,
+  tyrpr,
+  pnames,
+  tanm,
+  mclass = 1,
+  plotfile = FALSE
+)
 }
 \arguments{
 \item{stpars}{is a matrix of information about the best seawaveQ model
@@ -58,6 +77,9 @@ analysis run.  It is used to label output files.}
 
 \item{mclass}{has not been implemented yet, but will provide
 additional model options.}
+
+\item{plotfile}{is by default FALSE. True will write pdf files of plots to 
+the user's file system.}
 }
 \value{
 A PDF file containing plots of the data and modeled 
@@ -111,7 +133,7 @@ tseas=exampletseas, tseaspr=exampletseaspr, tndlin=exampletndlin,
 tndlinpr=exampletndlinpr, cdatsub=examplecdatsub, cavdat=examplecavdat, 
 cavmat=examplecavmat, clog=exampleclog, centmp=examplecentmp, 
 yrstart=1995, yrend=2003, tyr=exampletyr, tyrpr=exampletyrpr, 
-pnames=c("04041"), tanm="examplePlots04041")
+pnames=c("04041"), tanm="examplePlots04041", plotfile = FALSE)
 }
 \references{
 Mood, A.M., Graybill, F.A., and Boes, D.C., 1974, Introduction to the 

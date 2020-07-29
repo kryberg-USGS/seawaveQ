@@ -3,7 +3,8 @@
 \name{pesticideTrendCalcs}
 \alias{pesticideTrendCalcs}
 \title{Summarize linear trends}
-\format{The data frame returned has one row for each chemical analyzed 
+\format{
+The data frame returned has one row for each chemical analyzed 
 and the number of columns are defined as follows: \cr
 \tabular{lll}{
  pname \tab character \tab parameter analyzed \cr
@@ -26,10 +27,20 @@ and the number of columns are defined as follows: \cr
   \tab \tab for the trend in original units over the period of record\cr
   \tab \tab (calculation based on percent per year and base concentration)\cr
  ctndlklhd \tab numeric \tab is the concentration trend likelihood \cr
-}}
+}
+}
 \usage{
-pesticideTrendCalcs(tndbeg, tndend, ctnd, pval, alpha, setnd, scl, baseConc,
-  mclass)
+pesticideTrendCalcs(
+  tndbeg,
+  tndend,
+  ctnd,
+  pval,
+  alpha,
+  setnd,
+  scl,
+  baseConc,
+  mclass
+)
 }
 \arguments{
 \item{tndbeg}{is the beginning (in whole or decimal years) of the 
