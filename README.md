@@ -6,6 +6,9 @@ See the following report for a complete description of the project: Ryberg, K.R.
 # Note
 This software can write text files and pdf files to the user's file system as part of the documentation of the trend models. User's must turn on that feature though to give the software permission to write to the file system.
 
+# Note
+This software can write text files and pdf files to the user's file system as part of the documentation of the trend models. User's must turn on that feature though to give the software permission to write to the file system.
+
 # Disclaimer
 ------------
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey (USGS), an agency of the United States Department of Interior. For more information, see the official USGS copyright policy at [https://www.usgs.gov/visual-id/credit_usgs.html#copyright](https://www.usgs.gov/visual-id/credit_usgs.html#copyright)
