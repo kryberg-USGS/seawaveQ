@@ -45,9 +45,9 @@ cubic spline models is as described as follows: \cr
  period \cr
  rcsctndPpor \tab numeric \tab the concentration trend in percent over the 
  trend period \cr
- rcsctndOrigPORPercentBase \tab numeric \tab the concentration trend in 
- original units over the period of record (calculation based on percent per 
- year and base concentration) \cr
+ rcsctndOrigPORPercentBase \tab numeric \tab the conc. trend in 
+ original units over period of record (calc. based on percent per 
+ year and base conc.) \cr
  pvalrcstnd \tab numeric \tab \emph{p}-value, attained significance level, based on 
  bootstrapping \cr
  ctndlklhd \tab numeric \tab trend likelihood \cr
