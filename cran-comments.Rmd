@@ -1,10 +1,18 @@
 ## Test environments
 
 * macOS High Sierra 10.13.6 R version 4.0.2 (2020-06-22)
-*
+
 * win-builder (devel and release)
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs, or NOTEs. 
+There were no ERRORs or WARNINGs
+
+There is 1 NOTE
+
+The note indicates who the maintainer and it is correct.
+
+There is a comment: Possibly mis-spelled words in DESCRIPTION: SEAWAVE (4:8)
+  
+This is not a misspelling.
 
