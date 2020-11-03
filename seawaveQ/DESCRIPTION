@@ -1,19 +1,18 @@
 Package: seawaveQ
-Version: 2.0.1
-Date: 2020-07-31
+Version: 2.0.2
+Date: 2020-11-01
 Title: SEAWAVE-Q Model
 Authors@R: c(person("Karen R.", "Ryberg", role = c("aut", "cre"),
                     email = "kryberg@usgs.gov"),
              person("Aldo V.", "Vecchia", role = "aut"),
-             person("Benjamin", "York", role = "ctb",
-                    email = "byork@usgs.gov"))
+             person("Benjamin", "York", role = "ctb"))
 Author: Karen R. Ryberg [aut, cre], 
   Aldo V. Vecchia [aut], 
   Benjamin York [ctb]
 Maintainer: Karen R. Ryberg <kryberg@usgs.gov>
 Depends: R (>= 3.0.0), survival, rms, lubridate, reshape2, plyr
 Suggests: waterData
-Description: A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables.
+Description: A model and utilities for analyzing trends in chemical concentrations in streams with a seasonal wave (seawave) and adjustment for streamflow (Q) and other ancillary variables. See Ryberg and York, 2020, doi: 10.3133/ofr1082.
 License: Unlimited | file LICENSE
 URL: https://dx.doi.org/10.3133/ofr20131255
 LazyData: true

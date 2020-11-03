@@ -182,7 +182,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
                                    k = log(length(tmpouta$linear.predictors)))[2]
       }
     }
-  } else {
+  } else if (mclass == 1) {
     # nexvars is the number of explanatory variables (wave, trend, 
     # and continuous variables, if any)
     # stpars and aovout store the model output
@@ -235,6 +235,8 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
                                    k = log(length(tmpouta$linear.predictors)))[2]
       }
     }
+  } else {
+    message("Model class is unknown")
   }
   # find largest likelihood (smallest negative likelihood)
   likx <- (-parx[, 4])
@@ -284,6 +286,7 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
         round(cmaxt, digits = 2), ".", "\n", sep = "")
     sink()
   }
+  
   if (mclass == 2) {
     
     plotDat <- seawaveQPlots2(stpars, cmaxt, tseas, tseaspr, tndrcs, tndrcspr, 
@@ -293,11 +296,15 @@ fitMod <- function(cdatsub, cavdat, yrstart, yrend, tndbeg, tndend, tanm,
     # myRes <- list(stpars, aovout, plotDat, tndrcspr)
     myRes <- list(stpars, aovout, plotDat)
     myRes
-  } else {
+  } else if (mclass == 1) {
     plotDat <- seawaveQPlots(stpars, cmaxt, tseas, tseaspr, tndlin,
                               tndlinpr, cdatsub, cavdat, cavmat, clog, centmp,
-                              yrstart, yrend, tyr, tyrpr, pnames, tanm, plotfile)
+                              yrstart, yrend, tyr, tyrpr, pnames, tanm, mclass=1, 
+                             plotfile)
     myRes <- list(stpars, aovout, plotDat)
+    myRes
+  } else {
+    message("Model class unknown.")
   }
   myRes
 }

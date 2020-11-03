@@ -249,6 +249,22 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
   if (tndend == 0) {
     tndend <- yrend
   }
+  
+  pltind <- plotfile
+  txtind <- textfile
+  
+  if (is.logical(pltind)) {
+    # good
+  } else {
+    stop("plotfile argument must be a logical")
+  }
+  
+  if (is.logical(txtind)) {
+    # good
+  } else {
+    stop("textfile argument must be a logical")
+  }
+  
   dtmsg <- paste("Trend begin year is ", tndbeg, "; trend end year is ", 
                  tndend, ".", sep = "")
   message(dtmsg)
@@ -325,14 +341,15 @@ fitswavecav <- function(cdat, cavdat, tanm = "trend1", pnames, yrstart = 0,
         message(fitmsg)
         myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                        qwcols, mclass = 2, numk = numk, plotfile, textfile)
+                        qwcols, mclass = 2, plotfile = pltind, textfile = txtind)
       } else {
         fitmsg <- paste("Fitting model for ", pnames[iipar], 
                         ", using a linear trend model.", sep = "")
         message(fitmsg)
         myRes <- fitMod(cdatsub, cavdat, yrstart, yrend, 
                         tndbeg, tndend, tanm, pnames = pnames[iipar], 
-                        qwcols, mclass = 1, plotfile, textfile)
+                        qwcols, mclass = 1, numk = 4, plotfile = pltind, 
+                        textfile = txtind)
       }
       stpars <- myRes[[1]]
       aovout <- myRes[[2]]
