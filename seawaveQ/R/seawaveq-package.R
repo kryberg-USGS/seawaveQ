@@ -11,8 +11,8 @@
 #' \tabular{ll}{
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
-#' Version: \tab 2.0.1\cr
-#' Date: \tab 2020--07--31\cr
+#' Version: \tab 2.0.2\cr
+#' Date: \tab 2020--12--13\cr
 #' License: \tab Unlimited | file LICENSE \cr
 #' }
 #'

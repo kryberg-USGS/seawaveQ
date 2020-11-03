@@ -94,17 +94,18 @@ seawaveQPlots <- function (stpars, cmaxt, tseas, tseaspr,
                            cavmat, clog, centmp, yrstart, yrend, tyr, 
                            tyrpr, pnames, tanm, mclass=1, plotfile = FALSE) {
   # produce plots for selected model
-  
+
   if (plotfile == TRUE) {
     # set up output file for graphs 
     # output graphs to a pdf
-    graphfile<-paste(tanm, pnames, ".pdf", sep="")
-    gmes <- paste("Plots saved to ", graphfile, ".", sep="")
+    graphfile <- paste(tanm, pnames, ".pdf", sep = "")
+    gmes <- paste("Plots saved to ", graphfile, ".", sep = "")
     message(gmes)
-    pdf(graphfile, height=11.0, width=8.5)
+    pdf(graphfile, height = 11, width = 8.5)
   }
   
-  par(mfrow=c(2, 1), omi=c(0.5, 0.5, 0.5, 0.2), mai=c(0.5, 1, 0.5, 0.2))
+  par(mfrow = c(2, 1), omi = c(0.5, 0.5, 0.5, 0.2), mai = c(0.5, 
+                                                            1, 0.5, 0.2))
   
   pckone <- stpars[1, 2]
   mod1 <- floor((pckone - 1) / 4) + 1
