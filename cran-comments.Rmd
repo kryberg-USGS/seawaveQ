@@ -12,7 +12,8 @@ There is 1 NOTE
 
 The note indicates who the maintainer and it is correct.
 
-There is a comment: Possibly mis-spelled words in DESCRIPTION: SEAWAVE (4:8)
+In the Windwos Devel version there is a comment: Possibly mis-spelled words in DESCRIPTION: Ryberg (15:195)
+  doi (15:218)
   
 This is not a misspelling.
 

@@ -12,7 +12,11 @@
 #' Package: \tab seawaveQ\cr
 #' Type: \tab Package\cr
 #' Version: \tab 2.0.2\cr
+<<<<<<< HEAD
 #' Date: \tab 2020--12--13\cr
+=======
+#' Date: \tab 2020--11--01\cr
+>>>>>>> dac3118b258dd18ca032351045054b0098b83d68
 #' License: \tab Unlimited | file LICENSE \cr
 #' }
 #'
